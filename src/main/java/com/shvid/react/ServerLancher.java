@@ -1,34 +1,17 @@
 package com.shvid.react;
 
-import java.io.DataInputStream;
 
 public class ServerLancher {
 
+	private final static String REACT_PROPS = System.getProperty("react-properties", "classpath:react.properties");
+	
 	public static void main(String[] args) {
 				
-		System.out.println("React started");
-		System.out.println("Done");
-		
-	}
+		System.out.println("React lancher");
 
-	private static void sleep() {
+		ReactInstance instance = new ReactInstance(REACT_PROPS);
 		
-		try {
-			Thread.currentThread().sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private static void pause() {
-		System.out.println("Enter a string to continue:");
-		DataInputStream din = new DataInputStream(System.in);
-		try {
-			din.readLine();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 }

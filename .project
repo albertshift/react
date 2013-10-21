@@ -1,6 +1,6 @@
 <projectDescription>
-  <name>firedb</name>
-  <comment>firedb. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
+  <name>react</name>
+  <comment>react. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects/>
   <buildSpec>
     <buildCommand>
