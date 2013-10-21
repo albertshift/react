@@ -4,10 +4,31 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Map.Entry;
 import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class PropertiesUtil {
 
+	final static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
+	
+	public static void overrideStatsWith(String prefix, Properties dest, Properties src) {
+		for(Entry<Object, Object> entry : src.entrySet()) {
+			String key = entry.getKey().toString();
+			if (key.startsWith(prefix)) {
+				dest.put(entry.getKey(), entry.getValue());
+			}
+		}
+	}
+	
+	public static void log(String format, Properties props) {
+		for (Entry<Object, Object> entry : props.entrySet()) {
+			logger.info(format, entry.getKey(), entry.getValue());
+		}
+	}
+	
 	public static Properties readProperties(String cfgFile) {
 		if(cfgFile == null) {
 			throw new IllegalArgumentException("config file is null");

@@ -1,6 +1,6 @@
 
 @set BIN=%~dp0
-@cd %BIN%\..
+@pushd %BIN%\..
 
 set JAVA_OPTS=-server
 set JAVA_OPTS=%AVA_OPTS% -Xms2048m -Xmx2048m -XX:MaxPermSize=256m
@@ -12,6 +12,6 @@ set JAVA_OPTS=%JAVA_OPTS% -Xss412k
 
 @for %%a in (lib\*.jar) do @call bin\add2cp.bat %%a
 
-@java -classpath %CLASSPATH% %JAVA_OPTS% com.shvid.react.ServerLancher %1
+@java -classpath %CLASSPATH% %JAVA_OPTS% com.shvid.react.bash.ServerLancher %1
 
-pause
+popd
