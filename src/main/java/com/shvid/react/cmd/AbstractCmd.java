@@ -8,7 +8,7 @@ public abstract class AbstractCmd {
 
 	private final static String REACT_PROPS = System.getProperty("react.properties", "classpath:react.properties");
 
-    private static class PropertiesHolder {
+    private static final class PropertiesHolder {
     	
     	Properties reactProps;
     	
@@ -18,7 +18,7 @@ public abstract class AbstractCmd {
     	}
     }
 	
-    private static class PropertiesHolderSingleton {
+    private static final class PropertiesHolderSingleton {
     	static final PropertiesHolder INSTANCE = new PropertiesHolder();
     }
     
