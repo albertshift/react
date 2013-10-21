@@ -9,4 +9,6 @@ Reactive real-time IMDG
 4. Failover
 5. Reliable*
 
- 
+Features:
+1. No app jars in classpath
+2. Hot deploy with prerun procedures
