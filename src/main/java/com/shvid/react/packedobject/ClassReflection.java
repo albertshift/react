@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ClassReflection {
+public final class ClassReflection<T> {
 
 	private final FieldDescription[] fields;
 	
@@ -22,7 +22,7 @@ public final class ClassReflection {
 	}
 	
 	
-	public ClassReflection(Class<?> clazz) {
+	public ClassReflection(Class<T> clazz) {
 		try {
 			Field[] declaredFields = clazz.getDeclaredFields();
 			List<FieldDescription> collectList = new ArrayList<FieldDescription>(declaredFields.length);
@@ -45,7 +45,11 @@ public final class ClassReflection {
 		}
 	}
 	
-	public PackedObject[] constructFields(PackedObject instance, long offset) {
+	public static <T> ClassReflection<T> create(Class<T> clazz) {
+		return new ClassReflection<T>(clazz);
+	}
+	
+	public PackedObject[] constructFields(T instance, long offset) {
 		try {
 			PackedObject[] result = new PackedObject[fields.length];
 			for (int i = 0; i != fields.length; ++i) {
@@ -62,3 +66,4 @@ public final class ClassReflection {
 	}
 	
 }
+

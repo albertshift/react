@@ -1,8 +1,8 @@
 package com.shvid.react.packedobject;
 
-public final class Box extends ReflectionPackedObject {
+public final class Box extends ReflectionPackedObject<Box> {
 
-	static final ClassReflection CR = new ClassReflection(Box.class);
+	static final ClassReflection<Box> CR = ClassReflection.create(Box.class);
 	
 	private PackedLong num;  
 	private Point origin;

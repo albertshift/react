@@ -1,19 +1,19 @@
 package com.shvid.react.packedobject;
 
 
-public class ReflectionPackedObject implements PackedObject {
+public class ReflectionPackedObject<T> implements PackedObject {
 	
 	private final PackedObject[] fields;
 	
 	private final int fixedSize;
 	private final int initCapacity;
 	
-	public ReflectionPackedObject(long offset, ClassReflection cr) {
+	public ReflectionPackedObject(long offset, ClassReflection<T> cr) {
 		
 		/*
 		 * Initialize local cache of fields
 		 */
-		fields = cr.constructFields(this, offset);
+		fields = cr.constructFields((T) this, offset);
 
 		/*
 		 * Precalculate sizes
