@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ClassReflection<T> {
+public final class ClassDefinition<T> {
 
 	private final FieldDescription[] fields;
 	
@@ -39,7 +39,7 @@ public final class ClassReflection<T> {
 	}
 	
 	
-	public ClassReflection(Class<T> clazz) {
+	public ClassDefinition(Class<T> clazz) {
 		try {
 			Field[] declaredFields = clazz.getDeclaredFields();
 			List<FieldDescription> collectList = new ArrayList<FieldDescription>(declaredFields.length);
@@ -81,8 +81,8 @@ public final class ClassReflection<T> {
 		return null;
 	}
 	
-	public static <T> ClassReflection<T> create(Class<T> clazz) {
-		return new ClassReflection<T>(clazz);
+	public static <T> ClassDefinition<T> create(Class<T> clazz) {
+		return new ClassDefinition<T>(clazz);
 	}
 	
 	public PackedClass[] constructFields(T instance, long offset) {

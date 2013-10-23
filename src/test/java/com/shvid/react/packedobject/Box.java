@@ -2,7 +2,7 @@ package com.shvid.react.packedobject;
 
 public final class Box extends ReflectionBasedPackedClass<Box> {
 
-	static final ClassReflection<Box> CR = ClassReflection.create(Box.class);
+	static final ClassDefinition<Box> CR = ClassDefinition.create(Box.class);
 	
 	PackedLong num;  
 	Point origin;

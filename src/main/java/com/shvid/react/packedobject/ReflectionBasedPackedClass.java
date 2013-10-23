@@ -8,7 +8,7 @@ public class ReflectionBasedPackedClass<T> implements PackedClass {
 	private final int fixedSize;
 	private final int initCapacity;
 	
-	public ReflectionBasedPackedClass(long offset, ClassReflection<T> cr) {
+	public ReflectionBasedPackedClass(long offset, ClassDefinition<T> cr) {
 		
 		/*
 		 * Initialize local cache of fields
