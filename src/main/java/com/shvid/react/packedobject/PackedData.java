@@ -56,7 +56,7 @@ public final class PackedData {
 	
 	
 	public static int getCapacitySize() {
-		return 4;
+		return PackedConstants.CAPACITY_SIZE;
 	}
 	
 }

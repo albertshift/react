@@ -22,7 +22,7 @@ public class PackedIntTest {
 	private void check(int expected, byte[] serialized) {
 		PackedInt pi = new PackedInt(0);
 		byte[] blob = new byte[pi.getFixedSize()];
-		Assert.assertEquals(PackedInt.fixedSize, blob.length);
+		Assert.assertEquals(PackedConstants.INT_SIZE, blob.length);
 		pi.setInt(blob, 0, expected);
 		//System.out.println(Arrays.toString(blob));
 		Assert.assertTrue(Arrays.equals(blob, serialized));

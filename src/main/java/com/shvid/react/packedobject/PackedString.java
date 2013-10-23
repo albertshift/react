@@ -13,8 +13,6 @@ public final class PackedString implements PackedObject {
 	final PackedPtr data;
 	final int initCapacity;
 	
-	public final static int fixedSize = PackedPtr.fixedSize;
-	
 	public PackedString(long offset, int initCapacity) {
 		data = new PackedPtr(offset);
 		this.initCapacity = initCapacity;
@@ -46,7 +44,7 @@ public final class PackedString implements PackedObject {
 
 	@Override
 	public int getFixedSize() {
-		return fixedSize;
+		return data.getFixedSize();
 	}
 	
 	public int getInitCapacity() {

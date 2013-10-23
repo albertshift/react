@@ -6,10 +6,9 @@ public final class PackedByte implements PackedObject {
 
 	final long offset;
 	final byte defaultValue;
-	public final static int fixedSize = 1;
 
 	public PackedByte(long offset) {
-		this(offset, (byte)0);
+		this(offset, PackedConstants.DEFAULT_BYTE);
 	}
 
 	public PackedByte(long offset, byte defaultValue) {
@@ -42,7 +41,7 @@ public final class PackedByte implements PackedObject {
 	}
 	
 	public int getFixedSize() {
-		return fixedSize;
+		return PackedConstants.BYTE_SIZE;
 	}
 	
 	public int getInitCapacity() {

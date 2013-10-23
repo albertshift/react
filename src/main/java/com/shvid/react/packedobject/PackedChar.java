@@ -8,10 +8,9 @@ public final class PackedChar implements PackedObject {
 	
 	final long offset;
 	final char defaultValue;
-	public final static int fixedSize = 2;
 
 	public PackedChar(long offset) {
-		this(offset, '\000');
+		this(offset, PackedConstants.DEFAULT_CHAR);
 	}
 
 	public PackedChar(long offset, char defaultValue) {
@@ -48,7 +47,7 @@ public final class PackedChar implements PackedObject {
 	}
 	
 	public int getFixedSize() {
-		return fixedSize;
+		return PackedConstants.CHAR_SIZE;
 	}
 	
 	public int getInitCapacity() {

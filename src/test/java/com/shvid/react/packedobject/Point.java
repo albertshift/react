@@ -4,12 +4,10 @@ public final class Point implements PackedObject {
 
 	public final PackedInt x;
 	public final PackedInt y;
-
-	public final static int fixedSize = PackedInt.fixedSize + PackedInt.fixedSize;
 	
 	public Point(long offset) {
 		x = new PackedInt(offset);
-		offset += PackedInt.fixedSize;
+		offset += PackedConstants.INT_SIZE;
 		y = new PackedInt(offset);
 	}
 	
@@ -20,7 +18,7 @@ public final class Point implements PackedObject {
 	}
 
 	public int getFixedSize() {
-		return fixedSize;
+		return PackedConstants.INT_SIZE * 2;
 	}
 	
 	public int getInitCapacity() {

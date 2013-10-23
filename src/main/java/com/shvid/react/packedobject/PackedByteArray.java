@@ -9,7 +9,7 @@ public final class PackedByteArray implements PackedObject {
 	final byte defaultValue;
 	
 	public PackedByteArray(long offset, int length) {
-		this(offset, length, (byte)0);
+		this(offset, length, PackedConstants.DEFAULT_BYTE);
 	}
 	
 	public PackedByteArray(long offset, int length, byte defaultValue) {

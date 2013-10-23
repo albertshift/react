@@ -5,14 +5,13 @@ public final class PackedHeader implements PackedObject {
 	final PackedInt objTotalSize;
 	final PackedInt objFixedSize;
 	
-	public static final int fixedSize = PackedInt.fixedSize + PackedInt.fixedSize;
-	
+	static final int fixedSize = PackedConstants.INT_SIZE + PackedConstants.INT_SIZE;
 	public static final int objBaseOffset = fixedSize;
 	
 	public PackedHeader() {
 		long offset = 0;
 		objTotalSize = new PackedInt(offset);
-		offset += PackedInt.fixedSize;
+		offset += objTotalSize.getFixedSize();
 		objFixedSize = new PackedInt(offset);
 	}
 	

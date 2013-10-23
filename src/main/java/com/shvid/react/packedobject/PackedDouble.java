@@ -8,10 +8,9 @@ public final class PackedDouble implements PackedObject{
 	
 	final long offset;
 	final double defaultValue;
-	public final static int fixedSize = 8;
 	
 	public PackedDouble(long offset) {
-		this(offset, 0.0);
+		this(offset, PackedConstants.DEFAULT_DOUBLE);
 	}
 	
 	public PackedDouble(long offset, double defaultValue) {
@@ -48,7 +47,7 @@ public final class PackedDouble implements PackedObject{
 	}
 	
 	public int getFixedSize() {
-		return fixedSize;
+		return PackedConstants.DOUBLE_SIZE;
 	}
 	
 	public int getInitCapacity() {

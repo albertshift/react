@@ -8,10 +8,9 @@ public final class PackedShort implements PackedObject  {
 
 	final long offset;
 	final short defaultValue;
-	public final static int fixedSize = 2;
 	
 	public PackedShort(long offset) {
-		this(offset, (short)0);
+		this(offset, PackedConstants.DEFAULT_SHORT);
 	}
 	
 	public PackedShort(long offset, short defaultValue) {
@@ -48,7 +47,7 @@ public final class PackedShort implements PackedObject  {
 	}
 	
 	public int getFixedSize() {
-		return fixedSize;
+		return PackedConstants.SHORT_SIZE;
 	}
 	
 	public int getInitCapacity() {

@@ -8,10 +8,9 @@ public final class PackedFloat implements PackedObject {
 
 	final long offset;
 	final float defaultValue;
-	public final static int fixedSize = 4;
 	
 	public PackedFloat(long offset) {
-		this(offset, 0.0f);
+		this(offset, PackedConstants.FLOAT_SIZE);
 	}
 	
 	public PackedFloat(long offset, float defaultValue) {
@@ -48,7 +47,7 @@ public final class PackedFloat implements PackedObject {
 	}
 	
 	public int getFixedSize() {
-		return fixedSize;
+		return PackedConstants.FLOAT_SIZE;
 	}
 	
 	public int getInitCapacity() {

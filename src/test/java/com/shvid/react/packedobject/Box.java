@@ -6,25 +6,29 @@ public final class Box implements PackedObject {
 	public final Point origin;
 	public final Point extent; 
 	public final PackedString name; 
-	
-	public final static int fixedSize = PackedLong.fixedSize + Point.fixedSize + Point.fixedSize + PackedString.fixedSize;
+
+	public final int fixedSize;
 	
 	public Box() {
 		this(PackedHeader.objBaseOffset);
 	}
 	
-	public Box(long offset) {
+	public Box(long ioffset) {
+		long offset = ioffset;
+		
 		num = new PackedLong(offset);
-		offset += PackedLong.fixedSize;
+		offset += num.getFixedSize();
 		
 		origin = new Point(offset);
-		offset += Point.fixedSize;
+		offset += origin.getFixedSize();
 		
 		extent = new Point(offset);
-		offset += Point.fixedSize;
+		offset += extent.getFixedSize();
 		
 		name = new PackedString(offset, 20);
-		offset += PackedString.fixedSize;
+		offset += name.getFixedSize();
+		
+		fixedSize = (int) (offset - ioffset);
 
 	}
 

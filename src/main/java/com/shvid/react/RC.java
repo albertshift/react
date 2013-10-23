@@ -16,12 +16,13 @@ public final class RC {
 
 	final static Logger logger = LoggerFactory
 			.getLogger(RC.class);
-
+	
 	public final int pid;
 	public final int availableProcessors;
 	public final long freeMemory;
 	public final long maxMemory;
 	public final boolean isLittleEndian;
+	public final boolean ptr64;
 
 	private static final class Lazy {
 		private static final RC INSTANCE = new RC();
@@ -34,6 +35,7 @@ public final class RC {
 		maxMemory = Runtime.getRuntime().maxMemory();
 		isLittleEndian = ByteOrder.nativeOrder()
 				.equals(ByteOrder.LITTLE_ENDIAN);
+		ptr64 = Boolean.getBoolean("react.packedobject.ptr64");
 	}
 
 	public static RC getInstance() {
@@ -41,9 +43,12 @@ public final class RC {
 	}
 
 	public void log() {
+		logger.info("pid={}", pid);
 		logger.info("availableProcessors={}", availableProcessors);
 		logger.info("freeMemory={}", freeMemory);
 		logger.info("maxMemory={}", maxMemory);
+		logger.info("isLittleEndian={}", isLittleEndian);
+		logger.info("ptr64={}", ptr64);
 	}
 
 	private static int getPid() {
