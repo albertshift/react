@@ -179,6 +179,11 @@
 			<artifactId>javassist</artifactId>
 			<version>3.12.1.GA</version>
 		</dependency>
+		<dependency>
+			<groupId>com.lmax</groupId>
+			<artifactId>disruptor</artifactId>
+			<version>3.2.0</version>
+		</dependency>
 	</dependencies>
 	<properties>
 		<BUILD_TAG>-SNAPSHOT</BUILD_TAG>
