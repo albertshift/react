@@ -13,6 +13,10 @@ public final class PackedString implements PackedObject {
 	final PackedPtr data;
 	final int initCapacity;
 	
+	public PackedString(long offset) {
+		this(offset, 0);
+	}
+	
 	public PackedString(long offset, int initCapacity) {
 		data = new PackedPtr(offset);
 		this.initCapacity = initCapacity;

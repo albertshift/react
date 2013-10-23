@@ -2,6 +2,7 @@ package com.shvid.react.packedobject;
 
 import junit.framework.TestCase;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.shvid.react.Dumper;
@@ -12,6 +13,8 @@ public class ExperimentTest extends TestCase {
 	public void test() {
 		Box box = new Box(0);
 		
+		//Assert.assertEquals(box.fixedSize, box.getFixedSize());
+		/*
 		System.out.println("box-size = " + box.getFixedSize());
 		
 		byte[] blob = new byte[box.getFixedSize()];
@@ -25,6 +28,7 @@ public class ExperimentTest extends TestCase {
 		System.out.println("v =  " + v);
 		
 		Dumper.dump(blob, Dumper.CONSOLE_PRINTER);
+		*/
 		
 	}
 	
