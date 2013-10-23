@@ -27,22 +27,22 @@ public final class PackedDouble implements PackedObject{
 		setDouble(address, 0, defaultValue);
 	}
 	
-	public double getDouble(byte[] blob, int ptr) {
+	public double getDouble(byte[] blob, long ptr) {
 		double value = UnsafeHolder.UNSAFE.getDouble(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
 	}
 	
-	public double getDouble(long address, int ptr) {
+	public double getDouble(long address, long ptr) {
 		double value = UnsafeHolder.UNSAFE.getDouble(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
 	}
 	
-	public void setDouble(byte[] blob, int ptr, double value) {
+	public void setDouble(byte[] blob, long ptr, double value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
 		UnsafeHolder.UNSAFE.putDouble(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}
 	
-	public void setDouble(long address, int ptr, double value) {
+	public void setDouble(long address, long ptr, double value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
 		UnsafeHolder.UNSAFE.putDouble(address + offset + ptr, value);
 	}

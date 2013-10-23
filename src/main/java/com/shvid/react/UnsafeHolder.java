@@ -4,8 +4,8 @@ public final class UnsafeHolder {
 
     // Unsafe mechanics
     public static final sun.misc.Unsafe UNSAFE;
-	public static final int byteArrayBaseOffset;
-	public static final int byteArrayIndexScale;
+	public static final long byteArrayBaseOffset;
+	public static final long byteArrayIndexScale;
 	
     static {
         try {

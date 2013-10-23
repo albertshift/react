@@ -27,22 +27,22 @@ public final class PackedInt implements PackedObject {
 		setInt(address, 0, defaultValue);
 	}
 	
-	public int getInt(byte[] blob, int ptr) {
+	public int getInt(byte[] blob, long ptr) {
 		int value = UnsafeHolder.UNSAFE.getInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 	}
 	
-	public int getInt(long address, int ptr) {
+	public int getInt(long address, long ptr) {
 		int value = UnsafeHolder.UNSAFE.getInt(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 	}
 	
-	public void setInt(byte[] blob, int ptr, int value) {
+	public void setInt(byte[] blob, long ptr, int value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 		UnsafeHolder.UNSAFE.putInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}
 	
-	public void setInt(long address, int ptr, int value) {
+	public void setInt(long address, long ptr, int value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 		UnsafeHolder.UNSAFE.putInt(address + offset + ptr, value);
 	}

@@ -30,22 +30,22 @@ public final class PackedByteArray implements PackedObject {
 		}
 	}
 	
-	public byte getByte(byte[] blob, int ptr, int pos) {
+	public byte getByte(byte[] blob, long ptr, int pos) {
 		ensurePosition(pos);
 		return UnsafeHolder.UNSAFE.getByte(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset + pos * UnsafeHolder.byteArrayIndexScale);
 	}
 	
-	public byte getByte(long address, int ptr, int pos) {
+	public byte getByte(long address, long ptr, int pos) {
 		ensurePosition(pos);
 		return UnsafeHolder.UNSAFE.getByte(address + offset + ptr + pos);
 	}
 	
-	public void setByte(long address, int ptr, int pos, byte value) {
+	public void setByte(long address, long ptr, int pos, byte value) {
 		ensurePosition(pos);
 		UnsafeHolder.UNSAFE.putByte(address + offset + ptr + pos, value);
 	}
 	
-	public void setByte(byte[] blob, int ptr, int pos, byte value) {
+	public void setByte(byte[] blob, long ptr, int pos, byte value) {
 		ensurePosition(pos);
 		UnsafeHolder.UNSAFE.putByte(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset + pos * UnsafeHolder.byteArrayIndexScale, value);
 	}

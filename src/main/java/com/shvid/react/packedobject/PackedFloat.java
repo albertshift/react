@@ -27,22 +27,22 @@ public final class PackedFloat implements PackedObject {
 		setFloat(address, 0, defaultValue);
 	}
 	
-	public float getFloat(byte[] blob, int ptr) {
+	public float getFloat(byte[] blob, long ptr) {
 		float value = UnsafeHolder.UNSAFE.getFloat(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapFloat(value);
 	}
 	
-	public float getFloat(long address, int ptr) {
+	public float getFloat(long address, long ptr) {
 		float value = UnsafeHolder.UNSAFE.getFloat(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapFloat(value);
 	}
 	
-	public void setFloat(byte[] blob, int ptr, float value) {
+	public void setFloat(byte[] blob, long ptr, float value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapFloat(value);
 		UnsafeHolder.UNSAFE.putFloat(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}
 	
-	public void setFloat(long address, int ptr, float value) {
+	public void setFloat(long address, long ptr, float value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapFloat(value);
 		UnsafeHolder.UNSAFE.putFloat(address + offset + ptr, value);
 	}

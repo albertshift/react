@@ -27,22 +27,22 @@ public final class PackedShort implements PackedObject  {
 		setShort(address, 0, defaultValue);
 	}
 	
-	public short getShort(byte[] blob, int ptr) {
+	public short getShort(byte[] blob, long ptr) {
 		short value = UnsafeHolder.UNSAFE.getShort(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapShort(value);
 	}
 	
-	public short getShort(long address, int ptr) {
+	public short getShort(long address, long ptr) {
 		short value = UnsafeHolder.UNSAFE.getShort(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapShort(value);
 	}
 	
-	public void setShort(long address, int ptr, short value) {
+	public void setShort(long address, long ptr, short value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapShort(value);
 		UnsafeHolder.UNSAFE.putShort(address + offset + ptr, value);
 	}
 	
-	public void setShort(byte[] blob, int ptr, short value) {
+	public void setShort(byte[] blob, long ptr, short value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapShort(value);
 		UnsafeHolder.UNSAFE.putShort(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}

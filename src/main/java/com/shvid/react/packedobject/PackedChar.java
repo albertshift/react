@@ -27,22 +27,22 @@ public final class PackedChar implements PackedObject {
 		setChar(address, 0, defaultValue);
 	}
 	
-	public char getChar(byte[] blob, int ptr) {
+	public char getChar(byte[] blob, long ptr) {
 		char charValue = UnsafeHolder.UNSAFE.getChar(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? charValue : Swapper.swapChar(charValue);
 	}
 	
-	public char getChar(long address, int ptr) {
+	public char getChar(long address, long ptr) {
 		char charValue = UnsafeHolder.UNSAFE.getChar(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? charValue : Swapper.swapChar(charValue);
 	}
 	
-	public void setChar(byte[] blob, int ptr, char value) {
+	public void setChar(byte[] blob, long ptr, char value) {
 		char converted = RC.getInstance().isLittleEndian ? value : Swapper.swapChar(value);
 		UnsafeHolder.UNSAFE.putChar(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, converted);
 	}	
 	
-	public void setChar(long address, int ptr, char value) {
+	public void setChar(long address, long ptr, char value) {
 		char converted = RC.getInstance().isLittleEndian ? value : Swapper.swapChar(value);
 		UnsafeHolder.UNSAFE.putChar(address + offset + ptr, converted);
 	}

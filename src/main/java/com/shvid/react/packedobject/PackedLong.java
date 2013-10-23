@@ -27,22 +27,22 @@ public final class PackedLong implements PackedObject {
 		setLong(address, 0, defaultValue);
 	}
 	
-	public long getLong(byte[] blob, int ptr) {
+	public long getLong(byte[] blob, long ptr) {
 		long value = UnsafeHolder.UNSAFE.getLong(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
 	}
 	
-	public long getLong(long address, int ptr) {
+	public long getLong(long address, long ptr) {
 		long value = UnsafeHolder.UNSAFE.getLong(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
 	}
 	
-	public void setLong(byte[] blob, int ptr, long value) {
+	public void setLong(byte[] blob, long ptr, long value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
 		UnsafeHolder.UNSAFE.putLong(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}
 	
-	public void setLong(long address, int ptr, long value) {
+	public void setLong(long address, long ptr, long value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
 		UnsafeHolder.UNSAFE.putLong(address + offset + ptr, value);
 	}
