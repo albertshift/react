@@ -7,7 +7,7 @@ public final class PackedFactory {
 	private static final PackedLong memCapacity = new PackedLong(0);
 	public static final PackedHeader header = new PackedHeader();
 	
-	public static byte[] newHeapInstance(PackedObject obj) {
+	public static byte[] newHeapInstance(PackedClass obj) {
 		int memSize = PackedHeader.objBaseOffset() + obj.getFixedSize() + obj.getInitCapacity();
 		byte[] blob = new byte[memSize];
 		
@@ -18,7 +18,7 @@ public final class PackedFactory {
 		return blob;
 	}
 	
-	public static long newInstance(PackedObject obj) {
+	public static long newInstance(PackedClass obj) {
 		long memSize = PackedHeader.objBaseOffset() + obj.getFixedSize() + obj.getInitCapacity();
 		long address = UnsafeHolder.UNSAFE.allocateMemory(memSize);
 		memCapacity.setLong(address, 0, memSize);

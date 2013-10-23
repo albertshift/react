@@ -4,7 +4,7 @@ import com.shvid.react.RC;
 import com.shvid.react.Swapper;
 import com.shvid.react.UnsafeHolder;
 
-public final class PackedPtr implements PackedObject {
+public final class PackedPtr implements PackedClass {
 	
 	public final static int NULL = 0;
 

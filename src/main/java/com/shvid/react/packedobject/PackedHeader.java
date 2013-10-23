@@ -18,7 +18,7 @@ import com.shvid.react.RC;
  */
 
 
-public final class PackedHeader implements PackedObject {
+public final class PackedHeader implements PackedClass {
 
 	final PackedPtr freeOffset;
 	final PackedInt totalFixedSize;

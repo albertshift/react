@@ -11,7 +11,7 @@ package com.shvid.react.packedobject;
  * 
  */
 
-public interface PackedObject {
+public interface PackedClass {
 
 	int getFixedSize();
 	

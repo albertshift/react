@@ -2,7 +2,7 @@ package com.shvid.react.packedobject;
 
 import com.shvid.react.UnsafeHolder;
 
-public final class PackedByteArray implements PackedObject {
+public final class PackedByteArray implements PackedClass {
 
 	final long offset;
 	final int length;

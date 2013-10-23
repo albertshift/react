@@ -1,6 +1,6 @@
 package com.shvid.react.packedobject;
 
-public final class Point implements PackedObject {
+public final class Point implements PackedClass {
 
 	public final PackedInt x;
 	public final PackedInt y;

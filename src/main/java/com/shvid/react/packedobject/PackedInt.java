@@ -4,7 +4,7 @@ import com.shvid.react.Swapper;
 import com.shvid.react.RC;
 import com.shvid.react.UnsafeHolder;
 
-public final class PackedInt implements PackedObject {
+public final class PackedInt implements PackedClass {
 	
 	final long offset;
 	final int defaultValue;

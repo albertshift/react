@@ -1,9 +1,9 @@
 package com.shvid.react.packedobject;
 
 
-public class ReflectionPackedObject<T> implements PackedObject {
+public class ReflectionPackedObject<T> implements PackedClass {
 	
-	private final PackedObject[] fields;
+	private final PackedClass[] fields;
 	
 	private final int fixedSize;
 	private final int initCapacity;
@@ -21,7 +21,7 @@ public class ReflectionPackedObject<T> implements PackedObject {
 		
 		int size = 0;
 		int initCap = 0;
-		for (PackedObject field : fields) {
+		for (PackedClass field : fields) {
 			size += field.getFixedSize();
 			initCap += field.getInitCapacity();
 		}
@@ -42,14 +42,14 @@ public class ReflectionPackedObject<T> implements PackedObject {
 
 	@Override
 	public void format(byte[] blob) {
-		for (PackedObject field : fields) {
+		for (PackedClass field : fields) {
 			field.format(blob);
 		}
 	}
 
 	@Override
 	public void format(long address) {
-		for (PackedObject field : fields) {
+		for (PackedClass field : fields) {
 			field.format(address);
 		}
 	}

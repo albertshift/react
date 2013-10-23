@@ -28,12 +28,12 @@ public final class ClassReflection<T> {
 			this.length = length;
 		}
 		
-		PackedObject instantiate(long offset) throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		PackedClass instantiate(long offset) throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 			if (length != null) {
-				return (PackedObject) constructor.newInstance(offset, length);
+				return (PackedClass) constructor.newInstance(offset, length);
 			}
 			else {
-				return (PackedObject) constructor.newInstance(offset);
+				return (PackedClass) constructor.newInstance(offset);
 			}
 		}
 	}
@@ -45,7 +45,7 @@ public final class ClassReflection<T> {
 			List<FieldDescription> collectList = new ArrayList<FieldDescription>(declaredFields.length);
 			for (Field field : declaredFields) {
 				Class<?> fieldClass = field.getType();
-				if (PackedObject.class.isAssignableFrom(fieldClass)) {
+				if (PackedClass.class.isAssignableFrom(fieldClass)) {
 					field.setAccessible(true);
 					
 					Length length = findLengthAnnotation(field);
@@ -85,12 +85,12 @@ public final class ClassReflection<T> {
 		return new ClassReflection<T>(clazz);
 	}
 	
-	public PackedObject[] constructFields(T instance, long offset) {
+	public PackedClass[] constructFields(T instance, long offset) {
 		try {
-			PackedObject[] result = new PackedObject[fields.length];
+			PackedClass[] result = new PackedClass[fields.length];
 			for (int i = 0; i != fields.length; ++i) {
 				FieldDescription fieldDescription = fields[i];
-				PackedObject fieldInstance = fieldDescription.instantiate(offset);
+				PackedClass fieldInstance = fieldDescription.instantiate(offset);
 				result[i] = fieldInstance;
 				fieldDescription.field.set(instance, fieldInstance);
 			}
