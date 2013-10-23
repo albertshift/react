@@ -1,6 +1,7 @@
 package com.shvid.react;
 
 import java.nio.ByteOrder;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,8 @@ public final class RC {
 
 	final static Logger logger = LoggerFactory
 			.getLogger(RC.class);
+	
+	static Properties reactProps = new Properties();
 	
 	public final int pid;
 	public final int availableProcessors;
@@ -35,13 +38,18 @@ public final class RC {
 		maxMemory = Runtime.getRuntime().maxMemory();
 		isLittleEndian = ByteOrder.nativeOrder()
 				.equals(ByteOrder.LITTLE_ENDIAN);
-		ptr64 = Boolean.getBoolean("react.packedobject.ptr64");
+		ptr64 = Boolean.parseBoolean(reactProps.getProperty("react.packedobject.ptr64", "false"));
 	}
 
 	public static RC getInstance() {
 		return Lazy.INSTANCE;
 	}
 
+	public static RC getInstance(Properties props) {
+		reactProps = props;
+		return Lazy.INSTANCE;
+	}
+	
 	public void log() {
 		logger.info("pid={}", pid);
 		logger.info("availableProcessors={}", availableProcessors);

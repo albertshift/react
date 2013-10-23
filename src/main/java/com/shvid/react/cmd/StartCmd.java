@@ -20,7 +20,7 @@ public class StartCmd extends AbstractCmd {
 				
 		System.out.println("React Start");
 
-		RC.getInstance().log();
+		RC.getInstance(getReactProps()).log();
 		
 		PropertiesUtil.log("REACT {}={}", getReactProps());
 		

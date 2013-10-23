@@ -1,6 +1,7 @@
 package com.shvid.react.cmd;
 
 import com.shvid.react.PropertiesUtil;
+import com.shvid.react.RC;
 
 public class StatusCmd extends AbstractCmd {
 
@@ -8,6 +9,8 @@ public class StatusCmd extends AbstractCmd {
 		
 		System.out.println("React Status");
 	
+		RC.getInstance(getReactProps()).log();
+		
 		PropertiesUtil.log("REACT {}={}", getReactProps());
 		
 	}
