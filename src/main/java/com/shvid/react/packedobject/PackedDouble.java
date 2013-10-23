@@ -26,19 +26,35 @@ public final class PackedDouble implements PackedClass{
 		setDouble(address, 0, defaultValue);
 	}
 	
+	public double getDouble(HeapPackedObject<?> po) {
+		return getDouble(po.blob, po.ptr);
+	}	
+	
 	public double getDouble(byte[] blob, long ptr) {
 		double value = UnsafeHolder.UNSAFE.getDouble(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
 	}
+	
+	public double getDouble(AddressPackedObject<?> po) {
+		return getDouble(po.address, po.ptr);
+	}	
 	
 	public double getDouble(long address, long ptr) {
 		double value = UnsafeHolder.UNSAFE.getDouble(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
 	}
 	
+	public void setDouble(HeapPackedObject<?> po, double value) {
+		setDouble(po.blob, po.ptr, value);
+	}
+	
 	public void setDouble(byte[] blob, long ptr, double value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
 		UnsafeHolder.UNSAFE.putDouble(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
+	}
+	
+	public void setDouble(AddressPackedObject<?> po, double value) {
+		setDouble(po.address, po.ptr, value);
 	}
 	
 	public void setDouble(long address, long ptr, double value) {

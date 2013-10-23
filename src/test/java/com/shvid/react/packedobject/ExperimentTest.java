@@ -30,6 +30,10 @@ public class ExperimentTest extends TestCase {
 		System.out.println("v =  " + v);
 		
 		Dumper.dump(blob, Dumper.CONSOLE_PRINTER);
+		
+		HeapPackedObject<Box> instance = HeapPackedObject.newInstance(box);
+
+		instance.pclass.num.setLong(instance, 123);
 	
 		
 	}

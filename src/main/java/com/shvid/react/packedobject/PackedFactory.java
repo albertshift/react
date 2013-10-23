@@ -4,7 +4,7 @@ import com.shvid.react.UnsafeHolder;
 
 public final class PackedFactory {
 
-	private static final PackedLong memCapacity = new PackedLong(0);
+	static final PackedLong memCapacity = new PackedLong(0);
 	public static final PackedHeader header = new PackedHeader();
 	
 	public static byte[] newHeapInstance(PackedClass obj) {
