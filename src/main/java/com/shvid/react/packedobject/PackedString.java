@@ -46,6 +46,16 @@ public final class PackedString implements PackedObject {
 		}
 	}
 
+	public void setString(byte[] blob, long ptr, CharSequence value) {
+		
+	}
+	
+	public void setString(long address, long ptr, CharSequence value) {
+		
+	}
+	
+	
+	
 	@Override
 	public int getFixedSize() {
 		return data.getFixedSize();

@@ -4,12 +4,15 @@ public final class Box extends ReflectionPackedObject<Box> {
 
 	static final ClassReflection<Box> CR = ClassReflection.create(Box.class);
 	
-	private PackedLong num;  
-	private Point origin;
-	private Point extent; 
+	PackedLong num;  
+	Point origin;
+	Point extent; 
+	
+	@Length(200)
+	PackedByteArray ba;
 	
 	@Length(20)
-	public PackedString name; 
+	PackedString name; 
 	
 	public Box() {
 		this(PackedHeader.objBaseOffset());
@@ -19,4 +22,8 @@ public final class Box extends ReflectionPackedObject<Box> {
 		super(offset, CR);
 	}
 
+	public int manuaFixedSize() {
+		return num.getFixedSize() + origin.getFixedSize() + extent.getFixedSize() + ba.getFixedSize() + name.getFixedSize();
+	}
+	
 }

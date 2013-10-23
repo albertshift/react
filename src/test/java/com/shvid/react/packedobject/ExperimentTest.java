@@ -13,8 +13,8 @@ public class ExperimentTest extends TestCase {
 	public void test() {
 		Box box = new Box(0);
 		
-		//Assert.assertEquals(box.fixedSize, box.getFixedSize());
-		/*
+		Assert.assertEquals(box.manuaFixedSize(), box.getFixedSize());
+		
 		System.out.println("box-size = " + box.getFixedSize());
 		
 		byte[] blob = new byte[box.getFixedSize()];
@@ -24,11 +24,13 @@ public class ExperimentTest extends TestCase {
 		box.num.setLong(blob, 0, 123);
 		
 		long v = box.num.getLong(blob, 0);
+
+		box.name.setString(blob, 0, "hello world");
 		
 		System.out.println("v =  " + v);
 		
 		Dumper.dump(blob, Dumper.CONSOLE_PRINTER);
-		*/
+	
 		
 	}
 	
