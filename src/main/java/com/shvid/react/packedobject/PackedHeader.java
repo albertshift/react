@@ -1,18 +1,31 @@
 package com.shvid.react.packedobject;
 
+import com.shvid.react.RC;
+
+/**
+ * 
+ * Packet memory structure
+ * 
+ *       address         floatingOffset freeOffset
+ * memsize | [ header, fixed, | floating, | free, tail ]
+ * 
+ * header contains: freeOffset and totalFixedSize
+ * 
+ * floatingOffset = header.sizeof() + totalSizeOf
+ * 
+ * @author ashvid
+ *
+ */
+
+
 public final class PackedHeader implements PackedObject {
 
-	final PackedInt objTotalSize;
-	final PackedInt objFixedSize;
-	
-	static final int fixedSize = PackedConstants.INT_SIZE + PackedConstants.INT_SIZE;
-	public static final int objBaseOffset = fixedSize;
+	final PackedPtr freeOffset;
+	final PackedInt totalFixedSize;
 	
 	public PackedHeader() {
-		long offset = 0;
-		objTotalSize = new PackedInt(offset);
-		offset += objTotalSize.getFixedSize();
-		objFixedSize = new PackedInt(offset);
+		freeOffset = new PackedPtr(0);
+		totalFixedSize = new PackedInt(freeOffset.getFixedSize());
 	}
 	
 	public void format(byte[] blob) {
@@ -22,11 +35,15 @@ public final class PackedHeader implements PackedObject {
 	}
 
 	public int getFixedSize() {
-		return fixedSize;
+		return objBaseOffset();
 	}
 
 	public int getInitCapacity() {
 		return 0;
+	}
+	
+	public static int objBaseOffset() {
+		return (RC.getInstance().ptr64 ? PackedConstants.PTR64_SIZE : PackedConstants.PTR32_SIZE) + PackedConstants.INT_SIZE;
 	}
 	
 }

@@ -10,7 +10,7 @@ public final class Box implements PackedObject {
 	public final int fixedSize;
 	
 	public Box() {
-		this(PackedHeader.objBaseOffset);
+		this(PackedHeader.objBaseOffset());
 	}
 	
 	public Box(long ioffset) {

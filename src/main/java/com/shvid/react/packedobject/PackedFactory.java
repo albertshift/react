@@ -4,25 +4,27 @@ import com.shvid.react.UnsafeHolder;
 
 public final class PackedFactory {
 
-	private static final PackedInt memCapacity = new PackedInt(0);
+	private static final PackedLong memCapacity = new PackedLong(0);
 	public static final PackedHeader header = new PackedHeader();
 	
 	public static byte[] newHeapInstance(PackedObject obj) {
-		int memSize = PackedHeader.fixedSize + obj.getFixedSize() + obj.getInitCapacity();
+		int memSize = PackedHeader.objBaseOffset() + obj.getFixedSize() + obj.getInitCapacity();
 		byte[] blob = new byte[memSize];
-		header.objTotalSize.setInt(blob, 0, obj.getFixedSize());
-		header.objFixedSize.setInt(blob, 0, obj.getFixedSize());
+		
+		header.freeOffset.setPtr(blob, obj.getFixedSize());
+		header.totalFixedSize.setInt(blob, 0, obj.getFixedSize());
+
 		obj.format(blob);
 		return blob;
 	}
 	
 	public static long newInstance(PackedObject obj) {
-		int memSize = PackedHeader.fixedSize + obj.getFixedSize() + obj.getInitCapacity();
+		long memSize = PackedHeader.objBaseOffset() + obj.getFixedSize() + obj.getInitCapacity();
 		long address = UnsafeHolder.UNSAFE.allocateMemory(memSize);
-		memCapacity.setInt(address, 0, memSize);
+		memCapacity.setLong(address, 0, memSize);
 		address += memCapacity.getFixedSize();
-		header.objTotalSize.setInt(address, 0, obj.getFixedSize());
-		header.objFixedSize.setInt(address, 0, obj.getFixedSize());
+		header.freeOffset.setPtr(address, obj.getFixedSize());
+		header.totalFixedSize.setInt(address, 0, obj.getFixedSize());
 		obj.format(address);
 		return address;
 	}
@@ -32,23 +34,23 @@ public final class PackedFactory {
 		UnsafeHolder.UNSAFE.freeMemory(address);
 	}
 	
-	public static int allocate(byte[] blob, int capacity) {
-		int totalSize = header.objTotalSize.getInt(blob, 0);
-		if (totalSize + capacity > blob.length) {
+	public static long allocate(byte[] blob, int capacity) {
+		long freePtr = header.freeOffset.getPtr(blob);
+		if (freePtr + capacity > blob.length) {
 			throw new PackedObjectOverflowException();
 		}
-		header.objTotalSize.setInt(blob, 0, totalSize + capacity);
-		return totalSize;
+		header.freeOffset.setPtr(blob, freePtr + capacity);
+		return freePtr;
 	}
 	
-	public static int allocate(long address, int capacity) {
-		int memSize = memCapacity.getInt(address, -memCapacity.getFixedSize());
-		int totalSize = header.objTotalSize.getInt(address, 0);
-		if (totalSize + capacity > memSize) {
+	public static long allocate(long address, int capacity) {
+		long memSize = memCapacity.getLong(address, -memCapacity.getFixedSize());
+		long freePtr = header.freeOffset.getPtr(address);
+		if (freePtr + capacity > memSize) {
 			throw new PackedObjectOverflowException();
 		}
-		header.objTotalSize.setInt(address, 0, totalSize + capacity);
-		return totalSize;
+		header.freeOffset.setPtr(address, freePtr + capacity);
+		return freePtr;
 	}
 	
 }
