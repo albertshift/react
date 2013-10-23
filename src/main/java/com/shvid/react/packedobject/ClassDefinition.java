@@ -7,22 +7,22 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ClassDefinition<T> {
+public final class ClassDefinition<T extends PackedClass> {
 
-	private final FieldDescription[] fields;
+	private final FieldDefinition[] fields;
 	
-	private static final class FieldDescription {
+	private static final class FieldDefinition {
 		
 		final Field field;
 		final Constructor<?> constructor;
 		final Integer length;
 		
 		
-		FieldDescription(Field field, Constructor<?> constructor) {
+		FieldDefinition(Field field, Constructor<?> constructor) {
 			this(field, constructor, null);
 		}
 		
-		FieldDescription(Field field, Constructor<?> constructor, Integer length) {
+		FieldDefinition(Field field, Constructor<?> constructor, Integer length) {
 			this.field = field;
 			this.constructor = constructor;
 			this.length = length;
@@ -42,7 +42,7 @@ public final class ClassDefinition<T> {
 	public ClassDefinition(Class<T> clazz) {
 		try {
 			Field[] declaredFields = clazz.getDeclaredFields();
-			List<FieldDescription> collectList = new ArrayList<FieldDescription>(declaredFields.length);
+			List<FieldDefinition> collectList = new ArrayList<FieldDefinition>(declaredFields.length);
 			for (Field field : declaredFields) {
 				Class<?> fieldClass = field.getType();
 				if (PackedClass.class.isAssignableFrom(fieldClass)) {
@@ -53,18 +53,18 @@ public final class ClassDefinition<T> {
 						Constructor<?> offsetConstructor = fieldClass.getDeclaredConstructor(long.class, int.class);
 						offsetConstructor.setAccessible(true);
 						
-						collectList.add(new FieldDescription(field, offsetConstructor, length.value()));
+						collectList.add(new FieldDefinition(field, offsetConstructor, length.value()));
 					}
 					else {
 						Constructor<?> offsetConstructor = fieldClass.getDeclaredConstructor(long.class);
 						offsetConstructor.setAccessible(true);
 						
-						collectList.add(new FieldDescription(field, offsetConstructor));
+						collectList.add(new FieldDefinition(field, offsetConstructor));
 					}
 				}
 			}
 			
-			FieldDescription[] array = new FieldDescription[collectList.size()];
+			FieldDefinition[] array = new FieldDefinition[collectList.size()];
 			fields = collectList.toArray(array);
 		}
 		catch(Exception e) {
@@ -81,7 +81,7 @@ public final class ClassDefinition<T> {
 		return null;
 	}
 	
-	public static <T> ClassDefinition<T> create(Class<T> clazz) {
+	public static <T extends PackedClass> ClassDefinition<T> create(Class<T> clazz) {
 		return new ClassDefinition<T>(clazz);
 	}
 	
@@ -89,7 +89,7 @@ public final class ClassDefinition<T> {
 		try {
 			PackedClass[] result = new PackedClass[fields.length];
 			for (int i = 0; i != fields.length; ++i) {
-				FieldDescription fieldDescription = fields[i];
+				FieldDefinition fieldDescription = fields[i];
 				PackedClass fieldInstance = fieldDescription.instantiate(offset);
 				result[i] = fieldInstance;
 				fieldDescription.field.set(instance, fieldInstance);

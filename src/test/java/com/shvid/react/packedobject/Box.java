@@ -2,7 +2,7 @@ package com.shvid.react.packedobject;
 
 public final class Box extends ReflectionBasedPackedClass<Box> {
 
-	static final ClassDefinition<Box> CR = ClassDefinition.create(Box.class);
+	static final ClassDefinition<Box> CD = ClassDefinition.create(Box.class);
 	
 	PackedLong num;  
 	Point origin;
@@ -19,7 +19,7 @@ public final class Box extends ReflectionBasedPackedClass<Box> {
 	}
 	
 	public Box(long offset) {
-		super(offset, CR);
+		super(offset, CD);
 	}
 
 	public int manuaFixedSize() {
