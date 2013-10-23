@@ -1,5 +1,12 @@
 package com.shvid.react;
 
+/**
+ * Needs for Big Endian support
+ * 
+ * @author ashvid
+ *
+ */
+
 public final class Swapper {
 
 	public static char swapChar(char value) {

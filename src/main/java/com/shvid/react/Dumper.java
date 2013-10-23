@@ -3,6 +3,12 @@ package com.shvid.react;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * I like formatted dumps :)
+ * 
+ * @author ashvid
+ *
+ */
 
 public final class Dumper {
 

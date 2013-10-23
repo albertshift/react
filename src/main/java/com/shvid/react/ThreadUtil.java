@@ -16,7 +16,7 @@ public final class ThreadUtil {
 	 * @return true if interrupted
 	 */
 	
-	public static boolean interruptedSleep(int mls) {
+	public static boolean interruptedInSleep(int mls) {
 		
 		try {
 			Thread.sleep(mls);

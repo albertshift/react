@@ -1,8 +1,14 @@
 package com.shvid.react;
 
+/**
+ * Unsafe mechanics
+ * 
+ * @author ashvid
+ *
+ */
+
 public final class UnsafeHolder {
 
-    // Unsafe mechanics
     public static final sun.misc.Unsafe UNSAFE;
 	public static final long byteArrayBaseOffset;
 	public static final long byteArrayIndexScale;
