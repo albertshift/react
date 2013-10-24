@@ -1,4 +1,4 @@
-package com.shvid.react;
+package com.shvid.react.packedobject;
 
 /**
  * Needs for Big Endian support

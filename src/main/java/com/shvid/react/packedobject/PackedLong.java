@@ -1,6 +1,5 @@
 package com.shvid.react.packedobject;
 
-import com.shvid.react.Swapper;
 import com.shvid.react.RC;
 import com.shvid.react.UnsafeHolder;
 
