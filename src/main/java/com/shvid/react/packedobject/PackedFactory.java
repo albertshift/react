@@ -11,10 +11,10 @@ public final class PackedFactory {
 		int memSize = PackedHeader.objBaseOffset() + obj.getFixedSize() + obj.getInitCapacity();
 		byte[] blob = new byte[memSize];
 		
-		header.freeOffset.setPtr(blob, obj.getFixedSize());
+		header.freeOffset.setPtr(blob, 0, obj.getFixedSize());
 		header.totalFixedSize.setInt(blob, 0, obj.getFixedSize());
 
-		obj.format(blob);
+		obj.format(blob, 0);
 		return blob;
 	}
 	
@@ -23,9 +23,9 @@ public final class PackedFactory {
 		long address = UnsafeHolder.UNSAFE.allocateMemory(memSize);
 		memCapacity.setLong(address, 0, memSize);
 		address += memCapacity.getFixedSize();
-		header.freeOffset.setPtr(address, obj.getFixedSize());
+		header.freeOffset.setPtr(address, 0, obj.getFixedSize());
 		header.totalFixedSize.setInt(address, 0, obj.getFixedSize());
-		obj.format(address);
+		obj.format(address, 0);
 		return address;
 	}
 
@@ -35,21 +35,21 @@ public final class PackedFactory {
 	}
 	
 	public static long allocate(byte[] blob, int capacity) {
-		long freePtr = header.freeOffset.getPtr(blob);
+		long freePtr = header.freeOffset.getPtr(blob, 0);
 		if (freePtr + capacity > blob.length) {
 			throw new PackedObjectOverflowException();
 		}
-		header.freeOffset.setPtr(blob, freePtr + capacity);
+		header.freeOffset.setPtr(blob, 0, freePtr + capacity);
 		return freePtr;
 	}
 	
 	public static long allocate(long address, int capacity) {
 		long memSize = memCapacity.getLong(address, -memCapacity.getFixedSize());
-		long freePtr = header.freeOffset.getPtr(address);
+		long freePtr = header.freeOffset.getPtr(address, 0);
 		if (freePtr + capacity > memSize) {
 			throw new PackedObjectOverflowException();
 		}
-		header.freeOffset.setPtr(address, freePtr + capacity);
+		header.freeOffset.setPtr(address, 0, freePtr + capacity);
 		return freePtr;
 	}
 	

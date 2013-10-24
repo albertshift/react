@@ -18,12 +18,12 @@ public final class PackedShort implements PackedClass  {
 		this.defaultValue = defaultValue;
 	}
 	
-	public void format(byte[] blob) {
-		setShort(blob, 0, defaultValue);
+	public void format(byte[] blob, long ptr) {
+		setShort(blob, ptr, defaultValue);
 	}
 	
-	public void format(long address) {
-		setShort(address, 0, defaultValue);
+	public void format(long address, long ptr) {
+		setShort(address, ptr, defaultValue);
 	}
 	
 	public short getShort(HeapPackedObject<?> po) {

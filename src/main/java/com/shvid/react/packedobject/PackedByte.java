@@ -16,12 +16,12 @@ public final class PackedByte implements PackedClass {
 		this.defaultValue = defaultValue;
 	}
 	
-	public void format(byte[] blob) {
-		setByte(blob, 0, defaultValue);
+	public void format(byte[] blob, long ptr) {
+		setByte(blob, ptr, defaultValue);
 	}
 	
-	public void format(long address) {
-		setByte(address, 0, defaultValue);
+	public void format(long address, long ptr) {
+		setByte(address, ptr, defaultValue);
 	}
 	
 	public byte getByte(HeapPackedObject<?> po) {

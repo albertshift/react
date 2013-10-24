@@ -18,15 +18,15 @@ public class PackedCharArray implements PackedClass {
 		this.defaultValue = defaultValue;
 	}
 	
-	public void format(byte[] blob) {
+	public void format(byte[] blob, long ptr) {
 		for (int i = 0; i != length; ++i) {
-			setChar(blob, 0, i, defaultValue);
+			setChar(blob, ptr, i, defaultValue);
 		}
 	}
 	
-	public void format(long address) {
+	public void format(long address, long ptr) {
 		for (int i = 0; i != length; ++i) {
-			setChar(address, 0, i, defaultValue);
+			setChar(address, ptr, i, defaultValue);
 		}
 	}
 	

@@ -18,12 +18,12 @@ public final class PackedDouble implements PackedClass{
 		this.defaultValue = defaultValue;
 	}
 	
-	public void format(byte[] blob) {
-		setDouble(blob, 0, defaultValue);
+	public void format(byte[] blob, long ptr) {
+		setDouble(blob, ptr, defaultValue);
 	}
 	
-	public void format(long address) {
-		setDouble(address, 0, defaultValue);
+	public void format(long address, long ptr) {
+		setDouble(address, ptr, defaultValue);
 	}
 	
 	public double getDouble(HeapPackedObject<?> po) {

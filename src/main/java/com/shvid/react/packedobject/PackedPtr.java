@@ -14,58 +14,58 @@ public final class PackedPtr implements PackedClass {
 		this.offset = offset;
 	}
 
-	public void format(byte[] blob) {
-		setPtr(blob, NULL);
+	public void format(byte[] blob, long ptr) {
+		setPtr(blob, ptr, NULL);
 	}
 
 	@Override
-	public void format(long address) {
-		setPtr(address, NULL);
+	public void format(long address, long ptr) {
+		setPtr(address, ptr, NULL);
 	}
 
-	public long getPtr(byte[] blob) {
+	public long getPtr(byte[] blob, long ptr) {
 		if (RC.getInstance().ptr64) {
-			long value = UnsafeHolder.UNSAFE.getLong(blob, offset + UnsafeHolder.byteArrayBaseOffset);
+			long value = UnsafeHolder.UNSAFE.getLong(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 			return RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
 		}
 		else {
-			int value = UnsafeHolder.UNSAFE.getInt(blob, offset + UnsafeHolder.byteArrayBaseOffset);
+			int value = UnsafeHolder.UNSAFE.getInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 			return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 		}
 	}
 	
-	public long getPtr(long address) {
+	public long getPtr(long address, long ptr) {
 		if (RC.getInstance().ptr64) {
-			long value = UnsafeHolder.UNSAFE.getLong(address + offset);
+			long value = UnsafeHolder.UNSAFE.getLong(address + offset + ptr);
 			return RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
 		}
 		else {
-			int value = UnsafeHolder.UNSAFE.getInt(address + offset);
+			int value = UnsafeHolder.UNSAFE.getInt(address + offset + ptr);
 			return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 		}
 	}
 	
-	public void setPtr(byte[] blob, long ptr) {
+	public void setPtr(byte[] blob, long ptr, long value) {
 		if (RC.getInstance().ptr64) {
-			ptr = RC.getInstance().isLittleEndian ? ptr : Swapper.swapLong(ptr);
-			UnsafeHolder.UNSAFE.putLong(blob, offset + UnsafeHolder.byteArrayBaseOffset, ptr);
+			value = RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
+			UnsafeHolder.UNSAFE.putLong(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 		}
 		else {
-			int value = (int) ptr;
-			value = RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
-			UnsafeHolder.UNSAFE.putInt(blob, offset + UnsafeHolder.byteArrayBaseOffset, value);
+			int ivalue = (int) value;
+			ivalue = RC.getInstance().isLittleEndian ? ivalue : Swapper.swapInt(ivalue);
+			UnsafeHolder.UNSAFE.putInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, ivalue);
 		}
 	}
 	
-	public void setPtr(long address, long ptr) {
+	public void setPtr(long address, long ptr, long value) {
 		if (RC.getInstance().ptr64) {
-			ptr = RC.getInstance().isLittleEndian ? ptr : Swapper.swapLong(ptr);
-			UnsafeHolder.UNSAFE.putLong(address + offset, ptr);
+			value = RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
+			UnsafeHolder.UNSAFE.putLong(address + offset + ptr, value);
 		}
 		else {
-			int value = (int) ptr;
-			value = RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
-			UnsafeHolder.UNSAFE.putInt(address + offset, value);
+			int ivalue = (int) value;
+			ivalue = RC.getInstance().isLittleEndian ? ivalue : Swapper.swapInt(ivalue);
+			UnsafeHolder.UNSAFE.putInt(address + offset + ptr, ivalue);
 		}
 	}
 	

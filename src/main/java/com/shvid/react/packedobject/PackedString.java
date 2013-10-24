@@ -22,27 +22,27 @@ public final class PackedString implements PackedClass {
 		this.initCapacity = initCapacity;
 	}
 	
-	public void format(byte[] blob) {
+	public void format(byte[] blob, long ptr) {
 		if (initCapacity > 0) {
-			long ptr = PackedFactory.allocate(blob, initCapacity + PackedData.getCapacitySize());
-			PackedData.setCapacity(blob, ptr, initCapacity);
-			PackedData.setByte(blob, ptr + PackedData.getCapacitySize(), 0, initCapacity, (byte)0);
-			data.setPtr(blob, ptr);
+			long dataPtr = PackedFactory.allocate(blob, initCapacity + PackedData.getCapacitySize());
+			PackedData.setCapacity(blob, dataPtr, initCapacity);
+			PackedData.setByte(blob, dataPtr + PackedData.getCapacitySize(), 0, initCapacity, (byte)0);
+			data.setPtr(blob, ptr, dataPtr);
 		}
 		else {
-			data.setPtr(blob, PackedPtr.NULL);
+			data.setPtr(blob, ptr, PackedPtr.NULL);
 		}
 	}
 	
-	public void format(long address) {
+	public void format(long address, long ptr) {
 		if (initCapacity > 0) {
-			long ptr = PackedFactory.allocate(address, initCapacity + PackedData.getCapacitySize());
-			PackedData.setCapacity(address, ptr, initCapacity);
-			PackedData.setByte(address, ptr + PackedData.getCapacitySize(), 0, initCapacity, (byte)0);
-			data.setPtr(address, ptr);
+			long dataPtr = PackedFactory.allocate(address, initCapacity + PackedData.getCapacitySize());
+			PackedData.setCapacity(address, dataPtr, initCapacity);
+			PackedData.setByte(address, dataPtr + PackedData.getCapacitySize(), 0, initCapacity, (byte)0);
+			data.setPtr(address, ptr, dataPtr);
 		}	
 		else {
-			data.setPtr(address, PackedPtr.NULL);
+			data.setPtr(address, ptr, PackedPtr.NULL);
 		}
 	}
 

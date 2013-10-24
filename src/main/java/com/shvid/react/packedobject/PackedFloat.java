@@ -18,12 +18,12 @@ public final class PackedFloat implements PackedClass {
 		this.defaultValue = defaultValue;
 	}
 
-	public void format(byte[] blob) {
-		setFloat(blob, 0, defaultValue);
+	public void format(byte[] blob, long ptr) {
+		setFloat(blob, ptr, defaultValue);
 	}
 	
-	public void format(long address) {
-		setFloat(address, 0, defaultValue);
+	public void format(long address, long ptr) {
+		setFloat(address, ptr, defaultValue);
 	}
 	
 	public float getFloat(HeapPackedObject<?> po) {

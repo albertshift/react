@@ -18,12 +18,12 @@ public final class PackedChar implements PackedClass {
 		this.defaultValue = defaultValue;
 	}
 	
-	public void format(byte[] blob) {
-		setChar(blob, 0, defaultValue);
+	public void format(byte[] blob, long ptr) {
+		setChar(blob, ptr, defaultValue);
 	}
 	
-	public void format(long address) {
-		setChar(address, 0, defaultValue);
+	public void format(long address, long ptr) {
+		setChar(address, ptr, defaultValue);
 	}
 	
 	public char getChar(HeapPackedObject<?> po) {

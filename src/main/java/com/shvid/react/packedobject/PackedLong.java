@@ -18,12 +18,12 @@ public final class PackedLong implements PackedClass {
 		this.defaultValue = defaultValue;
 	}
 	
-	public void format(byte[] blob) {
-		setLong(blob, 0, defaultValue);
+	public void format(byte[] blob, long ptr) {
+		setLong(blob, ptr, defaultValue);
 	}
 	
-	public void format(long address) {
-		setLong(address, 0, defaultValue);
+	public void format(long address, long ptr) {
+		setLong(address, ptr, defaultValue);
 	}
 	
 	public long getLong(HeapPackedObject<?> po) {

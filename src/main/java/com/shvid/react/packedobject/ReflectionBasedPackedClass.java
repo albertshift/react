@@ -41,16 +41,16 @@ public class ReflectionBasedPackedClass<T extends PackedClass> implements Packed
 	}
 
 	@Override
-	public void format(byte[] blob) {
+	public void format(byte[] blob, long ptr) {
 		for (PackedClass field : fields) {
-			field.format(blob);
+			field.format(blob, ptr);
 		}
 	}
 
 	@Override
-	public void format(long address) {
+	public void format(long address, long ptr) {
 		for (PackedClass field : fields) {
-			field.format(address);
+			field.format(address, ptr);
 		}
 	}
 

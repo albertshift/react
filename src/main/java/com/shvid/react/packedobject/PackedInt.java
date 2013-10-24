@@ -18,12 +18,12 @@ public final class PackedInt implements PackedClass {
 		this.defaultValue = defaultValue;
 	}
 
-	public void format(byte[] blob) {
-		setInt(blob, 0, defaultValue);
+	public void format(byte[] blob, long ptr) {
+		setInt(blob, ptr, defaultValue);
 	}
 	
-	public void format(long address) {
-		setInt(address, 0, defaultValue);
+	public void format(long address, long ptr) {
+		setInt(address, ptr, defaultValue);
 	}
 	
 	public int getInt(HeapPackedObject<?> po) {

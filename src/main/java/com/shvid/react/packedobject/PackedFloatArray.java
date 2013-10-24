@@ -18,15 +18,15 @@ public class PackedFloatArray implements PackedClass {
 		this.defaultValue = defaultValue;
 	}
 	
-	public void format(byte[] blob) {
+	public void format(byte[] blob, long ptr) {
 		for (int i = 0; i != length; ++i) {
-			setFloat(blob, 0, i, defaultValue);
+			setFloat(blob, ptr, i, defaultValue);
 		}
 	}
 	
-	public void format(long address) {
+	public void format(long address, long ptr) {
 		for (int i = 0; i != length; ++i) {
-			setFloat(address, 0, i, defaultValue);
+			setFloat(address, ptr, i, defaultValue);
 		}
 	}
 	

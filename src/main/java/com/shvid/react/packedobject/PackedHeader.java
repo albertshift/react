@@ -28,10 +28,10 @@ public final class PackedHeader implements PackedClass {
 		totalFixedSize = new PackedInt(freeOffset.getFixedSize());
 	}
 	
-	public void format(byte[] blob) {
+	public void format(byte[] blob, long ptr) {
 	}
 
-	public void format(long address) {
+	public void format(long address, long ptr) {
 	}
 
 	public int getFixedSize() {

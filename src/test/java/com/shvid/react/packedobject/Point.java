@@ -11,10 +11,14 @@ public final class Point implements PackedClass {
 		y = new PackedInt(offset);
 	}
 	
-	public void format(byte[] blob) {
+	public void format(byte[] blob, long ptr) {
+		x.format(blob, ptr);
+		y.format(blob, ptr);
 	}
 	
-	public void format(long address) {
+	public void format(long address, long ptr) {
+		x.format(address, ptr);
+		y.format(address, ptr);
 	}
 
 	public int getFixedSize() {

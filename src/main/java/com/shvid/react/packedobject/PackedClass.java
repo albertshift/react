@@ -17,8 +17,8 @@ public interface PackedClass {
 	
 	int getInitCapacity();
 	
-	void format(byte[] blob);
+	void format(byte[] blob, long ptr);
 	
-	void format(long address);
+	void format(long address, long ptr);
 	
 }
