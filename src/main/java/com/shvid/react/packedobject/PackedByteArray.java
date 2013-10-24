@@ -30,9 +30,17 @@ public final class PackedByteArray implements PackedClass {
 		}
 	}
 	
+	public byte getByte(HeapPackedObject<?> po, int pos) {
+		return getByte(po.blob, po.ptr, pos);
+	}
+	
 	public byte getByte(byte[] blob, long ptr, int pos) {
 		ensurePosition(pos);
 		return UnsafeHolder.UNSAFE.getByte(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset + pos * UnsafeHolder.byteArrayIndexScale);
+	}
+	
+	public byte getByte(AddressPackedObject<?> po, int pos) {
+		return getByte(po.address, po.ptr, pos);
 	}
 	
 	public byte getByte(long address, long ptr, int pos) {
@@ -40,9 +48,17 @@ public final class PackedByteArray implements PackedClass {
 		return UnsafeHolder.UNSAFE.getByte(address + offset + ptr + pos);
 	}
 	
+	public void setByte(HeapPackedObject<?> po, int pos, byte value) {
+		setByte(po.blob, po.ptr, pos, value);
+	}
+	
 	public void setByte(long address, long ptr, int pos, byte value) {
 		ensurePosition(pos);
 		UnsafeHolder.UNSAFE.putByte(address + offset + ptr + pos, value);
+	}
+	
+	public void setByte(AddressPackedObject<?> po, int pos, byte value) {
+		setByte(po.address, po.ptr, pos, value);
 	}
 	
 	public void setByte(byte[] blob, long ptr, int pos, byte value) {
