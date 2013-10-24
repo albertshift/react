@@ -71,7 +71,7 @@ public class PackedShortArray implements PackedClass  {
 	}
 	
 	public int getFixedSize() {
-		return length;
+		return length << PackedConstants.SHORT_SHIFT_BITS;
 	}
 
 	public int getInitCapacity() {

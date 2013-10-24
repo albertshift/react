@@ -71,7 +71,7 @@ public class PackedFloatArray implements PackedClass {
 	}
 	
 	public int getFixedSize() {
-		return length;
+		return length << PackedConstants.FLOAT_SHIFT_BITS;
 	}
 
 	public int getInitCapacity() {

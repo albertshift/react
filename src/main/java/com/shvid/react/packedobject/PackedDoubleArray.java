@@ -71,7 +71,7 @@ public class PackedDoubleArray implements PackedClass{
 	}
 	
 	public int getFixedSize() {
-		return length;
+		return length << PackedConstants.DOUBLE_SHIFT_BITS;
 	}
 
 	public int getInitCapacity() {
