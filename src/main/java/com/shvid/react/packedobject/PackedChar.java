@@ -4,9 +4,8 @@ import com.shvid.react.RC;
 import com.shvid.react.Swapper;
 import com.shvid.react.UnsafeHolder;
 
-public final class PackedChar implements PackedClass {
+public final class PackedChar extends FixedPackedClass {
 	
-	final long offset;
 	final char defaultValue;
 
 	public PackedChar(long offset) {
@@ -14,7 +13,7 @@ public final class PackedChar implements PackedClass {
 	}
 
 	public PackedChar(long offset, char defaultValue) {
-		this.offset = offset;
+		super(offset);
 		this.defaultValue = defaultValue;
 	}
 	

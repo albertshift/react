@@ -4,9 +4,8 @@ import com.shvid.react.Swapper;
 import com.shvid.react.RC;
 import com.shvid.react.UnsafeHolder;
 
-public final class PackedLong implements PackedClass {
+public final class PackedLong extends FixedPackedClass {
 
-	final long offset;
 	final long defaultValue;
 	
 	public PackedLong(long offset) {
@@ -14,7 +13,7 @@ public final class PackedLong implements PackedClass {
 	}
 	
 	public PackedLong(long offset, long defaultValue) {
-		this.offset = offset;
+		super(offset);
 		this.defaultValue = defaultValue;
 	}
 	

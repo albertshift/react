@@ -2,9 +2,8 @@ package com.shvid.react.packedobject;
 
 import com.shvid.react.UnsafeHolder;
 
-public class PackedIntArray implements PackedClass {
+public class PackedIntArray extends FixedPackedClass {
 
-	final long offset;
 	final int length;
 	final int defaultValue;
 	
@@ -13,7 +12,7 @@ public class PackedIntArray implements PackedClass {
 	}
 	
 	public PackedIntArray(long offset, int length, int defaultValue) {
-		this.offset = offset;
+		super(offset);
 		this.length = length;
 		this.defaultValue = defaultValue;
 	}
