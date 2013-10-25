@@ -21,4 +21,8 @@ public interface PackedClass {
 	
 	void format(long address, long ptr);
 	
+	void copyTo(byte[] blob, long ptr, byte[] des, long desPtr);
+	
+	void copyTo(long address, long ptr, long des, long desPtr);
+	
 }

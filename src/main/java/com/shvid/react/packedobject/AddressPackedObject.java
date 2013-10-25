@@ -21,7 +21,7 @@ public final class AddressPackedObject<T extends PackedClass> implements PackedO
 	}
 
 	public long getSize() {
-		return PackedFactory.memCapacity.getLong(address, -PackedFactory.memCapacity.getFixedSize());
+		return AddressMemoryManager.getMemorySize(address);
 	}
 	
 	public boolean isHeap() {
@@ -32,8 +32,8 @@ public final class AddressPackedObject<T extends PackedClass> implements PackedO
 		return pclass;
 	}
 	
-	public static <T extends PackedClass> AddressPackedObject<T> newInstance(T pclass) {
-		long address = PackedFactory.newInstance(pclass);
+	public static <T extends PackedClass> AddressPackedObject<T> newInstance(T pclass, long thresholdCapacity) {
+		long address = PackedObjectMemory.newInstance(pclass, thresholdCapacity);
 		return new AddressPackedObject<T>(pclass, address, 0);
 	}
 }

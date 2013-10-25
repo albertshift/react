@@ -15,7 +15,7 @@ public final class Box extends ReflectionBasedPackedClass<Box> {
 	PackedString name; 
 	
 	public Box() {
-		this(PackedHeader.objBaseOffset());
+		this(PackedHeader.fixedOffset());
 	}
 	
 	public Box(long offset) {

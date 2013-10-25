@@ -2,7 +2,7 @@ package com.shvid.react.packedobject;
 
 
 public class ReflectionBasedPackedClass<T extends PackedClass> implements PackedClass {
-	
+
 	private final PackedClass[] fields;
 	
 	private final int fixedSize;
@@ -54,4 +54,18 @@ public class ReflectionBasedPackedClass<T extends PackedClass> implements Packed
 		}
 	}
 
+	@Override
+	public void copyTo(byte[] blob, long ptr, byte[] des, long desPtr) {
+		for (PackedClass field : fields) {
+			field.copyTo(blob, ptr, des, desPtr);
+		}
+	}
+
+	@Override
+	public void copyTo(long address, long ptr, long des, long desPtr) {
+		for (PackedClass field : fields) {
+			field.copyTo(address, ptr, des, desPtr);
+		}
+	}
+	
 }

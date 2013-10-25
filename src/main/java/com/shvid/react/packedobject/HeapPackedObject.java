@@ -32,8 +32,8 @@ public final class HeapPackedObject<T extends PackedClass> implements PackedObje
 		return pclass;
 	}
 	
-	public static <T extends PackedClass> HeapPackedObject<T> newInstance(T pclass) {
-		byte[] blob = PackedFactory.newHeapInstance(pclass);
+	public static <T extends PackedClass> HeapPackedObject<T> newInstance(T pclass, int thresholdCapacity) {
+		byte[] blob = PackedObjectMemory.newHeapInstance(pclass, thresholdCapacity);
 		return new HeapPackedObject<T>(pclass, blob, 0);
 	}
 }

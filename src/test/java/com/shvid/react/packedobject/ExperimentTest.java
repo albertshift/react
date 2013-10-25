@@ -68,7 +68,7 @@ public class ExperimentTest extends TestCase {
 		
 		Dumper.dump(blob, Dumper.CONSOLE_PRINTER);
 		
-		HeapPackedObject<Box> instance = HeapPackedObject.newInstance(box);
+		HeapPackedObject<Box> instance = HeapPackedObject.newInstance(box, 0);
 
 		instance.pclass.num.setLong(instance, 123);
 	

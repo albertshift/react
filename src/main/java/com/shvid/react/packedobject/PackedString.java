@@ -10,42 +10,35 @@ package com.shvid.react.packedobject;
 
 public final class PackedString implements PackedClass {
 	
-	final PackedPtr data;
-	final int initCapacity;
+	final PackedByteArrayRef data;
 	
 	public PackedString(long offset) {
 		this(offset, 0);
 	}
 	
-	public PackedString(long offset, int initCapacity) {
-		data = new PackedPtr(offset);
-		this.initCapacity = initCapacity;
+	public PackedString(long offset, int initLength) {
+		data = new PackedByteArrayRef(offset, initLength);
 	}
 	
 	public void format(byte[] blob, long ptr) {
-		if (initCapacity > 0) {
-			long dataPtr = PackedFactory.allocate(blob, initCapacity + PackedData.getCapacitySize());
-			PackedData.setCapacity(blob, dataPtr, initCapacity);
-			PackedData.setByte(blob, dataPtr + PackedData.getCapacitySize(), 0, initCapacity, (byte)0);
-			data.setPtr(blob, ptr, dataPtr);
-		}
-		else {
-			data.setPtr(blob, ptr, PackedPtr.NULL);
-		}
+		data.format(blob, ptr);
 	}
 	
 	public void format(long address, long ptr) {
-		if (initCapacity > 0) {
-			long dataPtr = PackedFactory.allocate(address, initCapacity + PackedData.getCapacitySize());
-			PackedData.setCapacity(address, dataPtr, initCapacity);
-			PackedData.setByte(address, dataPtr + PackedData.getCapacitySize(), 0, initCapacity, (byte)0);
-			data.setPtr(address, ptr, dataPtr);
-		}	
-		else {
-			data.setPtr(address, ptr, PackedPtr.NULL);
-		}
+		data.format(address, ptr);
+	}
+	
+	@Override
+	public void copyTo(byte[] blob, long ptr, byte[] des, long desPtr) {
+		data.copyTo(blob, ptr, des, desPtr);
 	}
 
+	@Override
+	public void copyTo(long address, long ptr, long des, long desPtr) {
+		data.copyTo(address, ptr, des, desPtr);
+	}
+
+	
 	public void setString(byte[] blob, long ptr, CharSequence value) {
 		
 	}
@@ -53,15 +46,13 @@ public final class PackedString implements PackedClass {
 	public void setString(long address, long ptr, CharSequence value) {
 		
 	}
-	
-	
-	
+
 	@Override
 	public int getFixedSize() {
 		return data.getFixedSize();
 	}
 	
 	public int getInitCapacity() {
-		return initCapacity;
+		return data.getInitCapacity();
 	}
 }

@@ -1,11 +1,12 @@
 package com.shvid.react.packedobject;
 
-public final class Point implements PackedClass {
+public final class Point extends FixedPackedClass {
 
 	public final PackedInt x;
 	public final PackedInt y;
 	
 	public Point(long offset) {
+		super(offset);
 		x = new PackedInt(offset);
 		offset += PackedConstants.INT_SIZE;
 		y = new PackedInt(offset);

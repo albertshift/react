@@ -64,7 +64,11 @@ public final class PackedByteArray extends FixedPackedClass {
 		ensurePosition(pos);
 		UnsafeHolder.UNSAFE.putByte(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset + pos * UnsafeHolder.byteArrayIndexScale, value);
 	}
-	
+
+	public int getLength() {
+		return length;
+	}
+
 	public int getFixedSize() {
 		return length;
 	}
