@@ -11,7 +11,7 @@ public class PackedCharArrayTest {
 	@Test 
 	public void test() {
 		
-		PackedCharArray arr = new PackedCharArray(0, 5);
+		PackedCharArray arr = new PackedCharArray(0);
 		
 		String hello = "hello";
 		

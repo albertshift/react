@@ -13,6 +13,8 @@ package com.shvid.react.packedobject;
 
 public interface PackedClass {
 
+	int getTypeId();
+	
 	int getFixedSize();
 	
 	int getInitCapacity();

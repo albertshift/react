@@ -1,32 +1,30 @@
 package com.shvid.react.packedobject;
 
-import com.shvid.react.UnsafeHolder;
 
-public class PackedCharArray extends FixedPackedClass {
+public final class PackedCharArray extends Array<PackedChar> {
 
-	final int length;
-	final char defaultValue;
-	
-	public PackedCharArray(long offset, int length) {
-		this(offset, length, PackedConstants.DEFAULT_CHAR);
-	}
-	
-	public PackedCharArray(long offset, int length, char defaultValue) {
+	public PackedCharArray(long offset) {
 		super(offset);
-		this.length = length;
-		this.defaultValue = defaultValue;
 	}
 	
-	public void format(byte[] blob, long ptr) {
-		for (int i = 0; i != length; ++i) {
-			setChar(blob, ptr, i, defaultValue);
-		}
+	public char charAt(byte[] blob, long ptr, int index) {
+		long elementPtr = elementAt(blob, ptr, index);
+		return TypeRegistry.CHAR.getChar(blob, elementPtr);
 	}
 	
-	public void format(long address, long ptr) {
-		for (int i = 0; i != length; ++i) {
-			setChar(address, ptr, i, defaultValue);
-		}
+	public char charAt(long address, long ptr, int index) {
+		long elementPtr = elementAt(address, ptr, index);
+		return TypeRegistry.CHAR.getChar(address, elementPtr);
+	}
+	
+	public void setCharAt(byte[] blob, long ptr, int index, char value) {
+		long elementPtr = elementAt(blob, ptr, index);
+		TypeRegistry.CHAR.setChar(blob, elementPtr, value);
+	}
+	
+	public void setCharAt(long address, long ptr, int index, char value) {
+		long elementPtr = elementAt(address, ptr, index);
+		TypeRegistry.CHAR.setChar(address, elementPtr, value);
 	}
 	
 	public CharSequence getChars(HeapPackedObject<?> po) {
@@ -34,35 +32,16 @@ public class PackedCharArray extends FixedPackedClass {
 	}
 
 	public CharSequence getChars(byte[] blob, long ptr) {
-		return new HeapCharSequence(blob, ptr, 0, length);
+		int length = getLength(blob, ptr);
+		return new HeapCharSequence(this, blob, ptr, 0, length, length);
 	}
-	
-	public char getChar(HeapPackedObject<?> po, int index) {
-		return getChar(po.blob, po.ptr, index);
-	}
-	
-	public char getChar(byte[] blob, long ptr, int pos) {
-		ensurePosition(pos);
-		pos <<= PackedConstants.CHAR_SHIFT_BITS;
-		return UnsafeHolder.UNSAFE.getChar(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset + pos * UnsafeHolder.byteArrayIndexScale);
-	}
-	
 	public CharSequence getChars(AddressPackedObject<?> po) {
 		return getChars(po.address, po.ptr);
 	}
 
 	public CharSequence getChars(long address, long ptr) {
-		return new AddressCharSequence(address, ptr, 0, length);
-	}
-	
-	public char getChar(AddressPackedObject<?> po, int pos) {
-		return getChar(po.address, po.ptr, pos);
-	}
-	
-	public char getChar(long address, long ptr, int pos) {
-		ensurePosition(pos);
-		pos <<= PackedConstants.CHAR_SHIFT_BITS;
-		return UnsafeHolder.UNSAFE.getChar(address + offset + ptr + pos);
+		int length = getLength(address, ptr);
+		return new AddressCharSequence(this, address, ptr, 0, length, length);
 	}
 	
 	public void setChars(HeapPackedObject<?> po, CharSequence chars) {
@@ -71,8 +50,9 @@ public class PackedCharArray extends FixedPackedClass {
 	
 	public void setChars(byte[] blob, long ptr, CharSequence chars) {
 		int len = chars.length();
-		if (len > length) {
-			throw new IndexOutOfBoundsException("chars.length" + chars.length() + ", length=" + length);
+		int currentLength = getLength(blob, ptr);
+		if (len > currentLength) {
+			throw new IndexOutOfBoundsException("chars.length" + chars.length() + ", length=" + currentLength);
 		}
 		for (int i = 0; i != len; ++i) {
 			setChar(blob, ptr, i, chars.charAt(i));
@@ -85,61 +65,50 @@ public class PackedCharArray extends FixedPackedClass {
 	
 	public void setChars(long address, long ptr, CharSequence chars) {
 		int len = chars.length();
-		if (len > length) {
-			throw new IndexOutOfBoundsException("chars.length" + chars.length() + ", length=" + length);
+		int currentLength = getLength(address, ptr);
+		if (len > currentLength) {
+			throw new IndexOutOfBoundsException("chars.length" + chars.length() + ", length=" + currentLength);
 		}
 		for (int i = 0; i != len; ++i) {
 			setChar(address, ptr, i, chars.charAt(i));
 		}
 	}
 		
-	public void setChar(HeapPackedObject<?> po, int pos, char value) {
-		setChar(po.blob, po.ptr, pos, value);
+	public void setChar(HeapPackedObject<?> po, int index, char value) {
+		setChar(po.blob, po.ptr, index, value);
 	}
 	
-	public void setChar(byte[] blob, long ptr, int pos, char value) {
-		ensurePosition(pos);
-		pos <<= PackedConstants.CHAR_SHIFT_BITS;
-		UnsafeHolder.UNSAFE.putChar(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset + pos * UnsafeHolder.byteArrayIndexScale, value);
+	public void setChar(byte[] blob, long ptr, int index, char value) {
+		long elementPtr = elementAt(blob, ptr, index);
+		TypeRegistry.CHAR.setChar(blob, elementPtr, value);
 	}	
 	
-	public void setChar(AddressPackedObject<?> po, int pos, char value) {
-		setChar(po.address, po.ptr, pos, value);
+	public void setChar(AddressPackedObject<?> po, int index, char value) {
+		setChar(po.address, po.ptr, index, value);
 	}
 	
-	public void setChar(long address, long ptr, int pos, char value) {
-		ensurePosition(pos);
-		pos <<= PackedConstants.CHAR_SHIFT_BITS;
-		UnsafeHolder.UNSAFE.putChar(address + offset + ptr + pos, value);
+	public void setChar(long address, long ptr, int index, char value) {
+		long elementPtr = elementAt(address, ptr, index);
+		TypeRegistry.CHAR.setChar(address, elementPtr, value);
 	}
 	
-	public int getFixedSize() {
-		return length << PackedConstants.CHAR_SHIFT_BITS;
-	}
+	private static class HeapCharSequence implements CharSequence {
 
-	public int getInitCapacity() {
-		return 0;
-	}
-	
-	private void ensurePosition(int pos) {
-		if (pos < 0 || pos >= length) {
-			throw new IndexOutOfBoundsException("pos=" + pos + ", length=" + length);
-		}
-	}
-	
-	private class HeapCharSequence implements CharSequence {
-
+		PackedCharArray _this;
 		byte[] blob;
 		long ptr;
 		int start;
 		int end;
+		int length;
 		
-		public HeapCharSequence(byte[] blob, long ptr, int start, int end) {
-			ensureSubSequence(start, end);
+		public HeapCharSequence(PackedCharArray _this, byte[] blob, long ptr, int start, int end, int length) {
+			ensureSubSequence(start, end, length);
+			this._this = _this;
 			this.blob = blob;
 			this.ptr = ptr;
 			this.start = start;
 			this.end = end;
+			this.length = length;
 		}
 		
 		@Override
@@ -150,12 +119,12 @@ public class PackedCharArray extends FixedPackedClass {
 		@Override
 		public char charAt(int index) {
 			ensureIndex(start, end, index);
-			return getChar(blob, ptr, start + index);
+			return _this.charAt(blob, ptr, start + index);
 		}
 
 		@Override
 		public CharSequence subSequence(int substart, int subend) {
-			return new HeapCharSequence(blob, ptr, start + substart, start + subend);
+			return new HeapCharSequence(_this, blob, ptr, start + substart, start + subend, length);
 		}
 		
 		@Override
@@ -172,17 +141,21 @@ public class PackedCharArray extends FixedPackedClass {
 	
 	private class AddressCharSequence implements CharSequence {
 
+		PackedCharArray _this;
 		long address;
 		long ptr;
 		int start;
 		int end;
+		int length;
 		
-		public AddressCharSequence(long address, long ptr, int start, int end) {
-			ensureSubSequence(start, end);
+		public AddressCharSequence(PackedCharArray _this, long address, long ptr, int start, int end, int length) {
+			ensureSubSequence(start, end, length);
+			this._this = _this;
 			this.address = address;
 			this.ptr = ptr;
 			this.start = start;
 			this.end = end;
+			this.length = length;
 		}
 		
 		@Override
@@ -193,12 +166,12 @@ public class PackedCharArray extends FixedPackedClass {
 		@Override
 		public char charAt(int index) {
 			ensureIndex(start, end, index);
-			return getChar(address, ptr, start + index);
+			return _this.charAt(address, ptr, start + index);
 		}
 
 		@Override
 		public CharSequence subSequence(int substart, int subend) {
-			return new AddressCharSequence(address, ptr, start + substart, start + subend);
+			return new AddressCharSequence(_this, address, ptr, start + substart, start + subend, length);
 		}
 		
 		@Override
@@ -213,7 +186,7 @@ public class PackedCharArray extends FixedPackedClass {
 		
 	}
 	
-	private void ensureSubSequence(int start, int end) {
+	private static void ensureSubSequence(int start, int end, int length) {
 		if (start < 0 || start >= length) {
 			throw new IndexOutOfBoundsException("start=" + start + ", length=" + length);
 		}
@@ -225,7 +198,7 @@ public class PackedCharArray extends FixedPackedClass {
 		}
 	}
 	
-	private void ensureIndex(int start, int end, int index) {
+	private static void ensureIndex(int start, int end, int index) {
 		if (start + index >= end) {
 			throw new IndexOutOfBoundsException("index=" + index + ", start=" + start + ", end=" + end);
 		}

@@ -60,6 +60,10 @@ public final class PackedDouble extends FixedPackedClass {
 		UnsafeHolder.UNSAFE.putDouble(address + offset + ptr, value);
 	}
 	
+	public int getTypeId() {
+		return TypeRegistry.DOUBLE_ID;
+	}
+	
 	public int getFixedSize() {
 		return PackedConstants.DOUBLE_SIZE;
 	}

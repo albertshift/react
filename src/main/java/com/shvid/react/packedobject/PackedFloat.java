@@ -60,6 +60,10 @@ public final class PackedFloat extends FixedPackedClass {
 		UnsafeHolder.UNSAFE.putFloat(address + offset + ptr, value);
 	}
 	
+	public int getTypeId() {
+		return TypeRegistry.FLOAT_ID;
+	}
+	
 	public int getFixedSize() {
 		return PackedConstants.FLOAT_SIZE;
 	}

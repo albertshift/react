@@ -55,6 +55,10 @@ public final class PackedByte extends FixedPackedClass {
 		UnsafeHolder.UNSAFE.putByte(address + offset + ptr, value);
 	}
 	
+	public int getTypeId() {
+		return TypeRegistry.BYTE_ID;
+	}
+	
 	public int getFixedSize() {
 		return PackedConstants.BYTE_SIZE;
 	}

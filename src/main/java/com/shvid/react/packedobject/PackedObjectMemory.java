@@ -30,6 +30,9 @@ public final class PackedObjectMemory {
 	
 	public static long newMemory(byte[] blob, int capacity) throws PackedObjectOverflowException {
 		long endOffset = HEADER.getEndOffset(blob);
+		System.out.println("endOffset" + endOffset);
+		System.out.println("capacity" + capacity);
+		System.out.println("blob" + blob.length);
 		if (endOffset + capacity > HeapMemoryManager.getMemorySize(blob)) {
 			throw new PackedObjectOverflowException();
 		}

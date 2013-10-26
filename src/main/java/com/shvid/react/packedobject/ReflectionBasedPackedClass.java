@@ -1,7 +1,7 @@
 package com.shvid.react.packedobject;
 
 
-public class ReflectionBasedPackedClass<T extends PackedClass> implements PackedClass {
+public abstract class ReflectionBasedPackedClass<T extends PackedClass> implements PackedClass {
 
 	private final PackedClass[] fields;
 	

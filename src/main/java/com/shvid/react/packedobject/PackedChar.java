@@ -60,6 +60,10 @@ public final class PackedChar extends FixedPackedClass {
 		UnsafeHolder.UNSAFE.putChar(address + offset + ptr, converted);
 	}
 	
+	public int getTypeId() {
+		return TypeRegistry.CHAR_ID;
+	}
+	
 	public int getFixedSize() {
 		return PackedConstants.CHAR_SIZE;
 	}

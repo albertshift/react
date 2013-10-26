@@ -60,6 +60,10 @@ public final class PackedShort extends FixedPackedClass {
 		UnsafeHolder.UNSAFE.putShort(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}
 	
+	public int getTypeId() {
+		return TypeRegistry.SHORT_ID;
+	}
+	
 	public int getFixedSize() {
 		return PackedConstants.SHORT_SIZE;
 	}

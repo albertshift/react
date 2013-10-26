@@ -60,6 +60,10 @@ public final class PackedInt extends FixedPackedClass {
 		UnsafeHolder.UNSAFE.putInt(address + offset + ptr, value);
 	}
 	
+	public int getTypeId() {
+		return TypeRegistry.INT_ID;
+	}
+	
 	public int getFixedSize() {
 		return PackedConstants.INT_SIZE;
 	}

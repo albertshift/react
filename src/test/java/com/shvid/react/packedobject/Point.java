@@ -2,6 +2,12 @@ package com.shvid.react.packedobject;
 
 public final class Point extends FixedPackedClass {
 
+	@Override
+	public int getTypeId() {
+		// TODO Auto-generated method stub
+		return 54;
+	}
+
 	public final PackedInt x;
 	public final PackedInt y;
 	

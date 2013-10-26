@@ -60,6 +60,10 @@ public final class PackedLong extends FixedPackedClass {
 		UnsafeHolder.UNSAFE.putLong(address + offset + ptr, value);
 	}
 	
+	public int getTypeId() {
+		return TypeRegistry.LONG_ID;
+	}
+	
 	public int getFixedSize() {
 		return PackedConstants.LONG_SIZE;
 	}

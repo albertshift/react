@@ -76,6 +76,11 @@ public final class PackedHeader extends FixedPackedClass {
 		return 0;
 	}
 	
+	@Override
+	public int getTypeId() {
+		return TypeRegistry.HEADER_ID;
+	}
+	
 	public void addTrash(byte[] blob, int addon) {
 		int trash = trashSize.getInt(blob, 0);
 		trashSize.setInt(blob, 0, trash + addon);

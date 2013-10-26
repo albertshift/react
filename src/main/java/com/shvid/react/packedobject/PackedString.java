@@ -10,32 +10,37 @@ package com.shvid.react.packedobject;
 
 public final class PackedString implements PackedClass {
 	
-	final PackedByteArrayRef data;
 	
+	@Override
+	public int getTypeId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	public PackedString(long offset) {
 		this(offset, 0);
 	}
 	
 	public PackedString(long offset, int initLength) {
-		data = new PackedByteArrayRef(offset, initLength);
+
 	}
 	
 	public void format(byte[] blob, long ptr) {
-		data.format(blob, ptr);
+
 	}
 	
 	public void format(long address, long ptr) {
-		data.format(address, ptr);
+
 	}
 	
 	@Override
 	public void copyTo(byte[] blob, long ptr, byte[] des, long desPtr) {
-		data.copyTo(blob, ptr, des, desPtr);
+		
 	}
 
 	@Override
 	public void copyTo(long address, long ptr, long des, long desPtr) {
-		data.copyTo(address, ptr, des, desPtr);
+	
 	}
 
 	
@@ -49,10 +54,10 @@ public final class PackedString implements PackedClass {
 
 	@Override
 	public int getFixedSize() {
-		return data.getFixedSize();
+		return 0;
 	}
 	
 	public int getInitCapacity() {
-		return data.getInitCapacity();
+		return 0;
 	}
 }

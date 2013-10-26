@@ -2,17 +2,27 @@ package com.shvid.react.packedobject;
 
 public final class Box extends ReflectionBasedPackedClass<Box> {
 
+	@Override
+	public int getTypeId() {
+		// TODO Auto-generated method stub
+		return 55;
+	}
+
 	static final ClassDefinition<Box> CD = ClassDefinition.create(Box.class);
 	
-	PackedLong num;  
+	PackedLong num;
 	Point origin;
-	Point extent; 
+	Point extent;
 	
 	@Length(200)
-	PackedByteArray ba;
+	PackedCharArray ba;
 	
 	@Length(20)
-	PackedString name; 
+	PackedString name;
+	
+	Ref<PackedCharArray> baref;
+	
+	Array<PackedByte> baa;
 	
 	public Box() {
 		this(PackedHeader.fixedOffset());
