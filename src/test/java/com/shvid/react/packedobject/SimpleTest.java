@@ -34,7 +34,7 @@ public class SimpleTest {
 		long ref = simple.bref.newInstance(blob, 0, TypeRegistry.BYTE_ID);
 		System.out.println("ref = " + ref);
 		
-		PackedClass po = simple.bref.getType(blob, 0);
+		PackedObject po = simple.bref.getType(blob, 0);
 		System.out.println("PackedClass = " + po);
 		
 		Assert.assertEquals(TypeRegistry.BYTE_ID, po.getTypeId());

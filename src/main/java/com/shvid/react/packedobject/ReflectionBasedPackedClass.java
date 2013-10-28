@@ -1,9 +1,9 @@
 package com.shvid.react.packedobject;
 
 
-public abstract class ReflectionBasedPackedClass<T extends PackedClass> implements PackedClass {
+public abstract class ReflectionBasedPackedClass<T extends PackedObject> implements PackedObject {
 
-	private final PackedClass[] fields;
+	private final PackedObject[] fields;
 	
 	private final int fixedSize;
 	private final int initCapacity;
@@ -21,7 +21,7 @@ public abstract class ReflectionBasedPackedClass<T extends PackedClass> implemen
 		
 		int size = 0;
 		int initCap = 0;
-		for (PackedClass field : fields) {
+		for (PackedObject field : fields) {
 			size += field.getFixedSize();
 			initCap += field.getInitCapacity();
 		}
@@ -42,28 +42,28 @@ public abstract class ReflectionBasedPackedClass<T extends PackedClass> implemen
 
 	@Override
 	public void format(byte[] blob, long ptr) {
-		for (PackedClass field : fields) {
+		for (PackedObject field : fields) {
 			field.format(blob, ptr);
 		}
 	}
 
 	@Override
 	public void format(long address, long ptr) {
-		for (PackedClass field : fields) {
+		for (PackedObject field : fields) {
 			field.format(address, ptr);
 		}
 	}
 
 	@Override
 	public void copyTo(byte[] blob, long ptr, byte[] des, long desPtr) {
-		for (PackedClass field : fields) {
+		for (PackedObject field : fields) {
 			field.copyTo(blob, ptr, des, desPtr);
 		}
 	}
 
 	@Override
 	public void copyTo(long address, long ptr, long des, long desPtr) {
-		for (PackedClass field : fields) {
+		for (PackedObject field : fields) {
 			field.copyTo(address, ptr, des, desPtr);
 		}
 	}

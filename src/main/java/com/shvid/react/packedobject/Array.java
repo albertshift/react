@@ -2,7 +2,7 @@ package com.shvid.react.packedobject;
 
 import com.shvid.react.UnsafeHolder;
 
-public class Array<T extends PackedClass> implements PackedClass, LengthAware {
+public class Array<T extends PackedObject> implements PackedObject, LengthAware {
 
 	final long offset;
 	final PackedInt typeId;
@@ -17,7 +17,7 @@ public class Array<T extends PackedClass> implements PackedClass, LengthAware {
 	public void format(byte[] blob, long ptr, int elementTypeId, int length) {
 		this.typeId.setInt(blob, ptr, elementTypeId);
 		this.length.setInt(blob, ptr, length);
-		PackedClass pc = TypeRegistry.resolveType(elementTypeId);
+		PackedObject pc = TypeRegistry.resolveType(elementTypeId);
 		for (int i = 0; i != length; ++i) {
 			long elementPtr = getElementPtr(ptr, i, pc);
 			pc.format(blob, elementPtr);
@@ -27,7 +27,7 @@ public class Array<T extends PackedClass> implements PackedClass, LengthAware {
 	public void format(long address, long ptr, int elementTypeId, int length) {
 		this.typeId.setInt(address, ptr, elementTypeId);
 		this.length.setInt(address, ptr, length);
-		PackedClass pc = TypeRegistry.resolveType(elementTypeId);
+		PackedObject pc = TypeRegistry.resolveType(elementTypeId);
 		for (int i = 0; i != length; ++i) {
 			long elementPtr = getElementPtr(ptr, i, pc);
 			pc.format(address, elementPtr);
@@ -46,7 +46,7 @@ public class Array<T extends PackedClass> implements PackedClass, LengthAware {
 
 	@Override
 	public void copyTo(byte[] blob, long ptr, byte[] des, long desPtr) {
-		PackedClass pc = getType(blob, ptr);
+		PackedObject pc = getType(blob, ptr);
 		int length = getLength(blob, ptr);
 		if (pc instanceof FixedPackedClass) {
 			int copySize = getFixedSize() + pc.getFixedSize() * length;
@@ -65,7 +65,7 @@ public class Array<T extends PackedClass> implements PackedClass, LengthAware {
 
 	@Override
 	public void copyTo(long address, long ptr, long des, long desPtr) {
-		PackedClass pc = getType(address, ptr);
+		PackedObject pc = getType(address, ptr);
 		int length = getLength(address, ptr);
 		if (pc instanceof FixedPackedClass) {
 			int copySize = getFixedSize() + pc.getFixedSize() * length;
@@ -98,7 +98,7 @@ public class Array<T extends PackedClass> implements PackedClass, LengthAware {
 		return getElementPtr(ptr, index, getType(address, ptr));
 	}
 	
-	private long getElementPtr(long ptr, int index, PackedClass pc) {
+	private long getElementPtr(long ptr, int index, PackedObject pc) {
 		int scale = pc.getFixedSize();
 		return ptr + offset + getFixedSize() + index * scale;
 	}
@@ -111,11 +111,11 @@ public class Array<T extends PackedClass> implements PackedClass, LengthAware {
 		return TypeRegistry.resolveType(typeId.getInt(address, ptr));
 	}
 
-	public void setType(byte[] blob, long ptr, PackedClass pc) {
+	public void setType(byte[] blob, long ptr, PackedObject pc) {
 		this.typeId.setInt(blob, ptr, pc.getTypeId());
 	}
 	
-	public void setType(long address, long ptr, PackedClass pc) {
+	public void setType(long address, long ptr, PackedObject pc) {
 		this.typeId.setInt(address, ptr, pc.getTypeId());
 	}
 

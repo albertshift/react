@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ClassDefinition<T extends PackedClass> {
+public final class ClassDefinition<T extends PackedObject> {
 
 	private final FieldDefinition[] fields;
 	
@@ -28,12 +28,12 @@ public final class ClassDefinition<T extends PackedClass> {
 			this.length = length;
 		}
 		
-		PackedClass instantiate(long offset) throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		PackedObject instantiate(long offset) throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 			if (length != null) {
-				return (PackedClass) constructor.newInstance(offset, length);
+				return (PackedObject) constructor.newInstance(offset, length);
 			}
 			else {
-				return (PackedClass) constructor.newInstance(offset);
+				return (PackedObject) constructor.newInstance(offset);
 			}
 		}
 	}
@@ -45,7 +45,7 @@ public final class ClassDefinition<T extends PackedClass> {
 			List<FieldDefinition> collectList = new ArrayList<FieldDefinition>(declaredFields.length);
 			for (Field field : declaredFields) {
 				Class<?> fieldClass = field.getType();
-				if (PackedClass.class.isAssignableFrom(fieldClass)) {
+				if (PackedObject.class.isAssignableFrom(fieldClass)) {
 					field.setAccessible(true);
 					
 					Length length = findLengthAnnotation(field);
@@ -81,16 +81,16 @@ public final class ClassDefinition<T extends PackedClass> {
 		return null;
 	}
 	
-	public static <T extends PackedClass> ClassDefinition<T> create(Class<T> clazz) {
+	public static <T extends PackedObject> ClassDefinition<T> create(Class<T> clazz) {
 		return new ClassDefinition<T>(clazz);
 	}
 	
-	public PackedClass[] constructFields(T instance, long offset) {
+	public PackedObject[] constructFields(T instance, long offset) {
 		try {
-			PackedClass[] result = new PackedClass[fields.length];
+			PackedObject[] result = new PackedObject[fields.length];
 			for (int i = 0; i != fields.length; ++i) {
 				FieldDefinition fieldDescription = fields[i];
-				PackedClass fieldInstance = fieldDescription.instantiate(offset);
+				PackedObject fieldInstance = fieldDescription.instantiate(offset);
 				result[i] = fieldInstance;
 				fieldDescription.field.set(instance, fieldInstance);
 			}

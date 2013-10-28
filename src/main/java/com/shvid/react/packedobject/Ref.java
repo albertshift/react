@@ -2,7 +2,7 @@ package com.shvid.react.packedobject;
 
 import com.shvid.react.RC;
 
-public class Ref<T extends PackedClass> implements PackedClass {
+public class Ref<T extends PackedObject> implements PackedObject {
 
 	public final static int NULL = 0;
 
@@ -55,7 +55,7 @@ public class Ref<T extends PackedClass> implements PackedClass {
 	}
 
 	public long newInstance(byte[] blob, long ptr, int typeId) {
-		PackedClass po = TypeRegistry.resolveType(typeId);
+		PackedObject po = TypeRegistry.resolveType(typeId);
 		
 		long oldDataPtr = getDataPtr(blob, ptr);
 		long dataPtr = PackedObjectMemory.newMemory(blob, po.getFixedSize() + TYPEID.getFixedSize());
@@ -71,7 +71,7 @@ public class Ref<T extends PackedClass> implements PackedClass {
 	}
 	
 	public long newArrayInstance(byte[] blob, long ptr, int elementTypeId, int length) {
-		PackedClass elementPO = TypeRegistry.resolveType(elementTypeId);
+		PackedObject elementPO = TypeRegistry.resolveType(elementTypeId);
 		Array po = (Array) TypeRegistry.resolveType(TypeRegistry.ARRAY_ID);
 		
 		long oldDataPtr = getDataPtr(blob, ptr);
@@ -88,7 +88,7 @@ public class Ref<T extends PackedClass> implements PackedClass {
 	}
 	
 	public long newInstance(long address, long ptr, int typeId) {
-		PackedClass po = TypeRegistry.resolveType(typeId);
+		PackedObject po = TypeRegistry.resolveType(typeId);
 		
 		long oldDataPtr = getDataPtr(address, ptr);
 		long dataPtr = PackedObjectMemory.newMemory(address, po.getFixedSize() + TYPEID.getFixedSize());
@@ -104,7 +104,7 @@ public class Ref<T extends PackedClass> implements PackedClass {
 	}
 	
 	public long newArrayInstance(long address, long ptr, int elementTypeId, int length) {
-		PackedClass elementPO = TypeRegistry.resolveType(elementTypeId);
+		PackedObject elementPO = TypeRegistry.resolveType(elementTypeId);
 		Array po = (Array) TypeRegistry.resolveType(TypeRegistry.ARRAY_ID);
 		
 		long oldDataPtr = getDataPtr(address, ptr);
@@ -122,14 +122,14 @@ public class Ref<T extends PackedClass> implements PackedClass {
 	
 	private void eraseInstance(byte[] blob, long dataPtr) {
 		if (dataPtr != NULL) {
-			PackedClass previousClass = TypeRegistry.resolveType(TYPEID.getInt(blob, dataPtr));
+			PackedObject previousClass = TypeRegistry.resolveType(TYPEID.getInt(blob, dataPtr));
 			PackedObjectMemory.incrementTrash(blob, previousClass.getFixedSize());
 		}
 	}
 	
 	private void eraseInstance(long address, long dataPtr) {
 		if (dataPtr != NULL) {
-			PackedClass previousClass = TypeRegistry.resolveType(TYPEID.getInt(address, dataPtr));
+			PackedObject previousClass = TypeRegistry.resolveType(TYPEID.getInt(address, dataPtr));
 			PackedObjectMemory.incrementTrash(address, previousClass.getFixedSize());
 		}
 	}

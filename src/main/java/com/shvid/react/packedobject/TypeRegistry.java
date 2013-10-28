@@ -28,16 +28,16 @@ public class TypeRegistry {
 	public static final PackedFloat FLOAT = new PackedFloat(0);
 	public static final PackedDouble DOUBLE = new PackedDouble(0);
 
-	public static final Ref<PackedClass> REF = new Ref<PackedClass>(0);
-	public static final Array<PackedClass> ARRAY = new Array<PackedClass>(0);
+	public static final Ref<PackedObject> REF = new Ref<PackedObject>(0);
+	public static final Array<PackedObject> ARRAY = new Array<PackedObject>(0);
 	public static final PackedString STRING = new PackedString(0);
 
 	
-	private static AtomicReference<PackedClass[]> registry = new AtomicReference<PackedClass[]>();
+	private static AtomicReference<PackedObject[]> registry = new AtomicReference<PackedObject[]>();
 
 	static {
 		
-		PackedClass[] array = new PackedClass[1000];
+		PackedObject[] array = new PackedObject[1000];
 		
 		array[BYTE_ID] = BYTE;
 		array[CHAR_ID] = CHAR;
@@ -56,11 +56,11 @@ public class TypeRegistry {
 
 	public static void require(int maxId) {
 		while(true) {
-			PackedClass[] array = registry.get();
+			PackedObject[] array = registry.get();
 			if (array.length > maxId) {
 				return;
 			}
-			PackedClass[] newArray = new PackedClass[maxId];
+			PackedObject[] newArray = new PackedObject[maxId];
 			System.arraycopy(array, 0, newArray, 0, array.length);
 			if (registry.compareAndSet(array, newArray)) {
 				return;
@@ -68,10 +68,10 @@ public class TypeRegistry {
 		}
 	}
 	
-	public static void register(int typeId, PackedClass pc) {
+	public static void register(int typeId, PackedObject pc) {
 		require(typeId);
 		while(true) {
-			PackedClass[] array = registry.get();
+			PackedObject[] array = registry.get();
 			array[typeId] = pc;
 			if (array == registry.get()) {
 				return;
@@ -79,12 +79,12 @@ public class TypeRegistry {
 		}
 	}
 	
-	public static <T extends PackedClass> T resolveType(int typeId) {
-		PackedClass[] array = registry.get();
+	public static <T extends PackedObject> T resolveType(int typeId) {
+		PackedObject[] array = registry.get();
 		if (typeId < 0 || typeId >= array.length) {
 			throw new IndexOutOfBoundsException();
 		}
-		PackedClass pc = array[typeId];
+		PackedObject pc = array[typeId];
 		if (pc == null) {
 			throw new IllegalStateException();
 		}

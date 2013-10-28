@@ -1,6 +1,6 @@
 package com.shvid.react.packedobject;
 
-public class Simple implements PackedClass {
+public class Simple implements PackedObject {
 
 	final PackedInt num;
 	final Array<PackedByte> ba;

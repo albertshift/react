@@ -11,7 +11,7 @@ package com.shvid.react.packedobject;
  * 
  */
 
-public interface PackedClass {
+public interface PackedObject {
 
 	int getTypeId();
 	

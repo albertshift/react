@@ -6,14 +6,14 @@ public final class PackedObjectMemory {
 
 	static final PackedHeader HEADER = new PackedHeader();
 	
-	public static byte[] newHeapInstance(PackedClass obj, int thresholdCapacity) {
+	public static byte[] newHeapInstance(PackedObject obj, int thresholdCapacity) {
 		int requestCapacity = (int) PackedHeader.fixedOffset() + obj.getFixedSize() + obj.getInitCapacity() + thresholdCapacity;
 		byte[] blob = HeapMemoryManager.allocateMemory(requestCapacity);
 		HEADER.format(blob, 0, obj.getFixedSize());
 		return blob;
 	}
 	
-	public static long newInstance(PackedClass obj, long thresholdCapacity) {
+	public static long newInstance(PackedObject obj, long thresholdCapacity) {
 		long requestCapacity = PackedHeader.fixedOffset() + obj.getFixedSize() + obj.getInitCapacity() + thresholdCapacity;
 		long address = AddressMemoryManager.allocateMemory(requestCapacity);
 		HEADER.format(address, 0, obj.getFixedSize());

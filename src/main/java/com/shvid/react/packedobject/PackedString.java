@@ -8,7 +8,7 @@ package com.shvid.react.packedobject;
  *
  */
 
-public final class PackedString implements PackedClass {
+public final class PackedString implements PackedObject {
 	
 	
 	@Override

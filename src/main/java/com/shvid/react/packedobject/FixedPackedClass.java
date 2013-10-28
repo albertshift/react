@@ -2,7 +2,7 @@ package com.shvid.react.packedobject;
 
 import com.shvid.react.UnsafeHolder;
 
-public abstract class FixedPackedClass implements PackedClass {
+public abstract class FixedPackedClass implements PackedObject {
 
 	final long offset;
 	
