@@ -27,25 +27,14 @@ public final class PackedCharArray extends Array<PackedChar> {
 		TypeRegistry.CHAR.setChar(address, elementPtr, value);
 	}
 	
-	public CharSequence getChars(HeapPackedObject<?> po) {
-		return getChars(po.blob, po.ptr);
-	}
-
 	public CharSequence getChars(byte[] blob, long ptr) {
 		int length = getLength(blob, ptr);
 		return new HeapCharSequence(this, blob, ptr, 0, length, length);
-	}
-	public CharSequence getChars(AddressPackedObject<?> po) {
-		return getChars(po.address, po.ptr);
 	}
 
 	public CharSequence getChars(long address, long ptr) {
 		int length = getLength(address, ptr);
 		return new AddressCharSequence(this, address, ptr, 0, length, length);
-	}
-	
-	public void setChars(HeapPackedObject<?> po, CharSequence chars) {
-		setChars(po.blob, po.ptr, chars);
 	}
 	
 	public void setChars(byte[] blob, long ptr, CharSequence chars) {
@@ -59,10 +48,6 @@ public final class PackedCharArray extends Array<PackedChar> {
 		}
 	}
 	
-	public void setChars(AddressPackedObject<?> po, CharSequence chars) {
-		setChars(po.address, po.ptr, chars);
-	}
-	
 	public void setChars(long address, long ptr, CharSequence chars) {
 		int len = chars.length();
 		int currentLength = getLength(address, ptr);
@@ -74,18 +59,10 @@ public final class PackedCharArray extends Array<PackedChar> {
 		}
 	}
 		
-	public void setChar(HeapPackedObject<?> po, int index, char value) {
-		setChar(po.blob, po.ptr, index, value);
-	}
-	
 	public void setChar(byte[] blob, long ptr, int index, char value) {
 		long elementPtr = elementAt(blob, ptr, index);
 		TypeRegistry.CHAR.setChar(blob, elementPtr, value);
 	}	
-	
-	public void setChar(AddressPackedObject<?> po, int index, char value) {
-		setChar(po.address, po.ptr, index, value);
-	}
 	
 	public void setChar(long address, long ptr, int index, char value) {
 		long elementPtr = elementAt(address, ptr, index);

@@ -1,5 +1,7 @@
 package com.shvid.react.packedobject;
 
+import java.nio.ByteBuffer;
+
 import com.shvid.react.RC;
 import com.shvid.react.UnsafeHolder;
 
@@ -23,18 +25,30 @@ public final class PackedInt extends FixedPackedClass {
 	public void format(long address, long ptr) {
 		setInt(address, ptr, defaultValue);
 	}
-	
-	public int getInt(HeapPackedObject<?> po) {
-		return getInt(po.blob, po.ptr);
-	}	
+
+	public int getInt(Object address, long ptr) {
+		int value;
+		if (address instanceof byte[]) {
+			byte[] blob = (byte[]) address;
+			value = UnsafeHolder.UNSAFE.getInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
+		}
+		else if (address instanceof Long) {
+			value = UnsafeHolder.UNSAFE.getInt((Long)address + offset + ptr);
+		}
+		else if (address instanceof ByteBuffer) {
+			ByteBuffer bb = (ByteBuffer) address;
+			value = bb.getInt((int)(offset + ptr));
+		}
+		else {
+			throw new IllegalArgumentException("unknown object " + address);
+		}
+		return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
+	}
+
 	
 	public int getInt(byte[] blob, long ptr) {
 		int value = UnsafeHolder.UNSAFE.getInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
-	}
-	
-	public int getInt(AddressPackedObject<?> po) {
-		return getInt(po.address, po.ptr);
 	}
 	
 	public int getInt(long address, long ptr) {
@@ -42,17 +56,9 @@ public final class PackedInt extends FixedPackedClass {
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 	}
 	
-	public void setInt(HeapPackedObject<?> po, int value) {
-		setInt(po.blob, po.ptr, value);
-	}
-	
 	public void setInt(byte[] blob, long ptr, int value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 		UnsafeHolder.UNSAFE.putInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
-	}
-	
-	public void setInt(AddressPackedObject<?> po, int value) {
-		setInt(po.address, po.ptr, value);
 	}
 	
 	public void setInt(long address, long ptr, int value) {

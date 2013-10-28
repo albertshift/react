@@ -23,33 +23,17 @@ public final class PackedByte extends FixedPackedClass {
 		setByte(address, ptr, defaultValue);
 	}
 	
-	public byte getByte(HeapPackedObject<?> po) {
-		return getByte(po.blob, po.ptr);
-	}	
-	
 	public byte getByte(byte[] blob, long ptr) {
 		return UnsafeHolder.UNSAFE.getByte(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 	}
-	
-	public byte getByte(AddressPackedObject<?> po) {
-		return getByte(po.address, po.ptr);
-	}	
 	
 	public byte getByte(long address, long ptr) {
 		return UnsafeHolder.UNSAFE.getByte(address + offset + ptr);
 	}
 	
-	public void setByte(HeapPackedObject<?> po, byte value) {
-		setByte(po.blob, po.ptr, value);
-	}
-	
 	public void setByte(byte[] blob, long ptr, byte value) {
 		UnsafeHolder.UNSAFE.putByte(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}	
-	
-	public void setByte(AddressPackedObject<?> po, byte value) {
-		setByte(po.address, po.ptr, value);
-	}
 	
 	public void setByte(long address, long ptr, byte value) {
 		UnsafeHolder.UNSAFE.putByte(address + offset + ptr, value);
