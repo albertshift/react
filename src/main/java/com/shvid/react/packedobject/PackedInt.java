@@ -26,26 +26,6 @@ public final class PackedInt extends FixedPackedClass {
 		setInt(address, ptr, defaultValue);
 	}
 
-	public int getInt(Object address, long ptr) {
-		int value;
-		if (address instanceof byte[]) {
-			byte[] blob = (byte[]) address;
-			value = UnsafeHolder.UNSAFE.getInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
-		}
-		else if (address instanceof Long) {
-			value = UnsafeHolder.UNSAFE.getInt((Long)address + offset + ptr);
-		}
-		else if (address instanceof ByteBuffer) {
-			ByteBuffer bb = (ByteBuffer) address;
-			value = bb.getInt((int)(offset + ptr));
-		}
-		else {
-			throw new IllegalArgumentException("unknown object " + address);
-		}
-		return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
-	}
-
-	
 	public int getInt(byte[] blob, long ptr) {
 		int value = UnsafeHolder.UNSAFE.getInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
@@ -55,7 +35,11 @@ public final class PackedInt extends FixedPackedClass {
 		int value = UnsafeHolder.UNSAFE.getInt(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 	}
-	
+
+	public int getInt(ByteBuffer bb, long ptr) {
+		return bb.getInt((int) (offset + ptr));
+	}
+
 	public void setInt(byte[] blob, long ptr, int value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 		UnsafeHolder.UNSAFE.putInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
@@ -65,7 +49,11 @@ public final class PackedInt extends FixedPackedClass {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 		UnsafeHolder.UNSAFE.putInt(address + offset + ptr, value);
 	}
-	
+
+	public void setInt(ByteBuffer bb, long ptr, int value) {
+		bb.putInt((int) (offset + ptr), value);
+	}
+
 	public int getTypeId() {
 		return TypeRegistry.INT_ID;
 	}
