@@ -1,5 +1,7 @@
 package com.shvid.react.packedobject;
 
+import java.nio.ByteBuffer;
+
 import com.shvid.react.RC;
 import com.shvid.react.UnsafeHolder;
 
@@ -33,6 +35,10 @@ public final class PackedFloat extends FixedPackedClass {
 		float value = UnsafeHolder.UNSAFE.getFloat(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapFloat(value);
 	}
+
+	public float getFloat(ByteBuffer bb, long ptr) {
+		return bb.getFloat((int)(offset + ptr));
+	}
 	
 	public void setFloat(byte[] blob, long ptr, float value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapFloat(value);
@@ -43,6 +49,10 @@ public final class PackedFloat extends FixedPackedClass {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapFloat(value);
 		UnsafeHolder.UNSAFE.putFloat(address + offset + ptr, value);
 	}
+	
+	public void setFloat(ByteBuffer bb, long ptr, float value) {
+		bb.putFloat((int)(offset + ptr), value);
+	}	
 	
 	public int getTypeId() {
 		return TypeRegistry.FLOAT_ID;

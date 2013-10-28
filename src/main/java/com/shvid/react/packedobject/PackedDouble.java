@@ -1,5 +1,7 @@
 package com.shvid.react.packedobject;
 
+import java.nio.ByteBuffer;
+
 import com.shvid.react.RC;
 import com.shvid.react.UnsafeHolder;
 
@@ -33,6 +35,10 @@ public final class PackedDouble extends FixedPackedClass {
 		double value = UnsafeHolder.UNSAFE.getDouble(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
 	}
+
+	public double getDouble(ByteBuffer bb, long ptr) {
+		return bb.getDouble((int)(offset + ptr));
+	}
 	
 	public void setDouble(byte[] blob, long ptr, double value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
@@ -43,6 +49,10 @@ public final class PackedDouble extends FixedPackedClass {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
 		UnsafeHolder.UNSAFE.putDouble(address + offset + ptr, value);
 	}
+	
+	public void setDouble(ByteBuffer bb, long ptr, double value) {
+		bb.putDouble((int)(offset + ptr), value);
+	}	
 	
 	public int getTypeId() {
 		return TypeRegistry.DOUBLE_ID;

@@ -1,5 +1,7 @@
 package com.shvid.react.packedobject;
 
+import java.nio.ByteBuffer;
+
 import com.shvid.react.UnsafeHolder;
 
 public final class PackedByte extends FixedPackedClass {
@@ -31,12 +33,20 @@ public final class PackedByte extends FixedPackedClass {
 		return UnsafeHolder.UNSAFE.getByte(address + offset + ptr);
 	}
 	
+	public byte getByte(ByteBuffer bb, long ptr) {
+		return bb.get((int)(offset + ptr));
+	}
+	
 	public void setByte(byte[] blob, long ptr, byte value) {
 		UnsafeHolder.UNSAFE.putByte(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}	
 	
 	public void setByte(long address, long ptr, byte value) {
 		UnsafeHolder.UNSAFE.putByte(address + offset + ptr, value);
+	}
+	
+	public void setByte(ByteBuffer bb, long ptr, byte value) {
+		bb.put((int)(offset + ptr), value);
 	}
 	
 	public int getTypeId() {

@@ -1,5 +1,7 @@
 package com.shvid.react.packedobject;
 
+import java.nio.ByteBuffer;
+
 import com.shvid.react.RC;
 import com.shvid.react.UnsafeHolder;
 
@@ -34,6 +36,10 @@ public final class PackedChar extends FixedPackedClass {
 		return RC.getInstance().isLittleEndian ? charValue : Swapper.swapChar(charValue);
 	}
 	
+	public char getChar(ByteBuffer bb, long ptr) {
+		return bb.getChar((int)(offset + ptr));
+	}
+	
 	public void setChar(byte[] blob, long ptr, char value) {
 		char converted = RC.getInstance().isLittleEndian ? value : Swapper.swapChar(value);
 		UnsafeHolder.UNSAFE.putChar(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, converted);
@@ -43,7 +49,11 @@ public final class PackedChar extends FixedPackedClass {
 		char converted = RC.getInstance().isLittleEndian ? value : Swapper.swapChar(value);
 		UnsafeHolder.UNSAFE.putChar(address + offset + ptr, converted);
 	}
-	
+
+	public void setChar(ByteBuffer bb, long ptr, char value) {
+		bb.putChar((int)(offset + ptr), value);
+	}
+
 	public int getTypeId() {
 		return TypeRegistry.CHAR_ID;
 	}

@@ -1,5 +1,7 @@
 package com.shvid.react.packedobject;
 
+import java.nio.ByteBuffer;
+
 import com.shvid.react.RC;
 import com.shvid.react.UnsafeHolder;
 
@@ -33,6 +35,10 @@ public final class PackedLong extends FixedPackedClass {
 		long value = UnsafeHolder.UNSAFE.getLong(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
 	}
+
+	public long getLong(ByteBuffer bb, long ptr) {
+		return bb.getLong((int)(offset+ptr));
+	}
 	
 	public void setLong(byte[] blob, long ptr, long value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
@@ -43,6 +49,10 @@ public final class PackedLong extends FixedPackedClass {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
 		UnsafeHolder.UNSAFE.putLong(address + offset + ptr, value);
 	}
+	
+	public void setLong(ByteBuffer bb, long ptr, long value) {
+		bb.putLong((int)(offset+ptr), value);
+	}	
 	
 	public int getTypeId() {
 		return TypeRegistry.LONG_ID;
