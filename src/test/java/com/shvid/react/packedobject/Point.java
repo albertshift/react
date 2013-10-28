@@ -18,12 +18,7 @@ public final class Point extends FixedPackedClass {
 		y = new PackedInt(offset);
 	}
 	
-	public void format(byte[] blob, long ptr) {
-		x.format(blob, ptr);
-		y.format(blob, ptr);
-	}
-	
-	public void format(long address, long ptr) {
+	public void format(Object address, long ptr) {
 		x.format(address, ptr);
 		y.format(address, ptr);
 	}

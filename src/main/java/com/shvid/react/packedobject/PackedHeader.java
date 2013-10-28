@@ -38,26 +38,11 @@ public final class PackedHeader extends FixedPackedClass {
 
 	}
 	
-	public void format(byte[] blob, long ptr) {
-		format(blob, ptr, 0);
-	}
-
-	public void format(long address, long ptr) {
+	public void format(Object address, long ptr) {
 		format(address, ptr, 0);
 	}
 
-	public void format(byte[] blob, long ptr, int objFixedSize) {
-		totalFixedSize.setInt(blob, ptr, objFixedSize);
-		trashSize.setInt(blob, ptr, 0);
-		if (RC.getInstance().ptr64) {
-			endOffset64.setLong(blob, ptr, fixedOffset() + objFixedSize);
-		}
-		else {
-			endOffset32.setInt(blob, ptr, (int)fixedOffset() + objFixedSize); 
-		}
-	}
-	
-	public void format(long address, long ptr, int objFixedSize) {
+	public void format(Object address, long ptr, int objFixedSize) {
 		totalFixedSize.setInt(address, ptr, objFixedSize);
 		trashSize.setInt(address, ptr, 0);
 		if (RC.getInstance().ptr64) {
@@ -81,34 +66,16 @@ public final class PackedHeader extends FixedPackedClass {
 		return TypeRegistry.HEADER_ID;
 	}
 	
-	public void addTrash(byte[] blob, int addon) {
-		int trash = trashSize.getInt(blob, 0);
-		trashSize.setInt(blob, 0, trash + addon);
-	}
-	
-	public void addTrash(long address, int addon) {
+	public void addTrash(Object address, int addon) {
 		int trash = trashSize.getInt(address, 0);
 		trashSize.setInt(address, 0, trash + addon);
 	}
 	
-	public long getEndOffset(byte[] blob) {
-		return RC.getInstance().ptr64 ? endOffset64.getLong(blob, 0) : endOffset32.getInt(blob, 0);
-	}
-	
-	public long getEndOffset(long address) {
+	public long getEndOffset(Object address) {
 		return RC.getInstance().ptr64 ? endOffset64.getLong(address, 0) : endOffset32.getInt(address, 0);
 	}
 	
-	public void setEndOffset(byte[] blob, long endOffset) {
-		if (RC.getInstance().ptr64) {
-			endOffset64.setLong(blob, 0, endOffset);
-		}
-		else {
-			endOffset32.setInt(blob, 0, (int) endOffset);
-		}
-	}
-	
-	public void setEndOffset(long address, long endOffset) {
+	public void setEndOffset(Object address, long endOffset) {
 		if (RC.getInstance().ptr64) {
 			endOffset64.setLong(address, 0, endOffset);
 		}

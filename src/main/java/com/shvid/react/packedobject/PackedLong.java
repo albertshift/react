@@ -18,39 +18,65 @@ public final class PackedLong extends FixedPackedClass {
 		this.defaultValue = defaultValue;
 	}
 	
-	public void format(byte[] blob, long ptr) {
-		setLong(blob, ptr, defaultValue);
-	}
-	
-	public void format(long address, long ptr) {
+	public void format(Object address, long ptr) {
 		setLong(address, ptr, defaultValue);
 	}
-	
-	public long getLong(byte[] blob, long ptr) {
+
+	public long getLong(Object address, long ptr) {
+		if (address instanceof byte[]) {
+			return getLongA((byte[]) address, ptr);
+		}
+		else if (address instanceof Long) {
+			return getLongL((Long) address, ptr);
+		}
+		else if (address instanceof ByteBuffer) {
+			return getLongB((ByteBuffer) address, ptr);
+		}
+		else {
+			throw new IllegalArgumentException("unknown object " + address);
+		}
+	}
+
+	public long getLongA(byte[] blob, long ptr) {
 		long value = UnsafeHolder.UNSAFE.getLong(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
 	}
 	
-	public long getLong(long address, long ptr) {
+	public long getLongL(long address, long ptr) {
 		long value = UnsafeHolder.UNSAFE.getLong(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
 	}
 
-	public long getLong(ByteBuffer bb, long ptr) {
+	public long getLongB(ByteBuffer bb, long ptr) {
 		return bb.getLong((int)(offset+ptr));
 	}
+
+	public void setLong(Object address, long ptr, long value) {
+		if (address instanceof byte[]) {
+			setLongA((byte[]) address, ptr, value);
+		}
+		else if (address instanceof Long) {
+			setLongL((Long) address, ptr, value);
+		}
+		else if (address instanceof ByteBuffer) {
+			setLongB((ByteBuffer) address, ptr, value);
+		}
+		else {
+			throw new IllegalArgumentException("unknown object " + address);
+		}
+	}
 	
-	public void setLong(byte[] blob, long ptr, long value) {
+	public void setLongA(byte[] blob, long ptr, long value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
 		UnsafeHolder.UNSAFE.putLong(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}
 	
-	public void setLong(long address, long ptr, long value) {
+	public void setLongL(long address, long ptr, long value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapLong(value);
 		UnsafeHolder.UNSAFE.putLong(address + offset + ptr, value);
 	}
 	
-	public void setLong(ByteBuffer bb, long ptr, long value) {
+	public void setLongB(ByteBuffer bb, long ptr, long value) {
 		bb.putLong((int)(offset+ptr), value);
 	}	
 	

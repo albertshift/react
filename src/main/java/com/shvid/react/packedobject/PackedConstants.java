@@ -1,6 +1,6 @@
 package com.shvid.react.packedobject;
 
-public final class PackedConstants {
+final class PackedConstants {
 
 	static final int BYTE_SIZE = 1;
 	static final int CHAR_SIZE = 2;

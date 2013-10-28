@@ -19,9 +19,7 @@ public interface PackedObject {
 	
 	int getInitCapacity();
 	
-	void format(byte[] blob, long ptr);
-	
-	void format(long address, long ptr);
+	void format(Object address, long ptr);
 	
 	void copyTo(byte[] blob, long ptr, byte[] des, long desPtr);
 	

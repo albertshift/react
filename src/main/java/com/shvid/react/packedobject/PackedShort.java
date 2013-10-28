@@ -18,39 +18,65 @@ public final class PackedShort extends FixedPackedClass {
 		this.defaultValue = defaultValue;
 	}
 	
-	public void format(byte[] blob, long ptr) {
-		setShort(blob, ptr, defaultValue);
+	public void format(Object address, long ptr) {
+		setShort((byte[]) address, ptr, defaultValue);
 	}
-	
-	public void format(long address, long ptr) {
-		setShort(address, ptr, defaultValue);
+
+	public short getShort(Object address, long ptr) {
+		if (address instanceof byte[]) {
+			return getShortA((byte[]) address, ptr);
+		}
+		else if (address instanceof Long) {
+			return getShortL((Long) address, ptr);
+		}
+		else if (address instanceof ByteBuffer) {
+			return getShortB((ByteBuffer) address, ptr);
+		}
+		else {
+			throw new IllegalArgumentException("unknown object " + address);
+		}
 	}
-	
-	public short getShort(byte[] blob, long ptr) {
+
+	public short getShortA(byte[] blob, long ptr) {
 		short value = UnsafeHolder.UNSAFE.getShort(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapShort(value);
 	}
 	
-	public short getShort(long address, long ptr) {
+	public short getShortL(long address, long ptr) {
 		short value = UnsafeHolder.UNSAFE.getShort(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapShort(value);
 	}
 	
-	public short getShort(ByteBuffer bb, long ptr) {
+	public short getShortB(ByteBuffer bb, long ptr) {
 		return bb.getShort((int) (offset + ptr));
 	}
 	
-	public void setShort(long address, long ptr, short value) {
+	public void setShort(Object address, long ptr, short value) {
+		if (address instanceof byte[]) {
+			setShortA((byte[]) address, ptr, value);
+		}
+		else if (address instanceof Long) {
+			setShortL((Long) address, ptr, value);
+		}
+		else if (address instanceof ByteBuffer) {
+			setShortB((ByteBuffer) address, ptr, value);
+		}
+		else {
+			throw new IllegalArgumentException("unknown object " + address);
+		}
+	}
+	
+	public void setShortL(long address, long ptr, short value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapShort(value);
 		UnsafeHolder.UNSAFE.putShort(address + offset + ptr, value);
 	}
 	
-	public void setShort(byte[] blob, long ptr, short value) {
+	public void setShortA(byte[] blob, long ptr, short value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapShort(value);
 		UnsafeHolder.UNSAFE.putShort(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}
 	
-	public void setShort(ByteBuffer bb, long ptr, short value) {
+	public void setShortB(ByteBuffer bb, long ptr, short value) {
 		bb.putShort((int)(offset + ptr), value);
 	}	
 	

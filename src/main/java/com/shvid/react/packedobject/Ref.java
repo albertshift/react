@@ -19,75 +19,29 @@ public class Ref<T extends PackedObject> implements PackedObject {
 		this.PTR_64 = new PackedLong(offset);
 	}
 	
-	public void format(byte[] blob, long ptr) {
-		setNull(blob, ptr);
-	}
-
 	@Override
-	public void format(long address, long ptr) {
+	public void format(Object address, long ptr) {
 		setNull(address, ptr);
 	}
 	
-	public boolean isNull(byte[] blob, long ptr) {
-		long dataPtr = getDataPtr(blob, ptr);
-		return dataPtr == NULL;
-	}
-	
-	public boolean isNull(long address, long ptr) {
+	public boolean isNull(Object address, long ptr) {
 		long dataPtr = getDataPtr(address, ptr);
 		return dataPtr == NULL;
 	}
 	
-	public void setNull(byte[] blob, long ptr) {
-		setDataPtr(blob, ptr, NULL);
-	}
-	
-	public void setNull(long address, long ptr) {
+	public void setNull(Object address, long ptr) {
 		setDataPtr(address, ptr, NULL);
 	}
 	
-	public T getType(byte[] blob, long ptr) {
-		long dataPtr = getDataPtr(blob, ptr);
+	public T getType(Object address, long ptr) {
+		long dataPtr = getDataPtr(address, ptr);
 		if (dataPtr == NULL) {
 			return null;
 		}
-		return TypeRegistry.resolveType(TYPEID.getInt(blob, dataPtr));
-	}
-
-	public long newInstance(byte[] blob, long ptr, int typeId) {
-		PackedObject po = TypeRegistry.resolveType(typeId);
-		
-		long oldDataPtr = getDataPtr(blob, ptr);
-		long dataPtr = PackedObjectMemory.newMemory(blob, po.getFixedSize() + TYPEID.getFixedSize());
-		
-		setDataPtr(blob, ptr, dataPtr);
-		TYPEID.setInt(blob, dataPtr, po.getTypeId());
-		
-		long pcPtr = dataPtr + TYPEID.getFixedSize();
-		po.format(blob, pcPtr);
-		
-		eraseInstance(blob, oldDataPtr);
-		return pcPtr;
+		return TypeRegistry.resolveType(TYPEID.getInt(address, dataPtr));
 	}
 	
-	public long newArrayInstance(byte[] blob, long ptr, int elementTypeId, int length) {
-		PackedObject elementPO = TypeRegistry.resolveType(elementTypeId);
-		Array po = (Array) TypeRegistry.resolveType(TypeRegistry.ARRAY_ID);
-		
-		long oldDataPtr = getDataPtr(blob, ptr);
-		long dataPtr = PackedObjectMemory.newMemory(blob, po.getFixedSize() + TYPEID.getFixedSize() + elementPO.getFixedSize() * length);
-		
-		setDataPtr(blob, ptr, dataPtr);
-		TYPEID.setInt(blob, dataPtr, po.getTypeId());
-		
-		long pcPtr = dataPtr + TYPEID.getFixedSize();
-		po.format(blob, pcPtr, elementTypeId, length);
-		
-		eraseInstance(blob, oldDataPtr);
-		return pcPtr;
-	}
-	
-	public long newInstance(long address, long ptr, int typeId) {
+	public long newInstance(Object address, long ptr, int typeId) {
 		PackedObject po = TypeRegistry.resolveType(typeId);
 		
 		long oldDataPtr = getDataPtr(address, ptr);
@@ -103,7 +57,7 @@ public class Ref<T extends PackedObject> implements PackedObject {
 		return pcPtr;
 	}
 	
-	public long newArrayInstance(long address, long ptr, int elementTypeId, int length) {
+	public long newArrayInstance(Object address, long ptr, int elementTypeId, int length) {
 		PackedObject elementPO = TypeRegistry.resolveType(elementTypeId);
 		Array po = (Array) TypeRegistry.resolveType(TypeRegistry.ARRAY_ID);
 		
@@ -120,29 +74,14 @@ public class Ref<T extends PackedObject> implements PackedObject {
 		return pcPtr;
 	}
 	
-	private void eraseInstance(byte[] blob, long dataPtr) {
-		if (dataPtr != NULL) {
-			PackedObject previousClass = TypeRegistry.resolveType(TYPEID.getInt(blob, dataPtr));
-			PackedObjectMemory.incrementTrash(blob, previousClass.getFixedSize());
-		}
-	}
-	
-	private void eraseInstance(long address, long dataPtr) {
+	private void eraseInstance(Object address, long dataPtr) {
 		if (dataPtr != NULL) {
 			PackedObject previousClass = TypeRegistry.resolveType(TYPEID.getInt(address, dataPtr));
 			PackedObjectMemory.incrementTrash(address, previousClass.getFixedSize());
 		}
 	}
 
-	public long getInstance(byte[] blob, long ptr) {
-		long dataPtr = getDataPtr(blob, ptr);
-		if (dataPtr == NULL) {
-			throw new NullPointerException();
-		}
-		return dataPtr + TYPEID.getFixedSize();
-	}
-	
-	public long getInstance(long address, long ptr) {
+	public long getInstance(Object address, long ptr) {
 		long dataPtr = getDataPtr(address, ptr);
 		if (dataPtr == NULL) {
 			throw new NullPointerException();
@@ -150,24 +89,11 @@ public class Ref<T extends PackedObject> implements PackedObject {
 		return dataPtr + TYPEID.getFixedSize();
 	}
 	
-	private long getDataPtr(byte[] blob, long ptr) {
-		return RC.getInstance().ptr64 ? PTR_64.getLong(blob, ptr) : UnsignedInt.toLong( PTR_32.getInt(blob, ptr) );
-	}
-	
-	private long getDataPtr(long address, long ptr) {
+	private long getDataPtr(Object address, long ptr) {
 		return RC.getInstance().ptr64 ? PTR_64.getLong(address, ptr) : UnsignedInt.toLong( PTR_32.getInt(address, ptr) );
 	}
 	
-	private void setDataPtr(byte[] blob, long ptr, long dataPtr) {
-		if (RC.getInstance().ptr64) {
-			PTR_64.setLong(blob, ptr, dataPtr);
-		}
-		else {
-			PTR_32.setInt(blob, ptr, UnsignedInt.fromLong(dataPtr) );
-		}
-	}
-	
-	private void setDataPtr(long address, long ptr, long dataPtr) {
+	private void setDataPtr(Object address, long ptr, long dataPtr) {
 		if (RC.getInstance().ptr64) {
 			PTR_64.setLong(address, ptr, dataPtr);
 		}

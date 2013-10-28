@@ -14,17 +14,7 @@ public class Array<T extends PackedObject> implements PackedObject, LengthAware 
 		this.length = new PackedInt(offset + PackedConstants.INT_SIZE);
 	}
 
-	public void format(byte[] blob, long ptr, int elementTypeId, int length) {
-		this.typeId.setInt(blob, ptr, elementTypeId);
-		this.length.setInt(blob, ptr, length);
-		PackedObject pc = TypeRegistry.resolveType(elementTypeId);
-		for (int i = 0; i != length; ++i) {
-			long elementPtr = getElementPtr(ptr, i, pc);
-			pc.format(blob, elementPtr);
-		}
-	}
-	
-	public void format(long address, long ptr, int elementTypeId, int length) {
+	public void format(Object address, long ptr, int elementTypeId, int length) {
 		this.typeId.setInt(address, ptr, elementTypeId);
 		this.length.setInt(address, ptr, length);
 		PackedObject pc = TypeRegistry.resolveType(elementTypeId);
@@ -35,13 +25,8 @@ public class Array<T extends PackedObject> implements PackedObject, LengthAware 
 	}
 	
 	@Override
-	public void format(byte[] blob, long ptr) {
+	public void format(Object address, long ptr) {
 		throw new IllegalAccessError("call format(blob, ptr, typeId, length)");
-	}
-
-	@Override
-	public void format(long address, long ptr) {
-		throw new IllegalAccessError("call format(address, ptr, typeId, length)");
 	}
 
 	@Override

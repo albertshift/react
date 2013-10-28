@@ -18,39 +18,65 @@ public final class PackedFloat extends FixedPackedClass {
 		this.defaultValue = defaultValue;
 	}
 
-	public void format(byte[] blob, long ptr) {
-		setFloat(blob, ptr, defaultValue);
-	}
-	
-	public void format(long address, long ptr) {
+	public void format(Object address, long ptr) {
 		setFloat(address, ptr, defaultValue);
 	}
-	
-	public float getFloat(byte[] blob, long ptr) {
+
+	public float getFloat(Object address, long ptr) {
+		if (address instanceof byte[]) {
+			return getFloatA((byte[]) address, ptr);
+		}
+		else if (address instanceof Long) {
+			return getFloatL((Long) address, ptr);
+		}
+		else if (address instanceof ByteBuffer) {
+			return getFloatB((ByteBuffer) address, ptr);
+		}
+		else {
+			throw new IllegalArgumentException("unknown object " + address);
+		}
+	}
+
+	public float getFloatA(byte[] blob, long ptr) {
 		float value = UnsafeHolder.UNSAFE.getFloat(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapFloat(value);
 	}
 	
-	public float getFloat(long address, long ptr) {
+	public float getFloatL(long address, long ptr) {
 		float value = UnsafeHolder.UNSAFE.getFloat(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapFloat(value);
 	}
 
-	public float getFloat(ByteBuffer bb, long ptr) {
+	public float getFloatB(ByteBuffer bb, long ptr) {
 		return bb.getFloat((int)(offset + ptr));
 	}
 	
-	public void setFloat(byte[] blob, long ptr, float value) {
+	public void setFloat(Object address, long ptr, float value) {
+		if (address instanceof byte[]) {
+			setFloatA((byte[]) address, ptr, value);
+		}
+		else if (address instanceof Long) {
+			setFloatL((Long) address, ptr, value);
+		}
+		else if (address instanceof ByteBuffer) {
+			setFloatB((ByteBuffer) address, ptr, value);
+		}
+		else {
+			throw new IllegalArgumentException("unknown object " + address);
+		}
+	}
+	
+	public void setFloatA(byte[] blob, long ptr, float value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapFloat(value);
 		UnsafeHolder.UNSAFE.putFloat(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}
 	
-	public void setFloat(long address, long ptr, float value) {
+	public void setFloatL(long address, long ptr, float value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapFloat(value);
 		UnsafeHolder.UNSAFE.putFloat(address + offset + ptr, value);
 	}
 	
-	public void setFloat(ByteBuffer bb, long ptr, float value) {
+	public void setFloatB(ByteBuffer bb, long ptr, float value) {
 		bb.putFloat((int)(offset + ptr), value);
 	}	
 	

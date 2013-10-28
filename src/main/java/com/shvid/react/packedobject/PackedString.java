@@ -25,11 +25,8 @@ public final class PackedString implements PackedObject {
 
 	}
 	
-	public void format(byte[] blob, long ptr) {
-
-	}
 	
-	public void format(long address, long ptr) {
+	public void format(Object address, long ptr) {
 
 	}
 	

@@ -36,18 +36,8 @@ public class Simple implements PackedObject {
 		fixedSize = (int) (offset - ioffset);
 	}
 	
-
 	@Override
-	public void format(byte[] blob, long ptr) {
-		num.format(blob, ptr);
-		ba.format(blob, ptr, TypeRegistry.BYTE_ID, 100);
-		total.format(blob, ptr);
-		bref.format(blob, ptr);
-		baref.format(blob, ptr);
-	}
-
-	@Override
-	public void format(long address, long ptr) {
+	public void format(Object address, long ptr) {
 		num.format(address, ptr);
 		ba.format(address, ptr, TypeRegistry.BYTE_ID, 100);
 		total.format(address, ptr);

@@ -41,14 +41,7 @@ public abstract class ReflectionBasedPackedClass<T extends PackedObject> impleme
 	}
 
 	@Override
-	public void format(byte[] blob, long ptr) {
-		for (PackedObject field : fields) {
-			field.format(blob, ptr);
-		}
-	}
-
-	@Override
-	public void format(long address, long ptr) {
+	public void format(Object address, long ptr) {
 		for (PackedObject field : fields) {
 			field.format(address, ptr);
 		}

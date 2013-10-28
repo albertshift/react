@@ -18,39 +18,65 @@ public final class PackedInt extends FixedPackedClass {
 		this.defaultValue = defaultValue;
 	}
 
-	public void format(byte[] blob, long ptr) {
-		setInt(blob, ptr, defaultValue);
-	}
-	
-	public void format(long address, long ptr) {
+	public void format(Object address, long ptr) {
 		setInt(address, ptr, defaultValue);
 	}
 
-	public int getInt(byte[] blob, long ptr) {
+	public int getInt(Object address, long ptr) {
+		if (address instanceof byte[]) {
+			return getIntA((byte[]) address, ptr);
+		}
+		else if (address instanceof Long) {
+			return getIntL((Long) address, ptr);
+		}
+		else if (address instanceof ByteBuffer) {
+			return getIntB((ByteBuffer) address, ptr);
+		}
+		else {
+			throw new IllegalArgumentException("unknown object " + address);
+		}
+	}
+	
+	public int getIntA(byte[] blob, long ptr) {
 		int value = UnsafeHolder.UNSAFE.getInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 	}
 	
-	public int getInt(long address, long ptr) {
+	public int getIntL(long address, long ptr) {
 		int value = UnsafeHolder.UNSAFE.getInt(address + offset + ptr);
 		return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 	}
 
-	public int getInt(ByteBuffer bb, long ptr) {
+	public int getIntB(ByteBuffer bb, long ptr) {
 		return bb.getInt((int) (offset + ptr));
 	}
 
-	public void setInt(byte[] blob, long ptr, int value) {
+	public void setInt(Object address, long ptr, int value) {
+		if (address instanceof byte[]) {
+			setIntA((byte[]) address, ptr, value);
+		}
+		else if (address instanceof Long) {
+			setIntL((Long) address, ptr, value);
+		}
+		else if (address instanceof ByteBuffer) {
+			setIntB((ByteBuffer) address, ptr, value);
+		}
+		else {
+			throw new IllegalArgumentException("unknown object " + address);
+		}
+	}
+	
+	public void setIntA(byte[] blob, long ptr, int value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 		UnsafeHolder.UNSAFE.putInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}
 	
-	public void setInt(long address, long ptr, int value) {
+	public void setIntL(long address, long ptr, int value) {
 		value = RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
 		UnsafeHolder.UNSAFE.putInt(address + offset + ptr, value);
 	}
 
-	public void setInt(ByteBuffer bb, long ptr, int value) {
+	public void setIntB(ByteBuffer bb, long ptr, int value) {
 		bb.putInt((int) (offset + ptr), value);
 	}
 
