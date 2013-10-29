@@ -87,11 +87,11 @@ public class Ref<T extends PackedObject> extends PackedObject {
 	}
 	
 	private long getDataPtr(Object address, long ptr) {
-		return ptr64 ? PTR_64.getLong(address, ptr) : UnsignedInt.toLong( PTR_32.getInt(address, ptr) );
+		return usePTR64 ? PTR_64.getLong(address, ptr) : UnsignedInt.toLong( PTR_32.getInt(address, ptr) );
 	}
 	
 	private void setDataPtr(Object address, long ptr, long dataPtr) {
-		if (ptr64) {
+		if (usePTR64) {
 			PTR_64.setLong(address, ptr, dataPtr);
 		}
 		else {
@@ -106,7 +106,7 @@ public class Ref<T extends PackedObject> extends PackedObject {
 
 	@Override
 	public int sizeOf() {
-		return ptr64 ? PrimitiveTypes.PTR64_SIZE : PrimitiveTypes.PTR32_SIZE;
+		return usePTR64 ? PrimitiveTypes.PTR64_SIZE : PrimitiveTypes.PTR32_SIZE;
 	}
 	
 	@Override
