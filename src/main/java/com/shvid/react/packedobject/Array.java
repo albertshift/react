@@ -33,7 +33,7 @@ public class Array<T extends PackedObject> implements PackedObject, LengthAware 
 	public void copyTo(Object address, long ptr, Object des, long desPtr) {
 		PackedObject po = getType(address, ptr);
 		int length = getLength(address, ptr);
-		if (po instanceof FixedPackedClass) {
+		if (po instanceof SimplePackedObject) {
 			int arraySize = getFixedSize() + po.getFixedSize() * length;
 			PackedObjectMemory.copyTo(address, ptr, des, desPtr, arraySize);
 		}

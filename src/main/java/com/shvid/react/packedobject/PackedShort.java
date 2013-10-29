@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 import com.shvid.react.RC;
 import com.shvid.react.UnsafeHolder;
 
-public final class PackedShort extends FixedPackedClass {
+public final class PackedShort extends SimplePackedObject {
 
 	final short defaultValue;
 	

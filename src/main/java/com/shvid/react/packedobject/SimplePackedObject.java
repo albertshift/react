@@ -1,11 +1,11 @@
 package com.shvid.react.packedobject;
 
 
-public abstract class FixedPackedClass implements PackedObject {
+public abstract class SimplePackedObject implements PackedObject {
 
 	final long offset;
 	
-	FixedPackedClass(long offset) {
+	SimplePackedObject(long offset) {
 		this.offset = offset;
 	}
 	

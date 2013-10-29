@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 import com.shvid.react.RC;
 import com.shvid.react.UnsafeHolder;
 
-public final class PackedFloat extends FixedPackedClass {
+public final class PackedFloat extends SimplePackedObject {
 
 	final float defaultValue;
 	

@@ -1,6 +1,6 @@
 package com.shvid.react.packedobject;
 
-public final class Point extends FixedPackedClass {
+public final class Point extends SimplePackedObject {
 
 	@Override
 	public int getTypeId() {

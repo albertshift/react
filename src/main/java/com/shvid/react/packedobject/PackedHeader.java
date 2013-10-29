@@ -16,7 +16,7 @@ import com.shvid.react.RC;
  */
 
 
-public final class PackedHeader extends FixedPackedClass {
+public final class PackedHeader extends SimplePackedObject {
 
 	final PackedInt totalFixedSize;
 	final PackedInt trashSize;
