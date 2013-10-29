@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import com.shvid.react.UnsafeHolder;
 
-public final class PackedByte extends SimplePackedObject {
+public final class PackedByte extends PackedObject {
 
 	final byte defaultValue;
 

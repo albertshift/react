@@ -2,19 +2,17 @@ package com.shvid.react.packedobject;
 
 import com.shvid.react.RC;
 
-public class Ref<T extends PackedObject> implements PackedObject {
+public class Ref<T extends PackedObject> extends PackedObject {
 
 	public final static int NULL = 0;
 
 	final static PackedInt TYPEID = new PackedInt(0);
-	
-	final long offset;
 
 	final PackedInt PTR_32;
 	final PackedLong PTR_64;
 	
 	public Ref(long offset) {
-		this.offset = offset;
+		super(offset);
 		this.PTR_32 = new PackedInt(offset);
 		this.PTR_64 = new PackedLong(offset);
 	}

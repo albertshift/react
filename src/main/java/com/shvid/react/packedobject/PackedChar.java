@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 import com.shvid.react.RC;
 import com.shvid.react.UnsafeHolder;
 
-public final class PackedChar extends SimplePackedObject {
+public final class PackedChar extends PackedObject {
 	
 	final char defaultValue;
 

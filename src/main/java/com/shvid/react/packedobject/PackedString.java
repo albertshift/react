@@ -8,7 +8,7 @@ package com.shvid.react.packedobject;
  *
  */
 
-public final class PackedString implements PackedObject {
+public final class PackedString extends PackedObject {
 	
 	
 	@Override
@@ -22,7 +22,7 @@ public final class PackedString implements PackedObject {
 	}
 	
 	public PackedString(long offset, int initLength) {
-
+		super(offset);
 	}
 	
 	

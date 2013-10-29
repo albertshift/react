@@ -1,6 +1,6 @@
 package com.shvid.react.packedobject;
 
-public final class Point extends SimplePackedObject {
+public final class Point extends PackedObject {
 
 	@Override
 	public int getTypeId() {
@@ -27,7 +27,4 @@ public final class Point extends SimplePackedObject {
 		return PackedConstants.INT_SIZE * 2;
 	}
 	
-	public int getInitCapacity() {
-		return 0;
-	}
 }

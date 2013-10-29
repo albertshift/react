@@ -1,15 +1,13 @@
 package com.shvid.react.packedobject;
 
-import com.shvid.react.UnsafeHolder;
 
-public class Array<T extends PackedObject> implements PackedObject, LengthAware {
+public class Array<T extends PackedObject> extends PackedObject {
 
-	final long offset;
 	final PackedInt typeId;
 	final PackedInt length;
 	
 	public Array(long offset) {
-		this.offset = offset;
+		super(offset);
 		this.typeId = new PackedInt(offset);
 		this.length = new PackedInt(offset + PackedConstants.INT_SIZE);
 	}
@@ -17,10 +15,10 @@ public class Array<T extends PackedObject> implements PackedObject, LengthAware 
 	public void format(Object address, long ptr, int elementTypeId, int length) {
 		this.typeId.setInt(address, ptr, elementTypeId);
 		this.length.setInt(address, ptr, length);
-		PackedObject pc = TypeRegistry.resolveType(elementTypeId);
+		PackedObject po = TypeRegistry.resolveType(elementTypeId);
 		for (int i = 0; i != length; ++i) {
-			long elementPtr = calculateElementPtr(ptr, i, pc);
-			pc.format(address, elementPtr);
+			long elementPtr = calculateElementPtr(ptr, i, po);
+			po.format(address, elementPtr);
 		}
 	}
 	
@@ -33,17 +31,17 @@ public class Array<T extends PackedObject> implements PackedObject, LengthAware 
 	public void copyTo(Object address, long ptr, Object des, long desPtr) {
 		PackedObject po = getType(address, ptr);
 		int length = getLength(address, ptr);
-		if (po instanceof SimplePackedObject) {
-			int arraySize = sizeOf() + po.sizeOf() * length;
-			PackedObjectMemory.copyTo(address, ptr, des, desPtr, arraySize);
-		}
-		else {
-			PackedObjectMemory.copyTo(address, ptr, des, desPtr, sizeOf());
+		if (po instanceof Array) {
+			PackedObjectMemory.copyTo(address, ptr + offset, des, desPtr + offset, sizeOf());
 			for (int i = 0; i != length; ++i) {
 				long elementPtr = calculateElementPtr(ptr, i, po);
 				long desElementPtr = calculateElementPtr(desPtr, i, po);
 				po.copyTo(address, elementPtr, des, desElementPtr);
 			}
+		}
+		else {
+			int arraySize = sizeOf() + po.sizeOf() * length;
+			PackedObjectMemory.copyTo(address, ptr + offset, des, desPtr + offset, arraySize);
 		}
 	}
 

@@ -1,6 +1,6 @@
 package com.shvid.react.packedobject;
 
-public class Simple implements PackedObject {
+public class Simple extends PackedObject {
 
 	final PackedInt num;
 	final Array<PackedByte> ba;
@@ -16,24 +16,24 @@ public class Simple implements PackedObject {
 	}
 	
 	public Simple(long ioffset) {
-		long offset = ioffset;
+		super(ioffset);
 		
-		num = new PackedInt(offset);
-		offset += num.sizeOf();
+		num = new PackedInt(ioffset);
+		ioffset += num.sizeOf();
 		
-		ba = new Array<PackedByte>(offset);
-		offset += ba.sizeOf() + PackedConstants.BYTE_SIZE * 100;
+		ba = new Array<PackedByte>(ioffset);
+		ioffset += ba.sizeOf() + PackedConstants.BYTE_SIZE * 100;
 		
-		total = new PackedLong(offset);
-		offset += total.sizeOf();
+		total = new PackedLong(ioffset);
+		ioffset += total.sizeOf();
 		
-		bref = new Ref<PackedByte>(offset);
-		offset += bref.sizeOf();
+		bref = new Ref<PackedByte>(ioffset);
+		ioffset += bref.sizeOf();
 		
-		baref = new Ref<Array<PackedByte>>(offset);
-		offset += baref.sizeOf();
+		baref = new Ref<Array<PackedByte>>(ioffset);
+		ioffset += baref.sizeOf();
 		
-		fixedSize = (int) (offset - ioffset);
+		fixedSize = (int) (ioffset - offset);
 	}
 	
 	@Override

@@ -11,14 +11,22 @@ package com.shvid.react.packedobject;
  * 
  */
 
-public interface PackedObject {
+public abstract class PackedObject {
 
-	int getTypeId();
+	final long offset;
 	
-	int sizeOf();
+	PackedObject(long offset) {
+		this.offset = offset;
+	}
 	
-	void format(Object address, long ptr);
+	public abstract int getTypeId();
 	
-	void copyTo(Object address, long ptr, Object des, long desPtr);
+	public abstract int sizeOf();
+	
+	public abstract void format(Object address, long ptr);
+	
+	public void copyTo(Object address, long ptr, Object des, long desPtr) {
+		PackedObjectMemory.copyTo(address, ptr + offset, des, desPtr + offset, sizeOf());
+	}
 	
 }

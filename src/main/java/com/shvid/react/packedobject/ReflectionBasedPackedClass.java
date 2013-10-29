@@ -1,13 +1,14 @@
 package com.shvid.react.packedobject;
 
 
-public abstract class ReflectionBasedPackedClass<T extends PackedObject> implements PackedObject {
+public abstract class ReflectionBasedPackedClass<T extends PackedObject> extends PackedObject {
 
 	private final PackedObject[] fields;
 	
 	private final int fixedSize;
 	
 	public ReflectionBasedPackedClass(long offset, ClassDefinition<T> cr) {
+		super(offset);
 		
 		/*
 		 * Initialize local cache of fields
