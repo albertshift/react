@@ -4,8 +4,9 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import com.reactbase.packedobject.Holder.HolderType;
 import com.reactbase.packedobject.PackedObject;
-import com.reactbase.packedobject.PackedObjectMemory;
+import com.reactbase.packedobject.CopyUtil;
 import com.reactbase.packedobject.TypeRegistry;
 import com.reactbase.react.Dumper;
 
@@ -20,28 +21,11 @@ public class SimpleTest {
 		
 		System.out.println("size = " + simple.sizeOf());
 		
-		byte[] blob = PackedObjectMemory.newHeapInstance(simple, 1000);
+		Object address = Holder.allocate(HolderType.BYTE_ARRAY, 1000);
+		Holder.format(address, simple);
 		
-		
-		
-		simple.format(blob, 0);
-		
-		Dumper.dump(blob, Dumper.CONSOLE_PRINTER);
+		Dumper.dump((byte[]) address, Dumper.CONSOLE_PRINTER);
 	
-		Assert.assertEquals(TypeRegistry.BYTE_ID, simple.ba.getElementTypeId(blob, 0));
-		Assert.assertEquals(100, simple.ba.getLength(blob, 0));
-		
-		long arrayref = simple.baref.newArrayInstance(blob, 0, TypeRegistry.BYTE_ID, 100);
-		System.out.println("arrayref = " + arrayref);
-		
-		long ref = simple.bref.newInstance(blob, 0, TypeRegistry.BYTE_ID);
-		System.out.println("ref = " + ref);
-		
-		PackedObject po = simple.bref.getType(blob, 0);
-		System.out.println("PackedClass = " + po);
-		
-		Assert.assertEquals(TypeRegistry.BYTE_ID, po.getTypeId());
-
 		
 		
 		

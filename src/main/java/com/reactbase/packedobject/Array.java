@@ -30,7 +30,7 @@ public class Array<T extends PackedObject> extends PackedObject {
 	
 	@Override
 	public void format(Object address, long ptr) {
-		throw new IllegalAccessError("call format(blob, ptr, typeId, length)");
+		throw new IllegalAccessError("call format(blob, ptr, elementTypeId, length)");
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class Array<T extends PackedObject> extends PackedObject {
 		PackedObject po = getElementType(address, ptr);
 		int length = getLength(address, ptr);
 		if (po instanceof Array) {
-			PackedObjectMemory.copyTo(address, ptr + offset, des, desPtr + offset, sizeOf());
+			CopyUtil.copyTo(address, ptr + offset, des, desPtr + offset, sizeOf());
 			for (int i = 0; i != length; ++i) {
 				long elementPtr = calculateElementPtr(ptr, i, po);
 				long desElementPtr = calculateElementPtr(desPtr, i, po);
@@ -47,7 +47,7 @@ public class Array<T extends PackedObject> extends PackedObject {
 		}
 		else {
 			int arraySize = sizeOf() + po.sizeOf() * length;
-			PackedObjectMemory.copyTo(address, ptr + offset, des, desPtr + offset, arraySize);
+			CopyUtil.copyTo(address, ptr + offset, des, desPtr + offset, arraySize);
 		}
 	}
 

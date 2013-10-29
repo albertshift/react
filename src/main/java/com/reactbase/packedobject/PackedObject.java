@@ -27,6 +27,10 @@ public abstract class PackedObject {
 		this.offset = offset;
 	}
 	
+	public long getOffset() {
+		return offset;
+	}
+	
 	public abstract int getTypeId();
 	
 	public abstract int sizeOf();
@@ -34,7 +38,7 @@ public abstract class PackedObject {
 	public abstract void format(Object address, long ptr);
 	
 	public void copyTo(Object address, long ptr, Object des, long desPtr) {
-		PackedObjectMemory.copyTo(address, ptr + offset, des, desPtr + offset, sizeOf());
+		CopyUtil.copyTo(address, ptr + offset, des, desPtr + offset, sizeOf());
 	}
 	
 }

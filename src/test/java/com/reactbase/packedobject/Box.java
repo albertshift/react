@@ -1,15 +1,5 @@
 package com.reactbase.packedobject;
 
-import com.reactbase.packedobject.Array;
-import com.reactbase.packedobject.ClassDefinition;
-import com.reactbase.packedobject.Length;
-import com.reactbase.packedobject.PackedByte;
-import com.reactbase.packedobject.PackedCharArray;
-import com.reactbase.packedobject.PackedHeader;
-import com.reactbase.packedobject.PackedLong;
-import com.reactbase.packedobject.PackedString;
-import com.reactbase.packedobject.Ref;
-import com.reactbase.packedobject.ReflectionBasedPackedClass;
 
 public final class Box extends ReflectionBasedPackedClass<Box> {
 
@@ -36,7 +26,7 @@ public final class Box extends ReflectionBasedPackedClass<Box> {
 	Array<PackedByte> baa;
 	
 	public Box() {
-		this(PackedHeader.fixedOffset());
+		this(Holder.getObjectOffset());
 	}
 	
 	public Box(long offset) {

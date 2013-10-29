@@ -1,14 +1,5 @@
 package com.reactbase.packedobject;
 
-import com.reactbase.packedobject.Array;
-import com.reactbase.packedobject.PackedByte;
-import com.reactbase.packedobject.PackedHeader;
-import com.reactbase.packedobject.PackedInt;
-import com.reactbase.packedobject.PackedLong;
-import com.reactbase.packedobject.PackedObject;
-import com.reactbase.packedobject.PrimitiveTypes;
-import com.reactbase.packedobject.Ref;
-import com.reactbase.packedobject.TypeRegistry;
 
 public class Simple extends PackedObject {
 
@@ -22,7 +13,7 @@ public class Simple extends PackedObject {
 	final int fixedSize;
 	
 	public Simple() {
-		this(PackedHeader.fixedOffset());
+		this(Holder.getObjectOffset());
 	}
 	
 	public Simple(long ioffset) {

@@ -18,7 +18,6 @@ public class TypeRegistry {
 	public static final int LIST_ID = 11;
 	public static final int SET_ID = 12;
 	public static final int MAP_ID = 13;
-	public static final int HEADER_ID = 14;
 	
 	public static final PackedByte BYTE = new PackedByte(0);
 	public static final PackedChar CHAR = new PackedChar(0);

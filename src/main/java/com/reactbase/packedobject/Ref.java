@@ -42,7 +42,7 @@ public class Ref<T extends PackedObject> extends PackedObject {
 		PackedObject po = TypeRegistry.resolveType(typeId);
 		
 		long oldDataPtr = getDataPtr(address, ptr);
-		long dataPtr = PackedObjectMemory.newMemory(address, po.sizeOf() + objectTypeId.sizeOf());
+		long dataPtr = Holder.newInternalObject(address, po.sizeOf() + objectTypeId.sizeOf());
 		
 		setDataPtr(address, ptr, dataPtr);
 		objectTypeId.setInt(address, dataPtr, po.getTypeId());
@@ -59,7 +59,7 @@ public class Ref<T extends PackedObject> extends PackedObject {
 		Array po = (Array) TypeRegistry.resolveType(TypeRegistry.ARRAY_ID);
 		
 		long oldDataPtr = getDataPtr(address, ptr);
-		long dataPtr = PackedObjectMemory.newMemory(address, po.sizeOf() + objectTypeId.sizeOf() + elementPO.sizeOf() * length);
+		long dataPtr = Holder.newInternalObject(address, po.sizeOf() + objectTypeId.sizeOf() + elementPO.sizeOf() * length);
 		
 		setDataPtr(address, ptr, dataPtr);
 		objectTypeId.setInt(address, dataPtr, po.getTypeId());
@@ -74,7 +74,7 @@ public class Ref<T extends PackedObject> extends PackedObject {
 	private void eraseInstance(Object address, long dataPtr) {
 		if (dataPtr != NULL) {
 			PackedObject previousClass = TypeRegistry.resolveType(objectTypeId.getInt(address, dataPtr));
-			PackedObjectMemory.incrementTrash(address, previousClass.sizeOf());
+			Holder.incrementTrash(address, previousClass.sizeOf());
 		}
 	}
 
@@ -115,7 +115,7 @@ public class Ref<T extends PackedObject> extends PackedObject {
 				PackedObject elementPO = arr.getElementType(address, dataPtr + objectTypeId.sizeOf());
 				objectSizeOf += length * elementPO.sizeOf();
 			}
-			long desDataPtr = PackedObjectMemory.newMemory(address, objectSizeOf);
+			long desDataPtr = Holder.newInternalObject(address, objectSizeOf);
 			objectTypeId.setInt(des, desDataPtr, typeId);
 			po.copyTo(address, dataPtr + objectTypeId.sizeOf(), des, desDataPtr + objectTypeId.sizeOf());
 		}
