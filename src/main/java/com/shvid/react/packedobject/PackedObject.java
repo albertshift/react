@@ -17,12 +17,8 @@ public interface PackedObject {
 	
 	int getFixedSize();
 	
-	int getInitCapacity();
-	
 	void format(Object address, long ptr);
 	
-	void copyTo(byte[] blob, long ptr, byte[] des, long desPtr);
-	
-	void copyTo(long address, long ptr, long des, long desPtr);
+	void copyTo(Object address, long ptr, Object des, long desPtr);
 	
 }

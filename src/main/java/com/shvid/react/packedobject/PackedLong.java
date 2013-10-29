@@ -88,8 +88,5 @@ public final class PackedLong extends FixedPackedClass {
 		return PackedConstants.LONG_SIZE;
 	}
 	
-	public int getInitCapacity() {
-		return 0;
-	}
 	
 }

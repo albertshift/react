@@ -46,14 +46,7 @@ public class Simple implements PackedObject {
 	}
 
 	@Override
-	public void copyTo(byte[] blob, long ptr, byte[] des, long desPtr) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void copyTo(long address, long ptr, long des, long desPtr) {
-		// TODO Auto-generated method stub
+	public void copyTo(Object address, long ptr, Object des, long desPtr) {
 		
 	}
 
@@ -62,11 +55,6 @@ public class Simple implements PackedObject {
 		return fixedSize;
 	}
 
-	@Override
-	public int getInitCapacity() {
-		return 0;
-	}
-	
 	@Override
 	public int getTypeId() {
 		return 0;

@@ -31,21 +31,11 @@ public final class PackedString implements PackedObject {
 	}
 	
 	@Override
-	public void copyTo(byte[] blob, long ptr, byte[] des, long desPtr) {
-		
-	}
-
-	@Override
-	public void copyTo(long address, long ptr, long des, long desPtr) {
+	public void copyTo(Object address, long ptr, Object des, long desPtr) {
 	
 	}
-
 	
-	public void setString(byte[] blob, long ptr, CharSequence value) {
-		
-	}
-	
-	public void setString(long address, long ptr, CharSequence value) {
+	public void setString(Object address, long ptr, CharSequence value) {
 		
 	}
 
@@ -54,7 +44,4 @@ public final class PackedString implements PackedObject {
 		return 0;
 	}
 	
-	public int getInitCapacity() {
-		return 0;
-	}
 }

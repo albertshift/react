@@ -88,7 +88,4 @@ public final class PackedDouble extends FixedPackedClass {
 		return PackedConstants.DOUBLE_SIZE;
 	}
 	
-	public int getInitCapacity() {
-		return 0;
-	}
 }

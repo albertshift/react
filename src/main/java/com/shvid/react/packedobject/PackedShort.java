@@ -88,7 +88,4 @@ public final class PackedShort extends FixedPackedClass {
 		return PackedConstants.SHORT_SIZE;
 	}
 	
-	public int getInitCapacity() {
-		return 0;
-	}
 }

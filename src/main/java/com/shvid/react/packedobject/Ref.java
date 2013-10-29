@@ -103,24 +103,13 @@ public class Ref<T extends PackedObject> implements PackedObject {
 	}
 
 	@Override
-	public void copyTo(byte[] blob, long ptr, byte[] des, long desPtr) {
+	public void copyTo(Object address, long ptr, Object des, long desPtr) {
 		throw new IllegalAccessError("copy data by value");
 	}
-
-	@Override
-	public void copyTo(long address, long ptr, long des, long desPtr) {
-		throw new IllegalAccessError("copy data by value");
-	}
-
 
 	@Override
 	public int getFixedSize() {
 		return RC.getInstance().ptr64 ? PackedConstants.PTR64_SIZE : PackedConstants.PTR32_SIZE;
-	}
-
-	@Override
-	public int getInitCapacity() {
-		return PackedConstants.INT_SIZE;
 	}
 	
 	@Override

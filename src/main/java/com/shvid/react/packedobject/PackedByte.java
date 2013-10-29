@@ -83,8 +83,4 @@ public final class PackedByte extends FixedPackedClass {
 		return PackedConstants.BYTE_SIZE;
 	}
 	
-	public int getInitCapacity() {
-		return 0;
-	}
-	
 }

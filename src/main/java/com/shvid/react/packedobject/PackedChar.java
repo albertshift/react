@@ -88,7 +88,4 @@ public final class PackedChar extends FixedPackedClass {
 		return PackedConstants.CHAR_SIZE;
 	}
 	
-	public int getInitCapacity() {
-		return 0;
-	}
 }

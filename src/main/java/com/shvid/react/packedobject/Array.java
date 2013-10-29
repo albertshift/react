@@ -19,7 +19,7 @@ public class Array<T extends PackedObject> implements PackedObject, LengthAware 
 		this.length.setInt(address, ptr, length);
 		PackedObject pc = TypeRegistry.resolveType(elementTypeId);
 		for (int i = 0; i != length; ++i) {
-			long elementPtr = getElementPtr(ptr, i, pc);
+			long elementPtr = calculateElementPtr(ptr, i, pc);
 			pc.format(address, elementPtr);
 		}
 	}
@@ -30,93 +30,49 @@ public class Array<T extends PackedObject> implements PackedObject, LengthAware 
 	}
 
 	@Override
-	public void copyTo(byte[] blob, long ptr, byte[] des, long desPtr) {
-		PackedObject pc = getType(blob, ptr);
-		int length = getLength(blob, ptr);
-		if (pc instanceof FixedPackedClass) {
-			int copySize = getFixedSize() + pc.getFixedSize() * length;
-			UnsafeHolder.UNSAFE.copyMemory(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, des, offset + desPtr + UnsafeHolder.byteArrayBaseOffset, copySize);
-		}
-		else {
-			int copySize = getFixedSize();
-			UnsafeHolder.UNSAFE.copyMemory(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, des, offset + desPtr + UnsafeHolder.byteArrayBaseOffset, copySize);
-			for (int i = 0; i != length; ++i) {
-				long elementPtr = getElementPtr(ptr, i, pc);
-				long desElementPtr = getElementPtr(desPtr, i, pc);
-				pc.copyTo(blob, elementPtr, des, desElementPtr);
-			}
-		}
-	}
-
-	@Override
-	public void copyTo(long address, long ptr, long des, long desPtr) {
-		PackedObject pc = getType(address, ptr);
+	public void copyTo(Object address, long ptr, Object des, long desPtr) {
+		PackedObject po = getType(address, ptr);
 		int length = getLength(address, ptr);
-		if (pc instanceof FixedPackedClass) {
-			int copySize = getFixedSize() + pc.getFixedSize() * length;
-			UnsafeHolder.UNSAFE.copyMemory(address, offset + ptr + UnsafeHolder.byteArrayBaseOffset, des, offset + desPtr + UnsafeHolder.byteArrayBaseOffset, copySize);
+		if (po instanceof FixedPackedClass) {
+			int arraySize = getFixedSize() + po.getFixedSize() * length;
+			PackedObjectMemory.copyTo(address, ptr, des, desPtr, arraySize);
 		}
 		else {
-			int copySize = getFixedSize();
-			UnsafeHolder.UNSAFE.copyMemory(address, offset + ptr + UnsafeHolder.byteArrayBaseOffset, des, offset + desPtr + UnsafeHolder.byteArrayBaseOffset, copySize);
+			PackedObjectMemory.copyTo(address, ptr, des, desPtr, getFixedSize());
 			for (int i = 0; i != length; ++i) {
-				long elementPtr = getElementPtr(ptr, i, pc);
-				long desElementPtr = getElementPtr(desPtr, i, pc);
-				pc.copyTo(address, elementPtr, des, desElementPtr);
+				long elementPtr = calculateElementPtr(ptr, i, po);
+				long desElementPtr = calculateElementPtr(desPtr, i, po);
+				po.copyTo(address, elementPtr, des, desElementPtr);
 			}
 		}
 	}
 
-	public long elementAt(byte[] blob, long ptr, int index) {
-		int len = getLength(blob, ptr);
-		if (index < 0 || index >= len) {
-			throw new IndexOutOfBoundsException();
-		}
-		return getElementPtr(ptr, index, getType(blob, ptr));
-	}
-	
-	public long elementAt(long address, long ptr, int index) {
+	public long elementAt(Object address, long ptr, int index) {
 		int len = getLength(address, ptr);
 		if (index < 0 || index >= len) {
 			throw new IndexOutOfBoundsException();
 		}
-		return getElementPtr(ptr, index, getType(address, ptr));
+		return calculateElementPtr(ptr, index, getType(address, ptr));
 	}
 	
-	private long getElementPtr(long ptr, int index, PackedObject pc) {
-		int scale = pc.getFixedSize();
+	private long calculateElementPtr(long ptr, int index, PackedObject po) {
+		int scale = po.getFixedSize();
 		return ptr + offset + getFixedSize() + index * scale;
 	}
 	
-	public T getType(byte[] blob, long ptr) {
-		return TypeRegistry.resolveType(typeId.getInt(blob, ptr));
-	}
-
-	public T getType(long address, long ptr) {
+	public T getType(Object address, long ptr) {
 		return TypeRegistry.resolveType(typeId.getInt(address, ptr));
 	}
 
-	public void setType(byte[] blob, long ptr, PackedObject pc) {
-		this.typeId.setInt(blob, ptr, pc.getTypeId());
-	}
-	
-	public void setType(long address, long ptr, PackedObject pc) {
-		this.typeId.setInt(address, ptr, pc.getTypeId());
+	public void setType(Object address, long ptr, PackedObject po) {
+		this.typeId.setInt(address, ptr, po.getTypeId());
 	}
 
-	public int getTypeId(byte[] blob, long ptr) {
-		return typeId.getInt(blob, ptr);
-	}
-
-	public int getTypeId(long address, long ptr) {
+	public int getTypeId(Object address, long ptr) {
 		return typeId.getInt(address, ptr);
 	}
-
-	public int getLength(byte[] blob, long ptr) {
-		return length.getInt(blob, ptr);
-	}
 	
-	public int getLength(long address, long ptr) {
+	public int getLength(Object address, long ptr) {
 		return length.getInt(address, ptr);
 	}
 
@@ -127,11 +83,6 @@ public class Array<T extends PackedObject> implements PackedObject, LengthAware 
 	@Override
 	public int getFixedSize() {
 		return PackedConstants.INT_SIZE + PackedConstants.INT_SIZE;
-	}
-
-	@Override
-	public int getInitCapacity() {
-		return 0;
 	}
 	
 }

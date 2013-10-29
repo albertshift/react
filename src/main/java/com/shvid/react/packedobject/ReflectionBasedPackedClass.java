@@ -6,7 +6,6 @@ public abstract class ReflectionBasedPackedClass<T extends PackedObject> impleme
 	private final PackedObject[] fields;
 	
 	private final int fixedSize;
-	private final int initCapacity;
 	
 	public ReflectionBasedPackedClass(long offset, ClassDefinition<T> cr) {
 		
@@ -23,21 +22,14 @@ public abstract class ReflectionBasedPackedClass<T extends PackedObject> impleme
 		int initCap = 0;
 		for (PackedObject field : fields) {
 			size += field.getFixedSize();
-			initCap += field.getInitCapacity();
 		}
 		fixedSize = size;
-		initCapacity = initCap;
 		
 	}
 	
 	@Override
 	public int getFixedSize() {
 		return fixedSize;
-	}
-
-	@Override
-	public int getInitCapacity() {
-		return initCapacity;
 	}
 
 	@Override
@@ -48,14 +40,7 @@ public abstract class ReflectionBasedPackedClass<T extends PackedObject> impleme
 	}
 
 	@Override
-	public void copyTo(byte[] blob, long ptr, byte[] des, long desPtr) {
-		for (PackedObject field : fields) {
-			field.copyTo(blob, ptr, des, desPtr);
-		}
-	}
-
-	@Override
-	public void copyTo(long address, long ptr, long des, long desPtr) {
+	public void copyTo(Object address, long ptr, Object des, long desPtr) {
 		for (PackedObject field : fields) {
 			field.copyTo(address, ptr, des, desPtr);
 		}

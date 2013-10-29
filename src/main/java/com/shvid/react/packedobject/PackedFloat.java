@@ -88,7 +88,4 @@ public final class PackedFloat extends FixedPackedClass {
 		return PackedConstants.FLOAT_SIZE;
 	}
 	
-	public int getInitCapacity() {
-		return 0;
-	}
 }

@@ -9,6 +9,8 @@ package com.shvid.react;
 
 public final class UnsafeHolder {
 
+	static final long UNSAFE_COPY_THRESHOLD = 1024L * 1024L;
+	
     public static final sun.misc.Unsafe UNSAFE;
 	public static final long byteArrayBaseOffset;
 	public static final long byteArrayIndexScale;
@@ -22,6 +24,27 @@ public final class UnsafeHolder {
             throw new Error(e);
         }
     }
+
+	public static void copyMemory(long srcAddr, long dstAddr, long length) {
+		while (length > 0) {
+			long size = (length > UNSAFE_COPY_THRESHOLD) ? UNSAFE_COPY_THRESHOLD : length;
+			UNSAFE.copyMemory(srcAddr, dstAddr, size);
+			length -= size;
+			srcAddr += size;
+			dstAddr += size;
+		}
+	}
+
+	public static void copyMemory(Object src, long srcAddr, Object dst,
+			long dstAddr, long length) {
+		while (length > 0) {
+			long size = (length > UNSAFE_COPY_THRESHOLD) ? UNSAFE_COPY_THRESHOLD : length;
+			UNSAFE.copyMemory(src, srcAddr, dst, dstAddr, size);
+			length -= size;
+			srcAddr += size;
+			dstAddr += size;
+		}
+	}
     
     private final static sun.misc.Unsafe getUnsafe() {
         try {

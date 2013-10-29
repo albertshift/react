@@ -88,8 +88,4 @@ public final class PackedInt extends FixedPackedClass {
 		return PackedConstants.INT_SIZE;
 	}
 	
-	public int getInitCapacity() {
-		return 0;
-	}
-	
 }
