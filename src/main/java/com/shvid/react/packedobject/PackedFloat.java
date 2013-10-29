@@ -84,7 +84,7 @@ public final class PackedFloat extends SimplePackedObject {
 		return TypeRegistry.FLOAT_ID;
 	}
 	
-	public int getFixedSize() {
+	public int sizeOf() {
 		return PackedConstants.FLOAT_SIZE;
 	}
 	

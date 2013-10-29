@@ -23,7 +23,7 @@ public final class Point extends SimplePackedObject {
 		y.format(address, ptr);
 	}
 
-	public int getFixedSize() {
+	public int sizeOf() {
 		return PackedConstants.INT_SIZE * 2;
 	}
 	

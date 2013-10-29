@@ -10,7 +10,7 @@ public abstract class SimplePackedObject implements PackedObject {
 	}
 	
 	public void copyTo(Object address, long ptr, Object des, long desPtr) {
-		PackedObjectMemory.copyTo(address, ptr, des, desPtr, getFixedSize());
+		PackedObjectMemory.copyTo(address, ptr, des, desPtr, sizeOf());
 	}
 
 	

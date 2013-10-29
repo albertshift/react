@@ -10,16 +10,16 @@ public final class PackedObjectMemory {
 	static final PackedLong MEMORY_SIZE = new PackedLong(0);
 	
 	public static byte[] newHeapInstance(PackedObject obj, int thresholdCapacity) {
-		int requestCapacity = (int) PackedHeader.fixedOffset() + obj.getFixedSize() + thresholdCapacity;
+		int requestCapacity = (int) PackedHeader.fixedOffset() + obj.sizeOf() + thresholdCapacity;
 		byte[] blob = HeapMemoryManager.allocateMemory(requestCapacity);
-		HEADER.format(blob, 0, obj.getFixedSize());
+		HEADER.format(blob, 0, obj.sizeOf());
 		return blob;
 	}
 	
 	public static long newInstance(PackedObject obj, long thresholdCapacity) {
-		long requestCapacity = PackedHeader.fixedOffset() + obj.getFixedSize() + thresholdCapacity;
+		long requestCapacity = PackedHeader.fixedOffset() + obj.sizeOf() + thresholdCapacity;
 		long address = AddressMemoryManager.allocateMemory(requestCapacity);
-		HEADER.format(address, 0, obj.getFixedSize());
+		HEADER.format(address, 0, obj.sizeOf());
 		return address;
 	}
 	
@@ -148,7 +148,7 @@ public final class PackedObjectMemory {
 			return blob.length;
 		}
 		else if (address instanceof Long) {
-			long allocatedAddress = (Long) address - MEMORY_SIZE.getFixedSize();
+			long allocatedAddress = (Long) address - MEMORY_SIZE.sizeOf();
 			return MEMORY_SIZE.getLong(allocatedAddress, 0);
 		}
 		else if (address instanceof ByteBuffer) {
@@ -209,14 +209,14 @@ public final class PackedObjectMemory {
 		static final PackedLong MEMORY_SIZE = new PackedLong(0);
 		
 		public static long allocateMemory(long requestedSize) {
-			long allocatedAddress = UnsafeHolder.UNSAFE.allocateMemory(requestedSize + MEMORY_SIZE.getFixedSize());
+			long allocatedAddress = UnsafeHolder.UNSAFE.allocateMemory(requestedSize + MEMORY_SIZE.sizeOf());
 			MEMORY_SIZE.setLong(allocatedAddress, 0, requestedSize);
-			long address = allocatedAddress + MEMORY_SIZE.getFixedSize();
+			long address = allocatedAddress + MEMORY_SIZE.sizeOf();
 			return address;
 		}
 		
 		public static void freeMemory(long address) {
-			long allocatedAddress = address - MEMORY_SIZE.getFixedSize();
+			long allocatedAddress = address - MEMORY_SIZE.sizeOf();
 			UnsafeHolder.UNSAFE.freeMemory(allocatedAddress);
 		}
 

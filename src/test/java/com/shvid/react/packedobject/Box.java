@@ -33,7 +33,7 @@ public final class Box extends ReflectionBasedPackedClass<Box> {
 	}
 
 	public int manuaFixedSize() {
-		return num.getFixedSize() + origin.getFixedSize() + extent.getFixedSize() + ba.getFixedSize() + name.getFixedSize();
+		return num.sizeOf() + origin.sizeOf() + extent.sizeOf() + ba.sizeOf() + name.sizeOf();
 	}
 	
 }

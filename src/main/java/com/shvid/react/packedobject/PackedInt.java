@@ -84,7 +84,7 @@ public final class PackedInt extends SimplePackedObject {
 		return TypeRegistry.INT_ID;
 	}
 	
-	public int getFixedSize() {
+	public int sizeOf() {
 		return PackedConstants.INT_SIZE;
 	}
 	

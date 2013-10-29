@@ -84,7 +84,7 @@ public final class PackedLong extends SimplePackedObject {
 		return TypeRegistry.LONG_ID;
 	}
 	
-	public int getFixedSize() {
+	public int sizeOf() {
 		return PackedConstants.LONG_SIZE;
 	}
 	

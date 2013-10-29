@@ -79,7 +79,7 @@ public final class PackedByte extends SimplePackedObject {
 		return TypeRegistry.BYTE_ID;
 	}
 	
-	public int getFixedSize() {
+	public int sizeOf() {
 		return PackedConstants.BYTE_SIZE;
 	}
 	

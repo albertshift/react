@@ -84,7 +84,7 @@ public final class PackedChar extends SimplePackedObject {
 		return TypeRegistry.CHAR_ID;
 	}
 	
-	public int getFixedSize() {
+	public int sizeOf() {
 		return PackedConstants.CHAR_SIZE;
 	}
 	

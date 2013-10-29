@@ -84,7 +84,7 @@ public final class PackedDouble extends SimplePackedObject {
 		return TypeRegistry.DOUBLE_ID;
 	}
 	
-	public int getFixedSize() {
+	public int sizeOf() {
 		return PackedConstants.DOUBLE_SIZE;
 	}
 	

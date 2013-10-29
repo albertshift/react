@@ -15,7 +15,7 @@ public class SimpleTest {
 		
 		Simple simple = new Simple();
 		
-		System.out.println("size = " + simple.getFixedSize());
+		System.out.println("size = " + simple.sizeOf());
 		
 		byte[] blob = PackedObjectMemory.newHeapInstance(simple, 1000);
 		

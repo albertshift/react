@@ -15,7 +15,7 @@ public class PackedCharArrayTest {
 		
 		String hello = "hello";
 		
-		byte[] blob = new byte[arr.getFixedSize()];
+		byte[] blob = new byte[arr.sizeOf()];
 		
 		Assert.assertEquals(hello.length() * 2, blob.length);
 		

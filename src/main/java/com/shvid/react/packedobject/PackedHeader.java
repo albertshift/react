@@ -28,10 +28,10 @@ public final class PackedHeader extends SimplePackedObject {
 		
 		long offset = 0;
 		totalFixedSize = new PackedInt(offset);
-		offset += totalFixedSize.getFixedSize();
+		offset += totalFixedSize.sizeOf();
 		
 		trashSize = new PackedInt(offset);
-		offset += trashSize.getFixedSize();
+		offset += trashSize.sizeOf();
 		
 		endOffset32 = new PackedInt(offset);
 		endOffset64 = new PackedLong(offset);
@@ -53,7 +53,7 @@ public final class PackedHeader extends SimplePackedObject {
 		}
 	}
 	
-	public int getFixedSize() {
+	public int sizeOf() {
 		return (int) fixedOffset();
 	}
 

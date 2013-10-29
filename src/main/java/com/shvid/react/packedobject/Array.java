@@ -34,11 +34,11 @@ public class Array<T extends PackedObject> implements PackedObject, LengthAware 
 		PackedObject po = getType(address, ptr);
 		int length = getLength(address, ptr);
 		if (po instanceof SimplePackedObject) {
-			int arraySize = getFixedSize() + po.getFixedSize() * length;
+			int arraySize = sizeOf() + po.sizeOf() * length;
 			PackedObjectMemory.copyTo(address, ptr, des, desPtr, arraySize);
 		}
 		else {
-			PackedObjectMemory.copyTo(address, ptr, des, desPtr, getFixedSize());
+			PackedObjectMemory.copyTo(address, ptr, des, desPtr, sizeOf());
 			for (int i = 0; i != length; ++i) {
 				long elementPtr = calculateElementPtr(ptr, i, po);
 				long desElementPtr = calculateElementPtr(desPtr, i, po);
@@ -56,8 +56,8 @@ public class Array<T extends PackedObject> implements PackedObject, LengthAware 
 	}
 	
 	private long calculateElementPtr(long ptr, int index, PackedObject po) {
-		int scale = po.getFixedSize();
-		return ptr + offset + getFixedSize() + index * scale;
+		int scale = po.sizeOf();
+		return ptr + offset + sizeOf() + index * scale;
 	}
 	
 	public T getType(Object address, long ptr) {
@@ -81,7 +81,7 @@ public class Array<T extends PackedObject> implements PackedObject, LengthAware 
 	}
 	
 	@Override
-	public int getFixedSize() {
+	public int sizeOf() {
 		return PackedConstants.INT_SIZE + PackedConstants.INT_SIZE;
 	}
 	

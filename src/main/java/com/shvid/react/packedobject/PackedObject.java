@@ -15,7 +15,7 @@ public interface PackedObject {
 
 	int getTypeId();
 	
-	int getFixedSize();
+	int sizeOf();
 	
 	void format(Object address, long ptr);
 	

@@ -40,7 +40,7 @@ public final class PackedString implements PackedObject {
 	}
 
 	@Override
-	public int getFixedSize() {
+	public int sizeOf() {
 		return 0;
 	}
 	

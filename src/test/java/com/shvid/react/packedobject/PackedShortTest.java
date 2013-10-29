@@ -21,7 +21,7 @@ public class PackedShortTest {
 	
 	private void check(short expected, byte[] serialized) {
 		PackedShort ps = new PackedShort(0);
-		byte[] blob = new byte[ps.getFixedSize()];
+		byte[] blob = new byte[ps.sizeOf()];
 		Assert.assertEquals(PackedConstants.SHORT_SIZE, blob.length);
 		ps.setShort(blob, 0, expected);
 		//System.out.println(Arrays.toString(blob));

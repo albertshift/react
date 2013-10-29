@@ -21,14 +21,14 @@ public abstract class ReflectionBasedPackedClass<T extends PackedObject> impleme
 		int size = 0;
 		int initCap = 0;
 		for (PackedObject field : fields) {
-			size += field.getFixedSize();
+			size += field.sizeOf();
 		}
 		fixedSize = size;
 		
 	}
 	
 	@Override
-	public int getFixedSize() {
+	public int sizeOf() {
 		return fixedSize;
 	}
 

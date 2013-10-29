@@ -19,7 +19,7 @@ public class PackedByteTest {
 	
 	private void check(byte expected, byte[] serialized) {
 		PackedByte pb = new PackedByte(0);
-		byte[] blob = new byte[pb.getFixedSize()];
+		byte[] blob = new byte[pb.sizeOf()];
 		Assert.assertEquals(PackedConstants.BYTE_SIZE, blob.length);
 		pb.setByte(blob, 0, expected);
 		//System.out.println(Arrays.toString(blob));

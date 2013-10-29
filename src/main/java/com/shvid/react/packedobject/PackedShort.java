@@ -84,7 +84,7 @@ public final class PackedShort extends SimplePackedObject {
 		return TypeRegistry.SHORT_ID;
 	}
 	
-	public int getFixedSize() {
+	public int sizeOf() {
 		return PackedConstants.SHORT_SIZE;
 	}
 	

@@ -19,19 +19,19 @@ public class Simple implements PackedObject {
 		long offset = ioffset;
 		
 		num = new PackedInt(offset);
-		offset += num.getFixedSize();
+		offset += num.sizeOf();
 		
 		ba = new Array<PackedByte>(offset);
-		offset += ba.getFixedSize() + PackedConstants.BYTE_SIZE * 100;
+		offset += ba.sizeOf() + PackedConstants.BYTE_SIZE * 100;
 		
 		total = new PackedLong(offset);
-		offset += total.getFixedSize();
+		offset += total.sizeOf();
 		
 		bref = new Ref<PackedByte>(offset);
-		offset += bref.getFixedSize();
+		offset += bref.sizeOf();
 		
 		baref = new Ref<Array<PackedByte>>(offset);
-		offset += baref.getFixedSize();
+		offset += baref.sizeOf();
 		
 		fixedSize = (int) (offset - ioffset);
 	}
@@ -51,7 +51,7 @@ public class Simple implements PackedObject {
 	}
 
 	@Override
-	public int getFixedSize() {
+	public int sizeOf() {
 		return fixedSize;
 	}
 
