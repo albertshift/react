@@ -1,6 +1,5 @@
 package com.reactbase.packedobject;
 
-import com.reactbase.react.RC;
 
 public class Ref<T extends PackedObject> extends PackedObject {
 
@@ -88,11 +87,11 @@ public class Ref<T extends PackedObject> extends PackedObject {
 	}
 	
 	private long getDataPtr(Object address, long ptr) {
-		return RC.getInstance().ptr64 ? PTR_64.getLong(address, ptr) : UnsignedInt.toLong( PTR_32.getInt(address, ptr) );
+		return ptr64 ? PTR_64.getLong(address, ptr) : UnsignedInt.toLong( PTR_32.getInt(address, ptr) );
 	}
 	
 	private void setDataPtr(Object address, long ptr, long dataPtr) {
-		if (RC.getInstance().ptr64) {
+		if (ptr64) {
 			PTR_64.setLong(address, ptr, dataPtr);
 		}
 		else {
@@ -107,7 +106,7 @@ public class Ref<T extends PackedObject> extends PackedObject {
 
 	@Override
 	public int sizeOf() {
-		return RC.getInstance().ptr64 ? PrimitiveTypes.PTR64_SIZE : PrimitiveTypes.PTR32_SIZE;
+		return ptr64 ? PrimitiveTypes.PTR64_SIZE : PrimitiveTypes.PTR32_SIZE;
 	}
 	
 	@Override

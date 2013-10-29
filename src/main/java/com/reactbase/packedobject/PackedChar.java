@@ -2,7 +2,6 @@ package com.reactbase.packedobject;
 
 import java.nio.ByteBuffer;
 
-import com.reactbase.react.RC;
 import com.reactbase.react.UnsafeHolder;
 
 public final class PackedChar extends PackedObject {
@@ -39,12 +38,12 @@ public final class PackedChar extends PackedObject {
 
 	public char getCharA(byte[] blob, long ptr) {
 		char charValue = UnsafeHolder.UNSAFE.getChar(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
-		return RC.getInstance().isLittleEndian ? charValue : Swapper.swapChar(charValue);
+		return isLittleEndian ? charValue : Swapper.swapChar(charValue);
 	}
 	
 	public char getCharL(long address, long ptr) {
 		char charValue = UnsafeHolder.UNSAFE.getChar(address + offset + ptr);
-		return RC.getInstance().isLittleEndian ? charValue : Swapper.swapChar(charValue);
+		return isLittleEndian ? charValue : Swapper.swapChar(charValue);
 	}
 	
 	public char getCharB(ByteBuffer bb, long ptr) {
@@ -67,12 +66,12 @@ public final class PackedChar extends PackedObject {
 	}	
 	
 	public void setCharA(byte[] blob, long ptr, char value) {
-		char converted = RC.getInstance().isLittleEndian ? value : Swapper.swapChar(value);
+		char converted = isLittleEndian ? value : Swapper.swapChar(value);
 		UnsafeHolder.UNSAFE.putChar(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, converted);
 	}	
 		
 	public void setCharL(long address, long ptr, char value) {
-		char converted = RC.getInstance().isLittleEndian ? value : Swapper.swapChar(value);
+		char converted = isLittleEndian ? value : Swapper.swapChar(value);
 		UnsafeHolder.UNSAFE.putChar(address + offset + ptr, converted);
 	}
 

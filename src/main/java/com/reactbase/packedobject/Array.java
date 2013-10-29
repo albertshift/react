@@ -1,5 +1,11 @@
 package com.reactbase.packedobject;
 
+/**
+ * 
+ * @author Alex Shvid
+ *
+ * @param <T>
+ */
 
 public class Array<T extends PackedObject> extends PackedObject {
 

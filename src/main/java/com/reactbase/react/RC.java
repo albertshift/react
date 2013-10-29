@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Runtime Configuration
  * 
- * @author ashvid
+ * @author Alex Shvid
  *
  */
 
@@ -25,7 +25,6 @@ public final class RC {
 	public final long freeMemory;
 	public final long maxMemory;
 	public final boolean isLittleEndian;
-	public final boolean ptr64;
 
 	private static final class Lazy {
 		private static final RC INSTANCE = new RC();
@@ -36,9 +35,7 @@ public final class RC {
 		availableProcessors = Runtime.getRuntime().availableProcessors();
 		freeMemory = Runtime.getRuntime().freeMemory();
 		maxMemory = Runtime.getRuntime().maxMemory();
-		isLittleEndian = ByteOrder.nativeOrder()
-				.equals(ByteOrder.LITTLE_ENDIAN);
-		ptr64 = Boolean.parseBoolean(reactProps.getProperty("react.packedobject.ptr64", "false"));
+		isLittleEndian = ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN);
 	}
 
 	public static RC getInstance() {
@@ -56,7 +53,6 @@ public final class RC {
 		logger.info("freeMemory={}", freeMemory);
 		logger.info("maxMemory={}", maxMemory);
 		logger.info("isLittleEndian={}", isLittleEndian);
-		logger.info("ptr64={}", ptr64);
 	}
 
 	private static int getPid() {

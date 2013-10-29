@@ -1,6 +1,5 @@
 package com.reactbase.packedobject;
 
-import com.reactbase.react.RC;
 
 /**
  * 
@@ -45,7 +44,7 @@ public final class PackedHeader extends PackedObject {
 	public void format(Object address, long ptr, int objFixedSize) {
 		totalFixedSize.setInt(address, ptr, objFixedSize);
 		trashSize.setInt(address, ptr, 0);
-		if (RC.getInstance().ptr64) {
+		if (ptr64) {
 			endOffset64.setLong(address, ptr, fixedOffset() + objFixedSize);
 		}
 		else {
@@ -72,11 +71,11 @@ public final class PackedHeader extends PackedObject {
 	}
 	
 	public long getEndOffset(Object address) {
-		return RC.getInstance().ptr64 ? endOffset64.getLong(address, 0) : endOffset32.getInt(address, 0);
+		return ptr64 ? endOffset64.getLong(address, 0) : endOffset32.getInt(address, 0);
 	}
 	
 	public void setEndOffset(Object address, long endOffset) {
-		if (RC.getInstance().ptr64) {
+		if (ptr64) {
 			endOffset64.setLong(address, 0, endOffset);
 		}
 		else {
@@ -85,7 +84,7 @@ public final class PackedHeader extends PackedObject {
 	}
 	
 	public static long fixedOffset() {
-		return (RC.getInstance().ptr64 ? PrimitiveTypes.PTR64_SIZE : PrimitiveTypes.PTR32_SIZE) + PrimitiveTypes.INT_SIZEOF + PrimitiveTypes.INT_SIZEOF;
+		return (ptr64 ? PrimitiveTypes.PTR64_SIZE : PrimitiveTypes.PTR32_SIZE) + PrimitiveTypes.INT_SIZEOF + PrimitiveTypes.INT_SIZEOF;
 	}
 	
 }

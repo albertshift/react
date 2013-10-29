@@ -2,7 +2,6 @@ package com.reactbase.packedobject;
 
 import java.nio.ByteBuffer;
 
-import com.reactbase.react.RC;
 import com.reactbase.react.UnsafeHolder;
 
 public final class PackedShort extends PackedObject {
@@ -39,12 +38,12 @@ public final class PackedShort extends PackedObject {
 
 	public short getShortA(byte[] blob, long ptr) {
 		short value = UnsafeHolder.UNSAFE.getShort(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
-		return RC.getInstance().isLittleEndian ? value : Swapper.swapShort(value);
+		return isLittleEndian ? value : Swapper.swapShort(value);
 	}
 	
 	public short getShortL(long address, long ptr) {
 		short value = UnsafeHolder.UNSAFE.getShort(address + offset + ptr);
-		return RC.getInstance().isLittleEndian ? value : Swapper.swapShort(value);
+		return isLittleEndian ? value : Swapper.swapShort(value);
 	}
 	
 	public short getShortB(ByteBuffer bb, long ptr) {
@@ -67,12 +66,12 @@ public final class PackedShort extends PackedObject {
 	}
 	
 	public void setShortL(long address, long ptr, short value) {
-		value = RC.getInstance().isLittleEndian ? value : Swapper.swapShort(value);
+		value = isLittleEndian ? value : Swapper.swapShort(value);
 		UnsafeHolder.UNSAFE.putShort(address + offset + ptr, value);
 	}
 	
 	public void setShortA(byte[] blob, long ptr, short value) {
-		value = RC.getInstance().isLittleEndian ? value : Swapper.swapShort(value);
+		value = isLittleEndian ? value : Swapper.swapShort(value);
 		UnsafeHolder.UNSAFE.putShort(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}
 	

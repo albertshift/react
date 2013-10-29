@@ -1,5 +1,7 @@
 package com.reactbase.packedobject;
 
+import java.nio.ByteOrder;
+
 /*
  * PackedObject is the structure of metadata in memory, not a object itself
  * 
@@ -13,6 +15,9 @@ package com.reactbase.packedobject;
 
 public abstract class PackedObject {
 
+	public static final boolean isLittleEndian = ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN);
+	public static final boolean ptr64 = Boolean.getBoolean("reactbase.packedobject.ptr64");
+	
 	final long offset;
 	
 	PackedObject(long offset) {

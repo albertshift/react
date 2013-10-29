@@ -2,7 +2,6 @@ package com.reactbase.packedobject;
 
 import java.nio.ByteBuffer;
 
-import com.reactbase.react.RC;
 import com.reactbase.react.UnsafeHolder;
 
 public final class PackedDouble extends PackedObject {
@@ -39,12 +38,12 @@ public final class PackedDouble extends PackedObject {
 
 	public double getDoubleA(byte[] blob, long ptr) {
 		double value = UnsafeHolder.UNSAFE.getDouble(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
-		return RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
+		return isLittleEndian ? value : Swapper.swapDouble(value);
 	}
 	
 	public double getDoubleL(long address, long ptr) {
 		double value = UnsafeHolder.UNSAFE.getDouble(address + offset + ptr);
-		return RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
+		return isLittleEndian ? value : Swapper.swapDouble(value);
 	}
 
 	public double getDoubleB(ByteBuffer bb, long ptr) {
@@ -67,12 +66,12 @@ public final class PackedDouble extends PackedObject {
 	}
 		
 	public void setDoubleA(byte[] blob, long ptr, double value) {
-		value = RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
+		value = isLittleEndian ? value : Swapper.swapDouble(value);
 		UnsafeHolder.UNSAFE.putDouble(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}
 	
 	public void setDoubleL(long address, long ptr, double value) {
-		value = RC.getInstance().isLittleEndian ? value : Swapper.swapDouble(value);
+		value = isLittleEndian ? value : Swapper.swapDouble(value);
 		UnsafeHolder.UNSAFE.putDouble(address + offset + ptr, value);
 	}
 	

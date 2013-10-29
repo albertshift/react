@@ -2,7 +2,6 @@ package com.reactbase.packedobject;
 
 import java.nio.ByteBuffer;
 
-import com.reactbase.react.RC;
 import com.reactbase.react.UnsafeHolder;
 
 public final class PackedInt extends PackedObject {
@@ -39,12 +38,12 @@ public final class PackedInt extends PackedObject {
 	
 	public int getIntA(byte[] blob, long ptr) {
 		int value = UnsafeHolder.UNSAFE.getInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
-		return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
+		return isLittleEndian ? value : Swapper.swapInt(value);
 	}
 	
 	public int getIntL(long address, long ptr) {
 		int value = UnsafeHolder.UNSAFE.getInt(address + offset + ptr);
-		return RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
+		return isLittleEndian ? value : Swapper.swapInt(value);
 	}
 
 	public int getIntB(ByteBuffer bb, long ptr) {
@@ -67,12 +66,12 @@ public final class PackedInt extends PackedObject {
 	}
 	
 	public void setIntA(byte[] blob, long ptr, int value) {
-		value = RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
+		value = isLittleEndian ? value : Swapper.swapInt(value);
 		UnsafeHolder.UNSAFE.putInt(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
 	}
 	
 	public void setIntL(long address, long ptr, int value) {
-		value = RC.getInstance().isLittleEndian ? value : Swapper.swapInt(value);
+		value = isLittleEndian ? value : Swapper.swapInt(value);
 		UnsafeHolder.UNSAFE.putInt(address + offset + ptr, value);
 	}
 
