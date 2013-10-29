@@ -2,8 +2,6 @@ package com.reactbase.packedobject;
 
 import java.nio.ByteBuffer;
 
-import com.reactbase.react.UnsafeHolder;
-
 public final class PackedDouble extends PackedObject {
 
 	final double defaultValue;

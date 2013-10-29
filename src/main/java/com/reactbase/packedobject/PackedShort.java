@@ -2,8 +2,6 @@ package com.reactbase.packedobject;
 
 import java.nio.ByteBuffer;
 
-import com.reactbase.react.UnsafeHolder;
-
 public final class PackedShort extends PackedObject {
 
 	final short defaultValue;

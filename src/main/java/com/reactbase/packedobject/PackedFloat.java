@@ -2,8 +2,6 @@ package com.reactbase.packedobject;
 
 import java.nio.ByteBuffer;
 
-import com.reactbase.react.UnsafeHolder;
-
 public final class PackedFloat extends PackedObject {
 
 	final float defaultValue;

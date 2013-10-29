@@ -1,4 +1,4 @@
-package com.reactbase.react;
+package com.reactbase.packedobject;
 
 /**
  * Unsafe mechanics

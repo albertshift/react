@@ -2,15 +2,18 @@ package com.reactbase.packedobject;
 
 import java.nio.ByteOrder;
 
-/*
- * PackedObject is the structure of metadata in memory, not a object itself
+/**
+ * PackedObject is the structure of metadata in memory, not an object itself
  * 
  * PackedObject has two parameters: memory address and ptr
+ * opens C-style programming model in Java :)
  * 
  * memory address can be:
  *   - on-heap   byte[]
  *   - off-heap  long
- * 
+ *   - bytebuffer (heap, direct)
+ *   
+ * @author Alex Shvid
  */
 
 public abstract class PackedObject {
