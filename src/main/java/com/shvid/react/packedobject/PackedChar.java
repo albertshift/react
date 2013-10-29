@@ -85,7 +85,7 @@ public final class PackedChar extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return PackedConstants.CHAR_SIZE;
+		return PackedConstants.CHAR_SIZEOF;
 	}
 	
 }

@@ -9,7 +9,7 @@ public class Array<T extends PackedObject> extends PackedObject {
 	public Array(long offset) {
 		super(offset);
 		this.typeId = new PackedInt(offset);
-		this.length = new PackedInt(offset + PackedConstants.INT_SIZE);
+		this.length = new PackedInt(offset + PackedConstants.INT_SIZEOF);
 	}
 
 	public void format(Object address, long ptr, int elementTypeId, int length) {
@@ -80,7 +80,7 @@ public class Array<T extends PackedObject> extends PackedObject {
 	
 	@Override
 	public int sizeOf() {
-		return PackedConstants.INT_SIZE + PackedConstants.INT_SIZE;
+		return PackedConstants.INT_SIZEOF + PackedConstants.INT_SIZEOF;
 	}
 	
 }

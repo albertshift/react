@@ -85,7 +85,7 @@ public final class PackedDouble extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return PackedConstants.DOUBLE_SIZE;
+		return PackedConstants.DOUBLE_SIZEOF;
 	}
 	
 }

@@ -85,7 +85,7 @@ public final class PackedShort extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return PackedConstants.SHORT_SIZE;
+		return PackedConstants.SHORT_SIZEOF;
 	}
 	
 }

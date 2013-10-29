@@ -85,7 +85,7 @@ public final class PackedHeader extends PackedObject {
 	}
 	
 	public static long fixedOffset() {
-		return (RC.getInstance().ptr64 ? PackedConstants.PTR64_SIZE : PackedConstants.PTR32_SIZE) + PackedConstants.INT_SIZE + PackedConstants.INT_SIZE;
+		return (RC.getInstance().ptr64 ? PackedConstants.PTR64_SIZE : PackedConstants.PTR32_SIZE) + PackedConstants.INT_SIZEOF + PackedConstants.INT_SIZEOF;
 	}
 	
 }

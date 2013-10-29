@@ -80,7 +80,7 @@ public final class PackedByte extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return PackedConstants.BYTE_SIZE;
+		return PackedConstants.BYTE_SIZEOF;
 	}
 	
 }

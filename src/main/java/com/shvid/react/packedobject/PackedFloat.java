@@ -10,7 +10,7 @@ public final class PackedFloat extends PackedObject {
 	final float defaultValue;
 	
 	public PackedFloat(long offset) {
-		this(offset, PackedConstants.FLOAT_SIZE);
+		this(offset, PackedConstants.FLOAT_SIZEOF);
 	}
 	
 	public PackedFloat(long offset, float defaultValue) {
@@ -85,7 +85,7 @@ public final class PackedFloat extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return PackedConstants.FLOAT_SIZE;
+		return PackedConstants.FLOAT_SIZEOF;
 	}
 	
 }

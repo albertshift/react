@@ -22,7 +22,7 @@ public class PackedShortTest {
 	private void check(short expected, byte[] serialized) {
 		PackedShort ps = new PackedShort(0);
 		byte[] blob = new byte[ps.sizeOf()];
-		Assert.assertEquals(PackedConstants.SHORT_SIZE, blob.length);
+		Assert.assertEquals(PackedConstants.SHORT_SIZEOF, blob.length);
 		ps.setShort(blob, 0, expected);
 		//System.out.println(Arrays.toString(blob));
 		Assert.assertTrue(Arrays.equals(blob, serialized));
