@@ -47,11 +47,11 @@ public class Ref<T extends PackedObject> extends PackedObject {
 		setDataPtr(address, ptr, dataPtr);
 		objectTypeId.setInt(address, dataPtr, po.getTypeId());
 		
-		long pcPtr = dataPtr + objectTypeId.sizeOf();
-		po.format(address, pcPtr);
+		long poPtr = dataPtr + objectTypeId.sizeOf();
+		po.format(address, poPtr);
 		
 		eraseInstance(address, oldDataPtr);
-		return pcPtr;
+		return poPtr;
 	}
 	
 	public long newArrayInstance(Object address, long ptr, int elementTypeId, int length) {
@@ -64,11 +64,11 @@ public class Ref<T extends PackedObject> extends PackedObject {
 		setDataPtr(address, ptr, dataPtr);
 		objectTypeId.setInt(address, dataPtr, po.getTypeId());
 		
-		long pcPtr = dataPtr + objectTypeId.sizeOf();
-		po.format(address, pcPtr, elementTypeId, length);
+		long poPtr = dataPtr + objectTypeId.sizeOf();
+		po.format(address, poPtr, elementTypeId, length);
 		
 		eraseInstance(address, oldDataPtr);
-		return pcPtr;
+		return poPtr;
 	}
 	
 	private void eraseInstance(Object address, long dataPtr) {
@@ -101,7 +101,24 @@ public class Ref<T extends PackedObject> extends PackedObject {
 
 	@Override
 	public void copyTo(Object address, long ptr, Object des, long desPtr) {
-		throw new IllegalAccessError("copy data by value");
+		long dataPtr = getDataPtr(address, ptr);
+		if (dataPtr == NULL) {
+			setDataPtr(des, desPtr, NULL);
+		}
+		else {
+			int typeId = objectTypeId.getInt(address, dataPtr);
+			PackedObject po = TypeRegistry.resolveType(typeId);
+			int objectSizeOf = objectTypeId.sizeOf() + po.sizeOf();
+			if (po instanceof Array) {
+				Array<PackedObject> arr = (Array<PackedObject>) po;
+				int length = arr.getLength(address, dataPtr + objectTypeId.sizeOf());
+				PackedObject elementPO = arr.getType(address, dataPtr + objectTypeId.sizeOf());
+				objectSizeOf += length * elementPO.sizeOf();
+			}
+			long desDataPtr = PackedObjectMemory.newMemory(address, objectSizeOf);
+			objectTypeId.setInt(des, desDataPtr, typeId);
+			po.copyTo(address, dataPtr + objectTypeId.sizeOf(), des, desDataPtr + objectTypeId.sizeOf());
+		}
 	}
 
 	@Override
