@@ -19,7 +19,7 @@ import java.nio.ByteOrder;
 public abstract class PackedObject {
 
 	public static final boolean isLittleEndian = ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN);
-	public static final boolean usePTR64 = Boolean.getBoolean("reactbase.packedobject.ptr64");
+	public static final boolean usePtr64 = Boolean.getBoolean("reactbase.packedobject.ptr64");
 	
 	final long offset;
 	

@@ -5,15 +5,15 @@ public class Ref<T extends PackedObject> extends PackedObject {
 
 	public final static int NULL = 0;
 
-	final static PackedInt TYPEID = new PackedInt(0);
+	final static PackedInt objectTypeId = new PackedInt(0);
 
-	final PackedInt PTR_32;
-	final PackedLong PTR_64;
+	final PackedInt ptr32;
+	final PackedLong ptr64;
 	
 	public Ref(long offset) {
 		super(offset);
-		this.PTR_32 = new PackedInt(offset);
-		this.PTR_64 = new PackedLong(offset);
+		this.ptr32 = new PackedInt(offset);
+		this.ptr64 = new PackedLong(offset);
 	}
 	
 	@Override
@@ -35,19 +35,19 @@ public class Ref<T extends PackedObject> extends PackedObject {
 		if (dataPtr == NULL) {
 			return null;
 		}
-		return TypeRegistry.resolveType(TYPEID.getInt(address, dataPtr));
+		return TypeRegistry.resolveType(objectTypeId.getInt(address, dataPtr));
 	}
 	
 	public long newInstance(Object address, long ptr, int typeId) {
 		PackedObject po = TypeRegistry.resolveType(typeId);
 		
 		long oldDataPtr = getDataPtr(address, ptr);
-		long dataPtr = PackedObjectMemory.newMemory(address, po.sizeOf() + TYPEID.sizeOf());
+		long dataPtr = PackedObjectMemory.newMemory(address, po.sizeOf() + objectTypeId.sizeOf());
 		
 		setDataPtr(address, ptr, dataPtr);
-		TYPEID.setInt(address, dataPtr, po.getTypeId());
+		objectTypeId.setInt(address, dataPtr, po.getTypeId());
 		
-		long pcPtr = dataPtr + TYPEID.sizeOf();
+		long pcPtr = dataPtr + objectTypeId.sizeOf();
 		po.format(address, pcPtr);
 		
 		eraseInstance(address, oldDataPtr);
@@ -59,12 +59,12 @@ public class Ref<T extends PackedObject> extends PackedObject {
 		Array po = (Array) TypeRegistry.resolveType(TypeRegistry.ARRAY_ID);
 		
 		long oldDataPtr = getDataPtr(address, ptr);
-		long dataPtr = PackedObjectMemory.newMemory(address, po.sizeOf() + TYPEID.sizeOf() + elementPO.sizeOf() * length);
+		long dataPtr = PackedObjectMemory.newMemory(address, po.sizeOf() + objectTypeId.sizeOf() + elementPO.sizeOf() * length);
 		
 		setDataPtr(address, ptr, dataPtr);
-		TYPEID.setInt(address, dataPtr, po.getTypeId());
+		objectTypeId.setInt(address, dataPtr, po.getTypeId());
 		
-		long pcPtr = dataPtr + TYPEID.sizeOf();
+		long pcPtr = dataPtr + objectTypeId.sizeOf();
 		po.format(address, pcPtr, elementTypeId, length);
 		
 		eraseInstance(address, oldDataPtr);
@@ -73,7 +73,7 @@ public class Ref<T extends PackedObject> extends PackedObject {
 	
 	private void eraseInstance(Object address, long dataPtr) {
 		if (dataPtr != NULL) {
-			PackedObject previousClass = TypeRegistry.resolveType(TYPEID.getInt(address, dataPtr));
+			PackedObject previousClass = TypeRegistry.resolveType(objectTypeId.getInt(address, dataPtr));
 			PackedObjectMemory.incrementTrash(address, previousClass.sizeOf());
 		}
 	}
@@ -83,19 +83,19 @@ public class Ref<T extends PackedObject> extends PackedObject {
 		if (dataPtr == NULL) {
 			throw new NullPointerException();
 		}
-		return dataPtr + TYPEID.sizeOf();
+		return dataPtr + objectTypeId.sizeOf();
 	}
 	
 	private long getDataPtr(Object address, long ptr) {
-		return usePTR64 ? PTR_64.getLong(address, ptr) : UnsignedInt.toLong( PTR_32.getInt(address, ptr) );
+		return usePtr64 ? ptr64.getLong(address, ptr) : UnsignedInt.toLong( ptr32.getInt(address, ptr) );
 	}
 	
 	private void setDataPtr(Object address, long ptr, long dataPtr) {
-		if (usePTR64) {
-			PTR_64.setLong(address, ptr, dataPtr);
+		if (usePtr64) {
+			ptr64.setLong(address, ptr, dataPtr);
 		}
 		else {
-			PTR_32.setInt(address, ptr, UnsignedInt.fromLong(dataPtr) );
+			ptr32.setInt(address, ptr, UnsignedInt.fromLong(dataPtr) );
 		}
 	}
 
@@ -106,7 +106,7 @@ public class Ref<T extends PackedObject> extends PackedObject {
 
 	@Override
 	public int sizeOf() {
-		return usePTR64 ? PrimitiveTypes.PTR64_SIZE : PrimitiveTypes.PTR32_SIZE;
+		return usePtr64 ? PrimitiveTypes.PTR64_SIZEOF : PrimitiveTypes.PTR32_SIZEOF;
 	}
 	
 	@Override

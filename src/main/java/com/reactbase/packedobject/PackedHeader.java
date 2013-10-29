@@ -44,7 +44,7 @@ public final class PackedHeader extends PackedObject {
 	public void format(Object address, long ptr, int objFixedSize) {
 		totalFixedSize.setInt(address, ptr, objFixedSize);
 		trashSize.setInt(address, ptr, 0);
-		if (usePTR64) {
+		if (usePtr64) {
 			endOffset64.setLong(address, ptr, fixedOffset() + objFixedSize);
 		}
 		else {
@@ -71,11 +71,11 @@ public final class PackedHeader extends PackedObject {
 	}
 	
 	public long getEndOffset(Object address) {
-		return usePTR64 ? endOffset64.getLong(address, 0) : endOffset32.getInt(address, 0);
+		return usePtr64 ? endOffset64.getLong(address, 0) : endOffset32.getInt(address, 0);
 	}
 	
 	public void setEndOffset(Object address, long endOffset) {
-		if (usePTR64) {
+		if (usePtr64) {
 			endOffset64.setLong(address, 0, endOffset);
 		}
 		else {
@@ -84,7 +84,7 @@ public final class PackedHeader extends PackedObject {
 	}
 	
 	public static long fixedOffset() {
-		return (usePTR64 ? PrimitiveTypes.PTR64_SIZE : PrimitiveTypes.PTR32_SIZE) + PrimitiveTypes.INT_SIZEOF + PrimitiveTypes.INT_SIZEOF;
+		return (usePtr64 ? PrimitiveTypes.PTR64_SIZEOF : PrimitiveTypes.PTR32_SIZEOF) + PrimitiveTypes.INT_SIZEOF + PrimitiveTypes.INT_SIZEOF;
 	}
 	
 }
