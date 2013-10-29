@@ -35,12 +35,12 @@ public final class PackedDouble extends PackedObject {
 	}
 
 	public double getDoubleA(byte[] blob, long ptr) {
-		double value = UnsafeHolder.UNSAFE.getDouble(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
+		double value = UnsafeUtil.UNSAFE.getDouble(blob, offset + ptr + UnsafeUtil.byteArrayBaseOffset);
 		return isLittleEndian ? value : Swapper.swapDouble(value);
 	}
 	
 	public double getDoubleL(long address, long ptr) {
-		double value = UnsafeHolder.UNSAFE.getDouble(address + offset + ptr);
+		double value = UnsafeUtil.UNSAFE.getDouble(address + offset + ptr);
 		return isLittleEndian ? value : Swapper.swapDouble(value);
 	}
 
@@ -65,12 +65,12 @@ public final class PackedDouble extends PackedObject {
 		
 	public void setDoubleA(byte[] blob, long ptr, double value) {
 		value = isLittleEndian ? value : Swapper.swapDouble(value);
-		UnsafeHolder.UNSAFE.putDouble(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
+		UnsafeUtil.UNSAFE.putDouble(blob, offset + ptr + UnsafeUtil.byteArrayBaseOffset, value);
 	}
 	
 	public void setDoubleL(long address, long ptr, double value) {
 		value = isLittleEndian ? value : Swapper.swapDouble(value);
-		UnsafeHolder.UNSAFE.putDouble(address + offset + ptr, value);
+		UnsafeUtil.UNSAFE.putDouble(address + offset + ptr, value);
 	}
 	
 	public void setDoubleB(ByteBuffer bb, long ptr, double value) {

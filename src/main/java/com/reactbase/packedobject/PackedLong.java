@@ -35,12 +35,12 @@ public final class PackedLong extends PackedObject {
 	}
 
 	public long getLongA(byte[] blob, long ptr) {
-		long value = UnsafeHolder.UNSAFE.getLong(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
+		long value = UnsafeUtil.UNSAFE.getLong(blob, offset + ptr + UnsafeUtil.byteArrayBaseOffset);
 		return isLittleEndian ? value : Swapper.swapLong(value);
 	}
 	
 	public long getLongL(long address, long ptr) {
-		long value = UnsafeHolder.UNSAFE.getLong(address + offset + ptr);
+		long value = UnsafeUtil.UNSAFE.getLong(address + offset + ptr);
 		return isLittleEndian ? value : Swapper.swapLong(value);
 	}
 
@@ -65,12 +65,12 @@ public final class PackedLong extends PackedObject {
 	
 	public void setLongA(byte[] blob, long ptr, long value) {
 		value = isLittleEndian ? value : Swapper.swapLong(value);
-		UnsafeHolder.UNSAFE.putLong(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
+		UnsafeUtil.UNSAFE.putLong(blob, offset + ptr + UnsafeUtil.byteArrayBaseOffset, value);
 	}
 	
 	public void setLongL(long address, long ptr, long value) {
 		value = isLittleEndian ? value : Swapper.swapLong(value);
-		UnsafeHolder.UNSAFE.putLong(address + offset + ptr, value);
+		UnsafeUtil.UNSAFE.putLong(address + offset + ptr, value);
 	}
 	
 	public void setLongB(ByteBuffer bb, long ptr, long value) {

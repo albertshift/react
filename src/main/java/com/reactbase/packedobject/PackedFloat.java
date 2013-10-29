@@ -35,12 +35,12 @@ public final class PackedFloat extends PackedObject {
 	}
 
 	public float getFloatA(byte[] blob, long ptr) {
-		float value = UnsafeHolder.UNSAFE.getFloat(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
+		float value = UnsafeUtil.UNSAFE.getFloat(blob, offset + ptr + UnsafeUtil.byteArrayBaseOffset);
 		return isLittleEndian ? value : Swapper.swapFloat(value);
 	}
 	
 	public float getFloatL(long address, long ptr) {
-		float value = UnsafeHolder.UNSAFE.getFloat(address + offset + ptr);
+		float value = UnsafeUtil.UNSAFE.getFloat(address + offset + ptr);
 		return isLittleEndian ? value : Swapper.swapFloat(value);
 	}
 
@@ -65,12 +65,12 @@ public final class PackedFloat extends PackedObject {
 	
 	public void setFloatA(byte[] blob, long ptr, float value) {
 		value = isLittleEndian ? value : Swapper.swapFloat(value);
-		UnsafeHolder.UNSAFE.putFloat(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
+		UnsafeUtil.UNSAFE.putFloat(blob, offset + ptr + UnsafeUtil.byteArrayBaseOffset, value);
 	}
 	
 	public void setFloatL(long address, long ptr, float value) {
 		value = isLittleEndian ? value : Swapper.swapFloat(value);
-		UnsafeHolder.UNSAFE.putFloat(address + offset + ptr, value);
+		UnsafeUtil.UNSAFE.putFloat(address + offset + ptr, value);
 	}
 	
 	public void setFloatB(ByteBuffer bb, long ptr, float value) {

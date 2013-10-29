@@ -35,12 +35,12 @@ public final class PackedChar extends PackedObject {
 	}
 
 	public char getCharA(byte[] blob, long ptr) {
-		char charValue = UnsafeHolder.UNSAFE.getChar(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
+		char charValue = UnsafeUtil.UNSAFE.getChar(blob, offset + ptr + UnsafeUtil.byteArrayBaseOffset);
 		return isLittleEndian ? charValue : Swapper.swapChar(charValue);
 	}
 	
 	public char getCharL(long address, long ptr) {
-		char charValue = UnsafeHolder.UNSAFE.getChar(address + offset + ptr);
+		char charValue = UnsafeUtil.UNSAFE.getChar(address + offset + ptr);
 		return isLittleEndian ? charValue : Swapper.swapChar(charValue);
 	}
 	
@@ -65,12 +65,12 @@ public final class PackedChar extends PackedObject {
 	
 	public void setCharA(byte[] blob, long ptr, char value) {
 		char converted = isLittleEndian ? value : Swapper.swapChar(value);
-		UnsafeHolder.UNSAFE.putChar(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, converted);
+		UnsafeUtil.UNSAFE.putChar(blob, offset + ptr + UnsafeUtil.byteArrayBaseOffset, converted);
 	}	
 		
 	public void setCharL(long address, long ptr, char value) {
 		char converted = isLittleEndian ? value : Swapper.swapChar(value);
-		UnsafeHolder.UNSAFE.putChar(address + offset + ptr, converted);
+		UnsafeUtil.UNSAFE.putChar(address + offset + ptr, converted);
 	}
 
 	public void setCharB(ByteBuffer bb, long ptr, char value) {

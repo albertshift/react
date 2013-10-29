@@ -7,7 +7,7 @@ package com.reactbase.packedobject;
  *
  */
 
-public final class UnsafeHolder {
+public final class UnsafeUtil {
 
 	static final long UNSAFE_COPY_THRESHOLD = 1024L * 1024L;
 	

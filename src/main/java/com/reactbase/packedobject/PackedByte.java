@@ -35,11 +35,11 @@ public final class PackedByte extends PackedObject {
 	}
 
 	public byte getByteA(byte[] blob, long ptr) {
-		return UnsafeHolder.UNSAFE.getByte(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset);
+		return UnsafeUtil.UNSAFE.getByte(blob, offset + ptr + UnsafeUtil.byteArrayBaseOffset);
 	}
 	
 	public byte getByteL(long address, long ptr) {
-		return UnsafeHolder.UNSAFE.getByte(address + offset + ptr);
+		return UnsafeUtil.UNSAFE.getByte(address + offset + ptr);
 	}
 	
 	public byte getByteB(ByteBuffer bb, long ptr) {
@@ -62,11 +62,11 @@ public final class PackedByte extends PackedObject {
 	}
 
 	public void setByteA(byte[] blob, long ptr, byte value) {
-		UnsafeHolder.UNSAFE.putByte(blob, offset + ptr + UnsafeHolder.byteArrayBaseOffset, value);
+		UnsafeUtil.UNSAFE.putByte(blob, offset + ptr + UnsafeUtil.byteArrayBaseOffset, value);
 	}	
 	
 	public void setByteL(long address, long ptr, byte value) {
-		UnsafeHolder.UNSAFE.putByte(address + offset + ptr, value);
+		UnsafeUtil.UNSAFE.putByte(address + offset + ptr, value);
 	}
 	
 	public void setByteB(ByteBuffer bb, long ptr, byte value) {

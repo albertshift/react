@@ -36,13 +36,13 @@ public final class PackedObjectMemory {
 	
 	public static long copyMemory(byte[] src, long ptr, int length, byte[] des) throws PackedObjectOverflowException {
 		long desPtr = newMemory(des, length);
-		UnsafeHolder.UNSAFE.copyMemory(src, ptr + UnsafeHolder.byteArrayBaseOffset, des, desPtr + UnsafeHolder.byteArrayBaseOffset, length);
+		UnsafeUtil.UNSAFE.copyMemory(src, ptr + UnsafeUtil.byteArrayBaseOffset, des, desPtr + UnsafeUtil.byteArrayBaseOffset, length);
 		return desPtr;
 	}
 	
 	public static long copyMemory(long src, long ptr, int length, long des) throws PackedObjectOverflowException {
 		long desPtr = newMemory(des, length);
-		UnsafeHolder.UNSAFE.copyMemory(src, ptr, des, desPtr, length);
+		UnsafeUtil.UNSAFE.copyMemory(src, ptr, des, desPtr, length);
 		return desPtr;
 	}
 
@@ -66,7 +66,7 @@ public final class PackedObjectMemory {
 			System.arraycopy(blob, ptr, des, positiveInt(desPtr, "desPtr"), length);
 		}
 		else if (des instanceof Long) {
-			UnsafeHolder.copyMemory(blob, ptr + UnsafeHolder.byteArrayBaseOffset, null, (Long) des + desPtr, length);
+			UnsafeUtil.copyMemory(blob, ptr + UnsafeUtil.byteArrayBaseOffset, null, (Long) des + desPtr, length);
 		}
 		else if (des instanceof ByteBuffer) {
 			ByteBuffer desBB = (ByteBuffer) des;
@@ -80,10 +80,10 @@ public final class PackedObjectMemory {
 
 	private static void copyToL(long address, long ptr, Object des, long desPtr, long length) {
 		if (des instanceof byte[]) {
-			UnsafeHolder.copyMemory(null, address + ptr, des, desPtr + UnsafeHolder.byteArrayBaseOffset, length);
+			UnsafeUtil.copyMemory(null, address + ptr, des, desPtr + UnsafeUtil.byteArrayBaseOffset, length);
 		}
 		else if (des instanceof Long) {
-			UnsafeHolder.copyMemory(address + ptr, (Long)des + desPtr, length);
+			UnsafeUtil.copyMemory(address + ptr, (Long)des + desPtr, length);
 		}
 		else if (des instanceof ByteBuffer) {
 			ByteBuffer desBB = (ByteBuffer) des;
@@ -91,12 +91,12 @@ public final class PackedObjectMemory {
 			int lengthInt = positiveInt(length, "length");
 			if (desBB.hasArray()) {
 				desBB.position(desPtrInt + lengthInt);
-				UnsafeHolder.copyMemory(null, address + ptr, desBB.array(), desPtr + desBB.arrayOffset() + UnsafeHolder.byteArrayBaseOffset, length);
+				UnsafeUtil.copyMemory(null, address + ptr, desBB.array(), desPtr + desBB.arrayOffset() + UnsafeUtil.byteArrayBaseOffset, length);
 			}
 			else {
 				desBB.position(desPtrInt);
 				for (int i = 0; i != length; ++i) {
-					desBB.put(UnsafeHolder.UNSAFE.getByte(address + ptr + i));
+					desBB.put(UnsafeUtil.UNSAFE.getByte(address + ptr + i));
 				}
 			}
 		}
@@ -112,12 +112,12 @@ public final class PackedObjectMemory {
 		}
 		else if (des instanceof Long) {
 			if (bb.hasArray()) {
-				UnsafeHolder.copyMemory(bb.array(), ptr + bb.arrayOffset() + UnsafeHolder.byteArrayBaseOffset, null, (Long)des + desPtr, length);
+				UnsafeUtil.copyMemory(bb.array(), ptr + bb.arrayOffset() + UnsafeUtil.byteArrayBaseOffset, null, (Long)des + desPtr, length);
 			}
 			else {
 				int ptrInt = positiveInt(ptr, "ptr");
 				for (int i = 0; i != length; ++i) {
-					UnsafeHolder.UNSAFE.putByte((Long) des + desPtr, bb.get(i + ptrInt));
+					UnsafeUtil.UNSAFE.putByte((Long) des + desPtr, bb.get(i + ptrInt));
 				}
 			}
 		}
@@ -207,7 +207,7 @@ public final class PackedObjectMemory {
 		static final PackedLong MEMORY_SIZE = new PackedLong(0);
 		
 		public static long allocateMemory(long requestedSize) {
-			long allocatedAddress = UnsafeHolder.UNSAFE.allocateMemory(requestedSize + MEMORY_SIZE.sizeOf());
+			long allocatedAddress = UnsafeUtil.UNSAFE.allocateMemory(requestedSize + MEMORY_SIZE.sizeOf());
 			MEMORY_SIZE.setLong(allocatedAddress, 0, requestedSize);
 			long address = allocatedAddress + MEMORY_SIZE.sizeOf();
 			return address;
@@ -215,7 +215,7 @@ public final class PackedObjectMemory {
 		
 		public static void freeMemory(long address) {
 			long allocatedAddress = address - MEMORY_SIZE.sizeOf();
-			UnsafeHolder.UNSAFE.freeMemory(allocatedAddress);
+			UnsafeUtil.UNSAFE.freeMemory(allocatedAddress);
 		}
 
 		public static long getMemorySize(long address) {
