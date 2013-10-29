@@ -1,4 +1,4 @@
-package com.shvid.react;
+package com.reactbase.react;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

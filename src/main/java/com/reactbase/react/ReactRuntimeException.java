@@ -1,4 +1,4 @@
-package com.shvid.react;
+package com.reactbase.react;
 
 public class ReactRuntimeException extends RuntimeException {
 

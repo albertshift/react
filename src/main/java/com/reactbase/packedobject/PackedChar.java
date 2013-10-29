@@ -2,8 +2,8 @@ package com.reactbase.packedobject;
 
 import java.nio.ByteBuffer;
 
-import com.shvid.react.RC;
-import com.shvid.react.UnsafeHolder;
+import com.reactbase.react.RC;
+import com.reactbase.react.UnsafeHolder;
 
 public final class PackedChar extends PackedObject {
 	

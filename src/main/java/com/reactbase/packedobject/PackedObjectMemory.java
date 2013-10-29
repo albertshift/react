@@ -2,7 +2,7 @@ package com.reactbase.packedobject;
 
 import java.nio.ByteBuffer;
 
-import com.shvid.react.UnsafeHolder;
+import com.reactbase.react.UnsafeHolder;
 
 public final class PackedObjectMemory {
 

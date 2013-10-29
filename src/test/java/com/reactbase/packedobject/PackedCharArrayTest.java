@@ -5,7 +5,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import com.reactbase.packedobject.PackedCharArray;
-import com.shvid.react.Dumper;
+import com.reactbase.react.Dumper;
 
 public class PackedCharArrayTest {
 

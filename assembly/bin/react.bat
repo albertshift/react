@@ -12,6 +12,6 @@ set JAVA_OPTS=%JAVA_OPTS% -Xss412k
 
 @for %%a in (lib\*.jar) do @call bin\add2cp.bat %%a
 
-@java -classpath %CLASSPATH% %JAVA_OPTS% com.shvid.react.bash.ServerLancher %1
+@java -classpath %CLASSPATH% %JAVA_OPTS% com.reactbase.react.bash.ServerLancher %1
 
 popd

@@ -48,19 +48,19 @@ else
 fi
 
 start() {
-    $JAVA -server -classpath ${CLASSPATH} ${JAVA_OPTS} ${ARGS} com.shvid.react.cmd.StartCmd
+    $JAVA -server -classpath ${CLASSPATH} ${JAVA_OPTS} ${ARGS} com.reactbase.react.cmd.StartCmd
 }
 
 stop() {
-    $JAVA -server -classpath ${CLASSPATH} ${ARGS} com.shvid.react.cmd.StopCmd
+    $JAVA -server -classpath ${CLASSPATH} ${ARGS} com.reactbase.react.cmd.StopCmd
 }
 
 status() {
-    $JAVA -server -classpath ${CLASSPATH} ${ARGS} com.shvid.react.cmd.StatusCmd
+    $JAVA -server -classpath ${CLASSPATH} ${ARGS} com.reactbase.react.cmd.StatusCmd
 }
 
 deploy() {
-    $JAVA -server -classpath ${CLASSPATH} ${ARGS} com.shvid.react.cmd.DeployCmd
+    $JAVA -server -classpath ${CLASSPATH} ${ARGS} com.reactbase.react.cmd.DeployCmd
 }
 
 

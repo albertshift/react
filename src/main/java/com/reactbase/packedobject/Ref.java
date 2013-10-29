@@ -1,6 +1,6 @@
 package com.reactbase.packedobject;
 
-import com.shvid.react.RC;
+import com.reactbase.react.RC;
 
 public class Ref<T extends PackedObject> extends PackedObject {
 

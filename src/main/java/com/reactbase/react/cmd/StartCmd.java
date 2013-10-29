@@ -1,4 +1,4 @@
-package com.shvid.react.cmd;
+package com.reactbase.react.cmd;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -7,9 +7,9 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.shvid.react.PropertiesUtil;
-import com.shvid.react.ReactInstance;
-import com.shvid.react.RC;
+import com.reactbase.react.PropertiesUtil;
+import com.reactbase.react.RC;
+import com.reactbase.react.ReactInstance;
 
 
 public class StartCmd extends AbstractCmd {

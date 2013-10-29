@@ -1,4 +1,4 @@
-package com.shvid.react;
+package com.reactbase.react;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

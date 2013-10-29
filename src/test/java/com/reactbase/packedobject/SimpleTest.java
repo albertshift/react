@@ -7,7 +7,7 @@ import org.junit.Test;
 import com.reactbase.packedobject.PackedObject;
 import com.reactbase.packedobject.PackedObjectMemory;
 import com.reactbase.packedobject.TypeRegistry;
-import com.shvid.react.Dumper;
+import com.reactbase.react.Dumper;
 
 public class SimpleTest {
 

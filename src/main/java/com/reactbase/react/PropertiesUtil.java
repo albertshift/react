@@ -1,4 +1,4 @@
-package com.shvid.react;
+package com.reactbase.react;
 
 import java.io.FileInputStream;
 import java.io.IOException;

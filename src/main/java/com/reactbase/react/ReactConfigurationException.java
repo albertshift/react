@@ -1,4 +1,4 @@
-package com.shvid.react;
+package com.reactbase.react;
 
 public class ReactConfigurationException extends ReactRuntimeException {
 

@@ -1,8 +1,8 @@
-package com.shvid.react.cmd;
+package com.reactbase.react.cmd;
 
 import java.util.Properties;
 
-import com.shvid.react.PropertiesUtil;
+import com.reactbase.react.PropertiesUtil;
 
 public abstract class AbstractCmd {
 

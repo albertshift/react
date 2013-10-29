@@ -8,7 +8,7 @@ import com.reactbase.packedobject.Array;
 import com.reactbase.packedobject.PackedByte;
 import com.reactbase.packedobject.PrimitiveTypes;
 import com.reactbase.packedobject.TypeRegistry;
-import com.shvid.react.Dumper;
+import com.reactbase.react.Dumper;
 
 public class ArrayTest {
 

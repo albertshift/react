@@ -1,7 +1,7 @@
-package com.shvid.react.cmd;
+package com.reactbase.react.cmd;
 
-import com.shvid.react.PropertiesUtil;
-import com.shvid.react.RC;
+import com.reactbase.react.PropertiesUtil;
+import com.reactbase.react.RC;
 
 public class StopCmd extends AbstractCmd {
 
