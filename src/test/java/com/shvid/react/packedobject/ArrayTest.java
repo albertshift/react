@@ -15,7 +15,7 @@ public class ArrayTest {
 		
 		Array<PackedByte> array = new Array<PackedByte>(0);
 		
-		int size = array.sizeOf() + length * PackedConstants.BYTE_SIZEOF;
+		int size = array.sizeOf() + length * PrimitiveTypes.BYTE_SIZEOF;
 		
 		byte[] blob = new byte[size];
 		

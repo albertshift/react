@@ -10,7 +10,7 @@ public final class PackedChar extends PackedObject {
 	final char defaultValue;
 
 	public PackedChar(long offset) {
-		this(offset, PackedConstants.DEFAULT_CHAR);
+		this(offset, PrimitiveTypes.DEFAULT_CHAR);
 	}
 
 	public PackedChar(long offset, char defaultValue) {
@@ -85,7 +85,7 @@ public final class PackedChar extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return PackedConstants.CHAR_SIZEOF;
+		return PrimitiveTypes.CHAR_SIZEOF;
 	}
 	
 }

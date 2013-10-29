@@ -20,7 +20,7 @@ public class PackedFloatTest {
 	private void check(float expected, byte[] serialized) {
 		PackedFloat pf = new PackedFloat(0);
 		byte[] blob = new byte[pf.sizeOf()];
-		Assert.assertEquals(PackedConstants.FLOAT_SIZEOF, blob.length);
+		Assert.assertEquals(PrimitiveTypes.FLOAT_SIZEOF, blob.length);
 		pf.setFloat(blob, 0, expected);
 		//System.out.println(Arrays.toString(blob));
 		Assert.assertTrue(Arrays.equals(blob, serialized));

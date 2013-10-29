@@ -20,7 +20,7 @@ public class PackedDoubleTest {
 	private void check(double expected, byte[] serialized) {
 		PackedDouble pd = new PackedDouble(0);
 		byte[] blob = new byte[pd.sizeOf()];
-		Assert.assertEquals(PackedConstants.DOUBLE_SIZEOF, blob.length);
+		Assert.assertEquals(PrimitiveTypes.DOUBLE_SIZEOF, blob.length);
 		pd.setDouble(blob, 0, expected);
 		//System.out.println(Arrays.toString(blob));
 		Assert.assertTrue(Arrays.equals(blob, serialized));

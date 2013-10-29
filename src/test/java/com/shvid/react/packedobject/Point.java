@@ -14,7 +14,7 @@ public final class Point extends PackedObject {
 	public Point(long offset) {
 		super(offset);
 		x = new PackedInt(offset);
-		offset += PackedConstants.INT_SIZEOF;
+		offset += PrimitiveTypes.INT_SIZEOF;
 		y = new PackedInt(offset);
 	}
 	
@@ -24,7 +24,7 @@ public final class Point extends PackedObject {
 	}
 
 	public int sizeOf() {
-		return PackedConstants.INT_SIZEOF * 2;
+		return PrimitiveTypes.INT_SIZEOF * 2;
 	}
 	
 }

@@ -107,7 +107,7 @@ public class Ref<T extends PackedObject> extends PackedObject {
 
 	@Override
 	public int sizeOf() {
-		return RC.getInstance().ptr64 ? PackedConstants.PTR64_SIZE : PackedConstants.PTR32_SIZE;
+		return RC.getInstance().ptr64 ? PrimitiveTypes.PTR64_SIZE : PrimitiveTypes.PTR32_SIZE;
 	}
 	
 	@Override

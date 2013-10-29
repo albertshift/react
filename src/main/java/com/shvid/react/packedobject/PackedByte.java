@@ -9,7 +9,7 @@ public final class PackedByte extends PackedObject {
 	final byte defaultValue;
 
 	public PackedByte(long offset) {
-		this(offset, PackedConstants.DEFAULT_BYTE);
+		this(offset, PrimitiveTypes.DEFAULT_BYTE);
 	}
 
 	public PackedByte(long offset, byte defaultValue) {
@@ -80,7 +80,7 @@ public final class PackedByte extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return PackedConstants.BYTE_SIZEOF;
+		return PrimitiveTypes.BYTE_SIZEOF;
 	}
 	
 }

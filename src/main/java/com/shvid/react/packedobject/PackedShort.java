@@ -10,7 +10,7 @@ public final class PackedShort extends PackedObject {
 	final short defaultValue;
 	
 	public PackedShort(long offset) {
-		this(offset, PackedConstants.DEFAULT_SHORT);
+		this(offset, PrimitiveTypes.DEFAULT_SHORT);
 	}
 	
 	public PackedShort(long offset, short defaultValue) {
@@ -85,7 +85,7 @@ public final class PackedShort extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return PackedConstants.SHORT_SIZEOF;
+		return PrimitiveTypes.SHORT_SIZEOF;
 	}
 	
 }
