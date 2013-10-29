@@ -28,7 +28,7 @@ public class SimpleTest {
 		
 		Dumper.dump(blob, Dumper.CONSOLE_PRINTER);
 	
-		Assert.assertEquals(TypeRegistry.BYTE_ID, simple.ba.getTypeId(blob, 0));
+		Assert.assertEquals(TypeRegistry.BYTE_ID, simple.ba.getElementTypeId(blob, 0));
 		Assert.assertEquals(100, simple.ba.getLength(blob, 0));
 		
 		long arrayref = simple.baref.newArrayInstance(blob, 0, TypeRegistry.BYTE_ID, 100);

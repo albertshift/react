@@ -25,7 +25,7 @@ public class ArrayTest {
 		
 		array.format(blob, 0, TypeRegistry.BYTE_ID, length);
 		
-		Assert.assertEquals(TypeRegistry.BYTE_ID, array.getTypeId(blob, 0));
+		Assert.assertEquals(TypeRegistry.BYTE_ID, array.getElementTypeId(blob, 0));
 		Assert.assertEquals(length, array.getLength(blob, 0));
 		
 		Dumper.dump(blob, Dumper.CONSOLE_PRINTER);

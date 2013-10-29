@@ -112,7 +112,7 @@ public class Ref<T extends PackedObject> extends PackedObject {
 			if (po instanceof Array) {
 				Array<PackedObject> arr = (Array<PackedObject>) po;
 				int length = arr.getLength(address, dataPtr + objectTypeId.sizeOf());
-				PackedObject elementPO = arr.getType(address, dataPtr + objectTypeId.sizeOf());
+				PackedObject elementPO = arr.getElementType(address, dataPtr + objectTypeId.sizeOf());
 				objectSizeOf += length * elementPO.sizeOf();
 			}
 			long desDataPtr = PackedObjectMemory.newMemory(address, objectSizeOf);

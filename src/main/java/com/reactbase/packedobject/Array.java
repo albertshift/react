@@ -9,17 +9,17 @@ package com.reactbase.packedobject;
 
 public class Array<T extends PackedObject> extends PackedObject {
 
-	final PackedInt typeId;
+	final PackedInt elementTypeId;
 	final PackedInt length;
 	
 	public Array(long offset) {
 		super(offset);
-		this.typeId = new PackedInt(offset);
+		this.elementTypeId = new PackedInt(offset);
 		this.length = new PackedInt(offset + PrimitiveTypes.INT_SIZEOF);
 	}
 
 	public void format(Object address, long ptr, int elementTypeId, int length) {
-		this.typeId.setInt(address, ptr, elementTypeId);
+		this.elementTypeId.setInt(address, ptr, elementTypeId);
 		this.length.setInt(address, ptr, length);
 		PackedObject po = TypeRegistry.resolveType(elementTypeId);
 		for (int i = 0; i != length; ++i) {
@@ -35,7 +35,7 @@ public class Array<T extends PackedObject> extends PackedObject {
 
 	@Override
 	public void copyTo(Object address, long ptr, Object des, long desPtr) {
-		PackedObject po = getType(address, ptr);
+		PackedObject po = getElementType(address, ptr);
 		int length = getLength(address, ptr);
 		if (po instanceof Array) {
 			PackedObjectMemory.copyTo(address, ptr + offset, des, desPtr + offset, sizeOf());
@@ -56,7 +56,7 @@ public class Array<T extends PackedObject> extends PackedObject {
 		if (index < 0 || index >= len) {
 			throw new IndexOutOfBoundsException();
 		}
-		return calculateElementPtr(ptr, index, getType(address, ptr));
+		return calculateElementPtr(ptr, index, getElementType(address, ptr));
 	}
 	
 	private long calculateElementPtr(long ptr, int index, PackedObject po) {
@@ -64,22 +64,23 @@ public class Array<T extends PackedObject> extends PackedObject {
 		return ptr + offset + sizeOf() + index * scale;
 	}
 	
-	public T getType(Object address, long ptr) {
-		return TypeRegistry.resolveType(typeId.getInt(address, ptr));
+	public T getElementType(Object address, long ptr) {
+		return TypeRegistry.resolveType(elementTypeId.getInt(address, ptr));
 	}
 
-	public void setType(Object address, long ptr, PackedObject po) {
-		this.typeId.setInt(address, ptr, po.getTypeId());
+	public void setElementType(Object address, long ptr, PackedObject po) {
+		this.elementTypeId.setInt(address, ptr, po.getTypeId());
 	}
 
-	public int getTypeId(Object address, long ptr) {
-		return typeId.getInt(address, ptr);
+	public int getElementTypeId(Object address, long ptr) {
+		return elementTypeId.getInt(address, ptr);
 	}
 	
 	public int getLength(Object address, long ptr) {
 		return length.getInt(address, ptr);
 	}
 
+	@Override
 	public int getTypeId() {
 		return TypeRegistry.ARRAY_ID;
 	}
