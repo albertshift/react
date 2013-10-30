@@ -21,7 +21,7 @@ import sun.misc.Cleaner;
 
 public final class Holder {
 
-	static final PackedLong MEMORY_SIZE = new PackedLong(0);
+	static final PackedLong MEMORY_CAPACITY = new PackedLong(0);
 
 	public enum HolderType {
 		BYTE_ARRAY, MEMORY, HEAP_BUFFER, DIRECT_BUFFER;
@@ -29,7 +29,7 @@ public final class Holder {
 
 	public static class Header {
 
-		final PackedInt objectSizeOf;
+		final PackedInt objectTypeId;
 		final PackedInt trashCounter;
 		final PackedInt endOffset32;
 		final PackedLong endOffset64;
@@ -37,8 +37,8 @@ public final class Holder {
 		Header() {
 
 			long offset = 0;
-			objectSizeOf = new PackedInt(offset);
-			offset += objectSizeOf.sizeOf();
+			objectTypeId = new PackedInt(offset);
+			offset += objectTypeId.sizeOf();
 
 			trashCounter = new PackedInt(offset);
 			offset += trashCounter.sizeOf();
@@ -48,9 +48,10 @@ public final class Holder {
 
 		}
 
-		public void addTrash(Object address, int addon) {
-			int trash = trashCounter.getInt(address, 0);
-			trashCounter.setInt(address, 0, trash + addon);
+		public void addTrash(Object address, long addon) {
+			long trash = (long) trashCounter.getInt(address, 0);
+			trash += addon;
+			trashCounter.setInt(address, 0, (int) Math.min(Integer.MAX_VALUE, trash));
 		}
 
 		long getEndOffset(Object address) {
@@ -77,19 +78,19 @@ public final class Holder {
 
 	private final static Header header = new Header();
 	
-	public static Object allocate(HolderType type, long size) {
+	public static Object allocate(HolderType type, long capacity) {
 		switch (type) {
 		case BYTE_ARRAY:
-			return new byte[positiveInt(size, "size")];
+			return new byte[positiveInt(capacity, "size")];
 		case MEMORY:
-			long allocatedAddress = UnsafeUtil.UNSAFE.allocateMemory(size + MEMORY_SIZE.sizeOf());
-			MEMORY_SIZE.setLong(allocatedAddress, 0, size);
-			long address = allocatedAddress + MEMORY_SIZE.sizeOf();
+			long allocatedAddress = UnsafeUtil.UNSAFE.allocateMemory(capacity + MEMORY_CAPACITY.sizeOf());
+			MEMORY_CAPACITY.setLong(allocatedAddress, 0, capacity);
+			long address = allocatedAddress + MEMORY_CAPACITY.sizeOf();
 			return address;
 		case HEAP_BUFFER:
-			return ByteBuffer.allocate(positiveInt(size, "size"));
+			return ByteBuffer.allocate(positiveInt(capacity, "size"));
 		case DIRECT_BUFFER:
-			return ByteBuffer.allocateDirect(positiveInt(size, "size"));
+			return ByteBuffer.allocateDirect(positiveInt(capacity, "size"));
 
 		}
 		throw new IllegalArgumentException("unknown type " + type);
@@ -97,21 +98,27 @@ public final class Holder {
 
 	public static void format(Object address, PackedObject po) {
 		int size = po.sizeOf();
-		header.objectSizeOf.setInt(address, 0, size);
+		header.objectTypeId.setInt(address, 0, po.getTypeId());
 		header.trashCounter.setInt(address, 0, 0);
-		header.setEndOffset(address, size);
-		if (po.getOffset() != header.sizeOf()) {
-			throw new IllegalArgumentException("offset must be " + header.sizeOf());
+		header.setEndOffset(address, header.sizeOf() + size);
+		
+		if (po.getOffset() != 0) {
+			throw new IllegalArgumentException("offset must be 0, but " + po.getOffset());
 		}
-		po.format(address, 0);
+		po.format(address, getObjectOffset());
+	}
+	
+	public static void formatArray(Object address, PackedObject elementPO, int length) {
+		header.objectTypeId.setInt(address, 0, TypeRegistry.ARRAY_ID);
+		header.trashCounter.setInt(address, 0, 0);
+		header.setEndOffset(address, header.sizeOf() + Array.sizeOf(elementPO, length));
+		
+		TypeRegistry.ARRAY.format(address, getObjectOffset(), elementPO.getTypeId(), length);
 	}
 	
 	public static void free(Object address) {
-		if (address instanceof byte[]) {
-			// do nothing, it is GC work
-		}
-		else if (address instanceof Long) {
-			long allocatedAddress = (Long) address - MEMORY_SIZE.sizeOf();
+		if (address instanceof Long) {
+			long allocatedAddress = (Long) address - MEMORY_CAPACITY.sizeOf();
 			UnsafeUtil.UNSAFE.freeMemory(allocatedAddress);
 		}
 		else if (address instanceof ByteBuffer) {
@@ -125,13 +132,26 @@ public final class Holder {
 		}
 	}
 
-	public static long getSize(Object address) {
+	public static HolderType getHolderType(Object address) {
+		if (address instanceof byte[]) {
+			return HolderType.BYTE_ARRAY;
+		} else if (address instanceof Long) {
+			return HolderType.MEMORY;
+		} else if (address instanceof ByteBuffer) {
+			ByteBuffer bb = (ByteBuffer) address;
+			return bb.isDirect() ? HolderType.DIRECT_BUFFER : HolderType.HEAP_BUFFER;
+		} else {
+			throw new IllegalArgumentException("unknown object " + address);
+		}
+	}
+	
+	public static long getCapacity(Object address) {
 		if (address instanceof byte[]) {
 			byte[] blob = (byte[]) address;
 			return blob.length;
 		} else if (address instanceof Long) {
-			long allocatedAddress = (Long) address - MEMORY_SIZE.sizeOf();
-			return MEMORY_SIZE.getLong(allocatedAddress, 0);
+			long allocatedAddress = (Long) address - MEMORY_CAPACITY.sizeOf();
+			return MEMORY_CAPACITY.getLong(allocatedAddress, 0);
 		} else if (address instanceof ByteBuffer) {
 			ByteBuffer bb = (ByteBuffer) address;
 			return bb.capacity();
@@ -140,16 +160,48 @@ public final class Holder {
 		}
 	}
 
-	public static long newInternalObject(Object address, int capacity) throws PackedObjectOverflowException {
+	public static long getSize(Object address) {
+		return header.getEndOffset(address);
+	}
+	
+	public static int getTrashCounter(Object address) {
+		return header.trashCounter.getInt(address, 0);
+	}
+	
+	public static void gc(Object address, Object desAddress) {
+		int typeId = header.objectTypeId.getInt(address, 0);
+		header.objectTypeId.setInt(desAddress, 0, typeId);
+		header.trashCounter.setInt(desAddress, 0, 0);
+		
+		long objectSize = getObjectSize(address, getObjectOffset(), typeId);
+		header.setEndOffset(desAddress, getObjectOffset() + objectSize);
+		
+		PackedObject po = TypeRegistry.resolveType(typeId);
+		po.copyTo(address, getObjectOffset(), desAddress, getObjectOffset());
+	}
+	
+	public static long getObjectSize(Object address, long ptr, int typeId) {
+		if (typeId == TypeRegistry.ARRAY_ID) {
+			PackedObject elementPO = TypeRegistry.ARRAY.getElementType(address, ptr);
+			int length = TypeRegistry.ARRAY.getLength(address, ptr);
+			return Array.sizeOf(elementPO, length);
+		}
+		else {
+			PackedObject po = TypeRegistry.resolveType(typeId);
+			return po.sizeOf();
+		}
+	}
+	
+	public static long newInternalObject(Object address, long capacity) throws PackedObjectOverflowException {
 		long endOffset = header.getEndOffset(address);
-		if (endOffset + capacity > getSize(address)) {
+		if (endOffset + capacity > getCapacity(address)) {
 			throw new PackedObjectOverflowException();
 		}
 		header.setEndOffset(address, endOffset + capacity);
 		return endOffset;
 	}
 	
-	public static void incrementTrash(Object address, int addTrash) {
+	public static void incrementTrash(Object address, long addTrash) {
 		header.addTrash(address, addTrash);
 	}
 	

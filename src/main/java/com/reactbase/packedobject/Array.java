@@ -80,6 +80,14 @@ public class Array<T extends PackedObject> extends PackedObject {
 		return length.getInt(address, ptr);
 	}
 
+	public static long sizeOf(PackedObject elementPO, int length) {
+		long size = (long) elementPO.sizeOf();
+		size *= length;
+		size += PrimitiveTypes.INT_SIZEOF;
+		size += PrimitiveTypes.INT_SIZEOF;
+		return size;
+	}
+	
 	@Override
 	public int getTypeId() {
 		return TypeRegistry.ARRAY_ID;

@@ -85,7 +85,7 @@ public class TypeRegistry {
 		}
 		PackedObject pc = array[typeId];
 		if (pc == null) {
-			throw new IllegalStateException();
+			throw new IllegalStateException("typeId not found " + typeId);
 		}
 		return (T) pc;
 	}

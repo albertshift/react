@@ -58,7 +58,7 @@ public class Simple extends PackedObject {
 
 	@Override
 	public int getTypeId() {
-		return 0;
+		return 777;
 	}
 	
 }

@@ -56,16 +56,16 @@ public class Ref<T extends PackedObject> extends PackedObject {
 	
 	public long newArrayInstance(Object address, long ptr, int elementTypeId, int length) {
 		PackedObject elementPO = TypeRegistry.resolveType(elementTypeId);
-		Array po = (Array) TypeRegistry.resolveType(TypeRegistry.ARRAY_ID);
 		
 		long oldDataPtr = getDataPtr(address, ptr);
-		long dataPtr = Holder.newInternalObject(address, po.sizeOf() + objectTypeId.sizeOf() + elementPO.sizeOf() * length);
+		long dataPtr = Holder.newInternalObject(address, Array.sizeOf(elementPO, length) + objectTypeId.sizeOf());
 		
 		setDataPtr(address, ptr, dataPtr);
-		objectTypeId.setInt(address, dataPtr, po.getTypeId());
+		objectTypeId.setInt(address, dataPtr, TypeRegistry.ARRAY_ID);
 		
 		long poPtr = dataPtr + objectTypeId.sizeOf();
-		po.format(address, poPtr, elementTypeId, length);
+		
+		TypeRegistry.ARRAY.format(address, poPtr, elementTypeId, length);
 		
 		eraseInstance(address, oldDataPtr);
 		return poPtr;
@@ -73,8 +73,9 @@ public class Ref<T extends PackedObject> extends PackedObject {
 	
 	private void eraseInstance(Object address, long dataPtr) {
 		if (dataPtr != NULL) {
-			PackedObject previousClass = TypeRegistry.resolveType(objectTypeId.getInt(address, dataPtr));
-			Holder.incrementTrash(address, previousClass.sizeOf());
+			int typeId = objectTypeId.getInt(address, dataPtr);
+			long trash = (long) objectTypeId.sizeOf() + Holder.getObjectSize(address, dataPtr + objectTypeId.sizeOf(), typeId);
+			Holder.incrementTrash(address, trash);
 		}
 	}
 
@@ -108,19 +109,24 @@ public class Ref<T extends PackedObject> extends PackedObject {
 		else {
 			int typeId = objectTypeId.getInt(address, dataPtr);
 			PackedObject po = TypeRegistry.resolveType(typeId);
-			int objectSizeOf = objectTypeId.sizeOf() + po.sizeOf();
-			if (po instanceof Array) {
-				Array<PackedObject> arr = (Array<PackedObject>) po;
-				int length = arr.getLength(address, dataPtr + objectTypeId.sizeOf());
-				PackedObject elementPO = arr.getElementType(address, dataPtr + objectTypeId.sizeOf());
-				objectSizeOf += length * elementPO.sizeOf();
-			}
-			long desDataPtr = Holder.newInternalObject(address, objectSizeOf);
+			long dataSize = (long) objectTypeId.sizeOf() + Holder.getObjectSize(address, dataPtr + objectTypeId.sizeOf(), typeId);
+			long desDataPtr = Holder.newInternalObject(des, dataSize);
 			objectTypeId.setInt(des, desDataPtr, typeId);
 			po.copyTo(address, dataPtr + objectTypeId.sizeOf(), des, desDataPtr + objectTypeId.sizeOf());
 		}
 	}
-
+	
+	public long getDataSize(Object address, long ptr) {
+		long dataPtr = getDataPtr(address, ptr);
+		if (dataPtr == NULL) {
+			return 0;
+		}
+		else {
+			int typeId = objectTypeId.getInt(address, dataPtr);
+			return (long) objectTypeId.sizeOf() + Holder.getObjectSize(address, dataPtr + objectTypeId.sizeOf(), typeId);
+		}
+	}
+	
 	@Override
 	public int sizeOf() {
 		return usePtr64 ? PrimitiveTypes.PTR64_SIZEOF : PrimitiveTypes.PTR32_SIZEOF;

@@ -40,5 +40,5 @@ public abstract class PackedObject {
 	public void copyTo(Object address, long ptr, Object des, long desPtr) {
 		CopyUtil.copyTo(address, ptr + offset, des, desPtr + offset, sizeOf());
 	}
-	
+
 }
