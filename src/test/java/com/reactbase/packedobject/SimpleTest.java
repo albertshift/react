@@ -1,13 +1,8 @@
 package com.reactbase.packedobject;
 
-import junit.framework.Assert;
-
 import org.junit.Test;
 
 import com.reactbase.packedobject.Holder.HolderType;
-import com.reactbase.packedobject.PackedObject;
-import com.reactbase.packedobject.CopyUtil;
-import com.reactbase.packedobject.TypeRegistry;
 import com.reactbase.react.Dumper;
 
 public class SimpleTest {

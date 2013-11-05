@@ -6,9 +6,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.reactbase.packedobject.PackedChar;
-import com.reactbase.packedobject.TypeDefaults;
-
 public class PackedCharTest {
 
 	@Test

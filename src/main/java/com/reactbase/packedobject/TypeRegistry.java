@@ -81,11 +81,11 @@ public class TypeRegistry {
 	public static <T extends PackedObject> T resolveType(int typeId) {
 		PackedObject[] array = registry.get();
 		if (typeId < 0 || typeId >= array.length) {
-			throw new IndexOutOfBoundsException();
+			throw new IndexOutOfBoundsException("typeId not found " + typeId);
 		}
 		PackedObject pc = array[typeId];
 		if (pc == null) {
-			throw new IllegalStateException("typeId not found " + typeId);
+			throw new IllegalStateException("typeId is not registered " + typeId);
 		}
 		return (T) pc;
 	}

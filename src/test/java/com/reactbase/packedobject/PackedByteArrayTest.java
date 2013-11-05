@@ -1,10 +1,5 @@
 package com.reactbase.packedobject;
 
-import java.util.Arrays;
-
-import junit.framework.Assert;
-
-import org.junit.Test;
 
 public class PackedByteArrayTest {
 /*
