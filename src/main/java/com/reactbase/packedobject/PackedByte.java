@@ -78,7 +78,7 @@ public final class PackedByte extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return TypeSizes.BYTE.getSize();
+		return TypeSizes.BYTE.sizeOf();
 	}
 	
 }

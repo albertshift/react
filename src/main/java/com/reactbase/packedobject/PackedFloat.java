@@ -82,7 +82,7 @@ public final class PackedFloat extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return TypeSizes.FLOAT.getSize();
+		return TypeSizes.FLOAT.sizeOf();
 	}
 	
 }

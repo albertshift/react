@@ -25,7 +25,7 @@ public final class Point extends PackedObject {
 	}
 
 	public int sizeOf() {
-		return TypeSizes.INT.getSize() * 2;
+		return TypeSizes.INT.sizeOf() * 2;
 	}
 	
 }

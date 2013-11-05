@@ -82,7 +82,7 @@ public final class PackedChar extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return TypeSizes.CHAR.getSize();
+		return TypeSizes.CHAR.sizeOf();
 	}
 	
 }

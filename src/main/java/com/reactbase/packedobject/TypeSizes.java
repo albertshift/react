@@ -18,7 +18,7 @@ public enum TypeSizes {
 		this.size = sz;
 	}
 
-	public int getSize() {
+	public int sizeOf() {
 		return size;
 	}
 

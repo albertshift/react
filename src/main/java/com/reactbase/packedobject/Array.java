@@ -15,7 +15,7 @@ public class Array<T extends PackedObject> extends PackedObject {
 	public Array(long offset) {
 		super(offset);
 		this.elementTypeId = new PackedInt(offset);
-		this.length = new PackedInt(offset + TypeSizes.INT.getSize());
+		this.length = new PackedInt(offset + TypeSizes.INT.sizeOf());
 	}
 
 	public void format(Object address, long ptr, int elementTypeId, int length) {
@@ -83,8 +83,8 @@ public class Array<T extends PackedObject> extends PackedObject {
 	public static long sizeOf(PackedObject elementPO, int length) {
 		long size = (long) elementPO.sizeOf();
 		size *= length;
-		size += TypeSizes.INT.getSize();
-		size += TypeSizes.INT.getSize();
+		size += TypeSizes.INT.sizeOf();
+		size += TypeSizes.INT.sizeOf();
 		return size;
 	}
 	
@@ -95,7 +95,7 @@ public class Array<T extends PackedObject> extends PackedObject {
 	
 	@Override
 	public int sizeOf() {
-		return TypeSizes.INT.getSize() + TypeSizes.INT.getSize();
+		return TypeSizes.INT.sizeOf() + TypeSizes.INT.sizeOf();
 	}
 	
 }

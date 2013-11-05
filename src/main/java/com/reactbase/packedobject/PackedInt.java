@@ -82,7 +82,7 @@ public final class PackedInt extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return TypeSizes.INT.getSize();
+		return TypeSizes.INT.sizeOf();
 	}
 	
 }
