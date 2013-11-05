@@ -7,7 +7,7 @@ public final class PackedByte extends PackedObject {
 	final byte defaultValue;
 
 	public PackedByte(long offset) {
-		this(offset, PrimitiveTypes.DEFAULT_BYTE);
+		this(offset, TypeDefaults.BYTE);
 	}
 
 	public PackedByte(long offset, byte defaultValue) {

@@ -7,7 +7,7 @@ public final class PackedChar extends PackedObject {
 	final char defaultValue;
 
 	public PackedChar(long offset) {
-		this(offset, PrimitiveTypes.DEFAULT_CHAR);
+		this(offset, TypeDefaults.CHAR);
 	}
 
 	public PackedChar(long offset, char defaultValue) {

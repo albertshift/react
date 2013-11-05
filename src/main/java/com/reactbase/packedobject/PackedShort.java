@@ -7,7 +7,7 @@ public final class PackedShort extends PackedObject {
 	final short defaultValue;
 	
 	public PackedShort(long offset) {
-		this(offset, PrimitiveTypes.DEFAULT_SHORT);
+		this(offset, TypeDefaults.SHORT);
 	}
 	
 	public PackedShort(long offset, short defaultValue) {

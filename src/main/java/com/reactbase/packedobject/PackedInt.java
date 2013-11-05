@@ -7,7 +7,7 @@ public final class PackedInt extends PackedObject {
 	final int defaultValue;
 	
 	public PackedInt(long offset) {
-		this(offset, PrimitiveTypes.DEFAULT_INT);
+		this(offset, TypeDefaults.INT);
 	}
 	
 	public PackedInt(long offset, int defaultValue) {

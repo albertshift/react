@@ -7,7 +7,7 @@ public final class PackedFloat extends PackedObject {
 	final float defaultValue;
 	
 	public PackedFloat(long offset) {
-		this(offset, PrimitiveTypes.DEFAULT_FLOAT);
+		this(offset, TypeDefaults.FLOAT);
 	}
 	
 	public PackedFloat(long offset, float defaultValue) {

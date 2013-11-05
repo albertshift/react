@@ -7,7 +7,7 @@ public final class PackedDouble extends PackedObject {
 	final double defaultValue;
 	
 	public PackedDouble(long offset) {
-		this(offset, PrimitiveTypes.DEFAULT_DOUBLE);
+		this(offset, TypeDefaults.DOUBLE);
 	}
 	
 	public PackedDouble(long offset, double defaultValue) {

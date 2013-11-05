@@ -7,7 +7,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import com.reactbase.packedobject.PackedByte;
-import com.reactbase.packedobject.PrimitiveTypes;
+import com.reactbase.packedobject.TypeDefaults;
 
 public class PackedByteTest {
 

@@ -7,7 +7,7 @@ public final class PackedLong extends PackedObject {
 	final long defaultValue;
 	
 	public PackedLong(long offset) {
-		this(offset, PrimitiveTypes.DEFAULT_LONG);
+		this(offset, TypeDefaults.LONG);
 	}
 	
 	public PackedLong(long offset, long defaultValue) {
