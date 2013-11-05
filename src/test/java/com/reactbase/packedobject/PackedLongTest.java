@@ -23,7 +23,7 @@ public class PackedLongTest {
 	private void check(long expected, byte[] serialized) {
 		PackedLong pl = new PackedLong(0);
 		byte[] blob = new byte[pl.sizeOf()];
-		Assert.assertEquals(PrimitiveTypes.LONG_SIZEOF, blob.length);
+		Assert.assertEquals(TypeSizes.LONG.getSize(), blob.length);
 		pl.setLong(blob, 0, expected);
 		//System.out.println(Arrays.toString(blob));
 		Assert.assertTrue(Arrays.equals(blob, serialized));

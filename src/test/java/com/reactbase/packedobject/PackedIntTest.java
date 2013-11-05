@@ -6,9 +6,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.reactbase.packedobject.PackedInt;
-import com.reactbase.packedobject.PrimitiveTypes;
-
 public class PackedIntTest {
 
 	@Test
@@ -23,7 +20,7 @@ public class PackedIntTest {
 	private void check(int expected, byte[] serialized) {
 		PackedInt pi = new PackedInt(0);
 		byte[] blob = new byte[pi.sizeOf()];
-		Assert.assertEquals(PrimitiveTypes.INT_SIZEOF, blob.length);
+		Assert.assertEquals(TypeSizes.INT.getSize(), blob.length);
 		pi.setInt(blob, 0, expected);
 		//System.out.println(Arrays.toString(blob));
 		Assert.assertTrue(Arrays.equals(blob, serialized));

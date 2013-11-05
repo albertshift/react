@@ -10,8 +10,7 @@ public enum TypeSizes {
 	FLOAT(4),
 	DOUBLE(8),
 	PTR32(4),
-	PTR64(8),
-	CAPACITY(4);
+	PTR64(8);
 		
 	final private int size;
 	

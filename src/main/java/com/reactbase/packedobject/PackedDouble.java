@@ -82,7 +82,7 @@ public final class PackedDouble extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return PrimitiveTypes.DOUBLE_SIZEOF;
+		return TypeSizes.DOUBLE.getSize();
 	}
 	
 }

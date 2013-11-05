@@ -6,9 +6,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.reactbase.packedobject.PackedFloat;
-import com.reactbase.packedobject.PrimitiveTypes;
-
 public class PackedFloatTest {
 
 	@Test
@@ -23,7 +20,7 @@ public class PackedFloatTest {
 	private void check(float expected, byte[] serialized) {
 		PackedFloat pf = new PackedFloat(0);
 		byte[] blob = new byte[pf.sizeOf()];
-		Assert.assertEquals(PrimitiveTypes.FLOAT_SIZEOF, blob.length);
+		Assert.assertEquals(TypeSizes.FLOAT.getSize(), blob.length);
 		pf.setFloat(blob, 0, expected);
 		//System.out.println(Arrays.toString(blob));
 		Assert.assertTrue(Arrays.equals(blob, serialized));

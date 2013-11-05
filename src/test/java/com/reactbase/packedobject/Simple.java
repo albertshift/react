@@ -23,7 +23,7 @@ public class Simple extends PackedObject {
 		ioffset += num.sizeOf();
 		
 		ba = new Array<PackedByte>(ioffset);
-		ioffset += ba.sizeOf() + PrimitiveTypes.BYTE_SIZEOF * 100;
+		ioffset += ba.sizeOf() + TypeSizes.BYTE.getSize() * 100;
 		
 		total = new PackedLong(ioffset);
 		ioffset += total.sizeOf();

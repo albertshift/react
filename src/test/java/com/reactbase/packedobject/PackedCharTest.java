@@ -25,7 +25,7 @@ public class PackedCharTest {
 	private void check(char expected, byte[] serialized) {
 		PackedChar pc = new PackedChar(0);
 		byte[] blob = new byte[pc.sizeOf()];
-		Assert.assertEquals(PrimitiveTypes.CHAR_SIZEOF, blob.length);
+		Assert.assertEquals(TypeSizes.CHAR.getSize(), blob.length);
 		pc.setChar(blob, 0, expected);
 		//System.out.println(Arrays.toString(blob));
 		Assert.assertTrue(Arrays.equals(blob, serialized));

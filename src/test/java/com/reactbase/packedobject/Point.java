@@ -1,8 +1,5 @@
 package com.reactbase.packedobject;
 
-import com.reactbase.packedobject.PackedInt;
-import com.reactbase.packedobject.PackedObject;
-import com.reactbase.packedobject.PrimitiveTypes;
 
 public final class Point extends PackedObject {
 
@@ -18,7 +15,7 @@ public final class Point extends PackedObject {
 	public Point(long offset) {
 		super(offset);
 		x = new PackedInt(offset);
-		offset += PrimitiveTypes.INT_SIZEOF;
+		offset += x.sizeOf();
 		y = new PackedInt(offset);
 	}
 	
@@ -28,7 +25,7 @@ public final class Point extends PackedObject {
 	}
 
 	public int sizeOf() {
-		return PrimitiveTypes.INT_SIZEOF * 2;
+		return TypeSizes.INT.getSize() * 2;
 	}
 	
 }

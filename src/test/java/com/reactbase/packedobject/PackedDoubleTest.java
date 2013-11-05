@@ -6,9 +6,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.reactbase.packedobject.PackedDouble;
-import com.reactbase.packedobject.PrimitiveTypes;
-
 public class PackedDoubleTest {
 
 	@Test
@@ -23,7 +20,7 @@ public class PackedDoubleTest {
 	private void check(double expected, byte[] serialized) {
 		PackedDouble pd = new PackedDouble(0);
 		byte[] blob = new byte[pd.sizeOf()];
-		Assert.assertEquals(PrimitiveTypes.DOUBLE_SIZEOF, blob.length);
+		Assert.assertEquals(TypeSizes.DOUBLE.getSize(), blob.length);
 		pd.setDouble(blob, 0, expected);
 		//System.out.println(Arrays.toString(blob));
 		Assert.assertTrue(Arrays.equals(blob, serialized));

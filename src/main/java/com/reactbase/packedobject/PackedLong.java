@@ -82,7 +82,7 @@ public final class PackedLong extends PackedObject {
 	}
 	
 	public int sizeOf() {
-		return PrimitiveTypes.LONG_SIZEOF;
+		return TypeSizes.LONG.getSize();
 	}
 	
 	

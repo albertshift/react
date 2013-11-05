@@ -68,10 +68,10 @@ public final class Holder {
 		}
 
 		int sizeOf() {
-			return (PackedObject.usePtr64 ? PrimitiveTypes.PTR64_SIZEOF
-					: PrimitiveTypes.PTR32_SIZEOF)
-					+ PrimitiveTypes.INT_SIZEOF
-					+ PrimitiveTypes.INT_SIZEOF;
+			return (PackedObject.usePtr64 ? TypeSizes.PTR64.getSize()
+					: TypeSizes.PTR32.getSize())
+					+ TypeSizes.INT.getSize()
+					+ TypeSizes.INT.getSize();
 
 		}
 	}

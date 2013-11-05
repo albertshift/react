@@ -6,9 +6,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.reactbase.packedobject.PackedShort;
-import com.reactbase.packedobject.PrimitiveTypes;
-
 public class PackedShortTest {
 
 	@Test
@@ -23,7 +20,7 @@ public class PackedShortTest {
 	private void check(short expected, byte[] serialized) {
 		PackedShort ps = new PackedShort(0);
 		byte[] blob = new byte[ps.sizeOf()];
-		Assert.assertEquals(PrimitiveTypes.SHORT_SIZEOF, blob.length);
+		Assert.assertEquals(TypeSizes.SHORT.getSize(), blob.length);
 		ps.setShort(blob, 0, expected);
 		//System.out.println(Arrays.toString(blob));
 		Assert.assertTrue(Arrays.equals(blob, serialized));
